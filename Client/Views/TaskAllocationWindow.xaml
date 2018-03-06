@@ -1,0 +1,525 @@
+﻿<Window x:Class="Client.Views.TaskAllocationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Client.ViewModels.Tasks"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:utils="clr-namespace:Client.ViewModels.Utils"
+        xmlns:entities="clr-namespace:Entities;assembly=Entities"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Client.Views"
+        mc:Ignorable="d"
+        x:Name="TanAllocationWindow"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        d:DesignHeight="600"
+        d:DesignWidth="1500"
+        xmlns:WPFMVVMPrism="clr-namespace:WPFMVVMPrism;assembly=WPFMVVMPrism"
+        WindowState="Maximized"
+        Title="Task Allocation">
+
+    <Window.DataContext>
+        <viewModels:TaskAllocationVM />
+    </Window.DataContext>
+    <telerik:RadBusyIndicator IsBusy="{Binding WorkInProgress}"
+                              BusyContent="Working, Please Wait . .">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="110" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="600" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Batch Selection"
+                              FontWeight="SemiBold"
+                              Style="{StaticResource GroupStyle}"
+                              Grid.Column="0">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <Label Content="From" />
+                            <telerik:RadAutoCompleteBox FontWeight="Normal"
+                                                        ItemsSource="{Binding Batches}"
+                                                        SelectedItem="{Binding SelectedFromBatch,Mode=TwoWay}"
+                                                        SelectionMode="Multiple"
+                                                        DisplayMemberPath="Name"
+                                                        x:Name="Batches"
+                                                        Height="35" SelectionChanged="RadAutoCompleteBox_SelectionChanged"
+                                                        Width="485"
+                                                        WatermarkContent="Choose Batch. ."/>
+                            <!--<Label Content="To" />
+                            <telerik:RadComboBox FontWeight="Normal"
+                                                        ItemsSource="{Binding Batches}"
+                                                        SelectedItem="{Binding SelectedToBatch,Mode=TwoWay}"
+                                                        DisplayMemberPath="Name"
+                                                        Height="25"
+                                                        Width="175"/>-->
+
+                            <telerik:RadButton CornerRadius="2"
+                                               Content="SEARCH"
+                                               Margin="2"
+                                               Command="{Binding SearchTans}"
+                                               CommandParameter="{Binding ElementName=ShipmentTans}"/>
+                            <telerik:RadButton CornerRadius="2"
+                                               x:Name="AllowReview"
+                                               Content="Allow Review"
+                                               Margin="2,0,0,0"
+                                               Visibility="Collapsed"
+                                               Command="{Binding AllowReview}" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="User Selection"
+                              FontWeight="SemiBold"
+                              Style="{StaticResource GroupStyle}"
+                              Grid.Column="1"
+                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <Label Content="Role"
+                                   VerticalAlignment="Center" />
+                            <telerik:RadComboBox  FontWeight="Normal"
+                                                        Margin="10,0,0,0"
+                                                        ItemsSource="{Binding Roles}"
+                                                        SelectedItem="{Binding SelectedRole,Mode=TwoWay}"
+                                                        Height="35"
+                                                        Width="250" Name="RolesList"/>
+
+                            <Label Content="User"
+                                   VerticalAlignment="Center" />
+                            <telerik:RadAutoCompleteBox FontWeight="Normal"
+                                                        Margin="10,0,0,0"
+                                                        ItemsSource="{Binding RoleWiseUsers}"
+                                                        SelectedItem="{Binding SelectedCurator,Mode=TwoWay}"
+                                                        SelectionMode="Single"
+                                                        DisplayMemberPath="Name"
+                                                        Height="35"
+                                                        Width="250"
+                                                        WatermarkContent="Choose User. ." />
+                            <Label Content="Comment"
+                                   VerticalAlignment="Center" />
+                            <TextBox Height="45"
+                                     Width="250"
+                                     Name="Comment"
+                                     Text="{Binding CommentText,Mode=TwoWay}"
+                                     AcceptsReturn="True"
+                                     Margin="10,5,5,5"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Visible" />
+
+                            <telerik:RadButton CornerRadius="2"
+                                               Height="30"
+                                               Content="Assign"
+                                               HorizontalAlignment="Left"
+                                               Margin="2,0,0,0"
+                                               Command="{Binding AssignTans}" />
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="1"
+                  Margin="2">
+                <GroupBox Header="Search Results"
+                          FontWeight="SemiBold"
+                          Style="{StaticResource GroupStyle}">
+                    <telerik:RadGridView Name="ShipmentTans"
+                                         IsReadOnly="True"
+                                         SelectionMode="Extended"
+                                         ItemsSource="{Binding BatchTansView}"
+                                         AutoGenerateColumns="False"
+                                         Margin="2"
+                                         ShowGroupPanel="False"
+                                         ShowSearchPanel="True"
+                                         SelectedItem="{Binding SelectedTan,Mode=TwoWay}"
+                                         IsSynchronizedWithCurrentItem="False" Filtered="ShipmentTans_Filtered">
+                        <telerik:RadGridView.RowStyle>
+                            <Style TargetType="telerik:GridViewRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NearToTargetDate}"
+                                                 Value="true">
+                                        <Setter Property="Foreground"
+                                                Value="Red"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding NearToTargetDate}"
+                                                 Value="false">
+                                        <Setter Property="Foreground"
+                                                Value="Black"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </telerik:RadGridView.RowStyle>
+                        <i:Interaction.Behaviors>
+                            <utils:ShipmentTansMultiSelectBehavior SelectedItems="{Binding SelectedTans,Mode=TwoWay}" />
+                        </i:Interaction.Behaviors>
+                        <WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                            <WPFMVVMPrism:BehaviorBinding Event="MouseDoubleClick"
+                                                          Command="{Binding Path=MouseDoubleClickCommand}"
+                                                          CommandParameter="{Binding ElementName=ShipmentTans, Path=SelectedItem}" />
+                        </WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                        <telerik:RadGridView.ContextMenu>
+
+                            <ContextMenu>
+                                <MenuItem Header="Show Curator Version"
+                                                          Command="{Binding Path=ShowCuratorVersion}" />
+                                <MenuItem Header="Show Reiewer Version"
+                                                          Command="{Binding Path=ShowReviewerVersion}" />
+                                <MenuItem Header="Show QC Version"
+                                                          Command="{Binding Path=ShowQcVersion}" />
+                            </ContextMenu>
+                        </telerik:RadGridView.ContextMenu>
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding DisplayOrder}"
+                                                        Header="S.No"
+                                                        Width="50"
+                                                        IsVisible="True" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding BatchNum}"
+                                                        Header="Shipment"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding TanNumber}"
+                                                        Header="TAN"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding TanCategory}"
+                                                        Header="Category"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding TanType}"
+                                                        Header="Class" />
+                            <telerik:GridViewDataColumn Header="Priority" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding StatusString}"
+                                                        Header="Status"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding Nums}"
+                                                        Header="NUMs" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding Rxns}"
+                                                        Header="RXNs" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding Stages}" Header="Stages" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding Curator}"
+                                                        Header="Curator"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding Reviewer}"
+                                                        Header="Reviewer"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding QC}"
+                                                        Header="QC"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding IsDoubtRaised}"
+                                                        Header="IsDoubtRaised"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding TargetedDate}"
+                                                        Header="Targeted Date"
+                                                        Width="100" />
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding ProcessingNote}"
+                                                        Header="Processing Note"
+                                                        Width="100" />
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Horizontal"
+                            Margin="2"
+                            HorizontalAlignment="Stretch">
+                    <GroupBox Header="TANs"
+                              Style="{StaticResource GroupStyle}"
+                              FontWeight="SemiBold"
+                              Margin="2"
+                              Width="680">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Top">
+                            <Border BorderBrush="#ddd"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="30" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="SUMMARY"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="4"
+                                           HorizontalAlignment="Center" />
+                                    <Label Content="Count"
+                                           Grid.Row="1"
+                                           Grid.Column="0" />
+                                    <Label Content="Stages"
+                                           Grid.Row="1"
+                                           Grid.Column="1" />
+                                    <Label Content="Pending"
+                                           Grid.Row="1"
+                                           Grid.Column="2" />
+                                    <Label Content="Zero RXNs"
+                                           Grid.Row="1"
+                                           Grid.Column="3" />
+                                    <Label Content="{Binding TotalTans}"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding ExtraStages}"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding NotAssigned}"
+                                           Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding ZeroRXNs}"
+                                           Grid.Row="2"
+                                           Grid.Column="3"
+                                           Style="{StaticResource NumberStyle}" />
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="#ddd"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="CURATION"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           HorizontalAlignment="Center" />
+                                    <Label Content="Assigned"
+                                           Grid.Row="1"
+                                           Grid.Column="0" />
+                                    <Label Content="Progress"
+                                           Grid.Row="1"
+                                           Grid.Column="2" />
+                                    <Label Content="{Binding CurationAssigned}"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding CurationProgress}"
+                                           Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource NumberStyle}" />
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="#ddd"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="REVIEW"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           HorizontalAlignment="Center" />
+                                    <Label Content="Assigned"
+                                           Grid.Row="1"
+                                           Grid.Column="0" />
+                                    <Label Content="Progress"
+                                           Grid.Row="1"
+                                           Grid.Column="1" />
+                                    <Label Content="{Binding ReviewAssigned}"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding ReviewProgress}"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource NumberStyle}" />
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="#ddd"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="QC"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="3"
+                                           HorizontalAlignment="Center" />
+                                    <Label Content="Assigned"
+                                           Grid.Row="1"
+                                           Grid.Column="0" />
+                                    <Label Content="Progress"
+                                           Grid.Row="1"
+                                           Grid.Column="1" />
+                                    <Label Content="Completed"
+                                           Grid.Row="1"
+                                           Grid.Column="2" />
+                                    <Label Content="{Binding QCAssigned}"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding QCProgress}"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding QCCompleted}"
+                                           Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource NumberStyle}" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Reactions"
+                              Style="{StaticResource GroupStyle}"
+                              FontWeight="SemiBold"
+                              Margin="2"
+                              Width="460">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Top">
+                            <Border BorderBrush="#ddd"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="CURATION"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           HorizontalAlignment="Center" />
+                                    <Label Content="Assigned"
+                                           Grid.Row="1"
+                                           Grid.Column="0" />
+                                    <Label Content="Progress"
+                                           Grid.Row="1"
+                                           Grid.Column="2" />
+                                    <Label Content="{Binding RXNCurationAssigned}"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding RXNCurationProgress}"
+                                           Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource NumberStyle}" />
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="#ddd"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="REVIEW"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           HorizontalAlignment="Center" />
+                                    <Label Content="Assigned"
+                                           Grid.Row="1"
+                                           Grid.Column="0" />
+                                    <Label Content="Progress"
+                                           Grid.Row="1"
+                                           Grid.Column="1" />
+                                    <Label Content="{Binding RXNReviewAssigned}"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding RXNReviewProgress}"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource NumberStyle}" />
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="#ddd"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="QC"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="3"
+                                           HorizontalAlignment="Center" />
+                                    <Label Content="Assigned"
+                                           Grid.Row="1"
+                                           Grid.Column="0" />
+                                    <Label Content="Progress"
+                                           Grid.Row="1"
+                                           Grid.Column="1" />
+                                    <Label Content="Completed"
+                                           Grid.Row="1"
+                                           Grid.Column="2" />
+                                    <Label Content="{Binding RXNQCAssigned}"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding RXNQCProgress}"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource NumberStyle}" />
+                                    <Label Content="{Binding RXNQCCompleted}"
+                                           Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource NumberStyle}" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</Window>

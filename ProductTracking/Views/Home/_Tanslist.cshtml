@@ -1,0 +1,27 @@
+﻿@using ProductTracking.Models.Core
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th>Date</th>
+            <th>Target</th>
+            <th>Delivered</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            List<Tan> tansList = ViewBag.tansList;
+        }
+        @foreach (Tan tan in tansList)
+        {
+            <tr>
+                <td>@(++count)</td>
+                <td>@tan.TargetDate.ToString("dd-MM-yyyy hh:mm tt")</td>
+                <td>@tan.Id</td>
+                <td></td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

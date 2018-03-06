@@ -1,0 +1,9 @@
+diff a/Client/Views/Conditions.xaml.cs b/Client/Views/Conditions.xaml.cs	(rejected hunks)
+@@ -359,7 +359,6 @@
+                 
+                     // e.Handled = false;
+                 }
+-                    //e.Handled = true;
+                 
+ 
+                 //BKSP-8,--45,.-46, <-60,>-62

@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Meta Shipment Notification</title>
+    <style>
+        body {{
+            font-family: "Segoe UI","Helvetica Neue",Helvetica;
+            font-size: 13px;
+            padding: 10px;
+        }}
+
+        h2 {{
+            font-weight: 200 !important;
+            text-transform: uppercase;
+            background-color: rgb(54,112,204);
+            color: white;
+            padding: 5px;
+        }}
+
+
+        table {{
+            border-collapse: collapse;
+        }}
+
+        table, th, td {{
+            border: 1px solid #eee;
+        }}
+
+        th, td {{
+            padding: 4px;
+        }}
+
+        th {{
+            font-weight: 500;
+        }}
+
+        tr:nth-child(even) {{
+            background-color: #eee;
+        }}
+
+        .invalid {{
+            color: red;
+        }}
+    </style>
+</head>
+
+
+
+<body>
+    <div style="text-align:center;padding-bottom:10px">
+        <h2>Shipment Upload Details</h2>
+    </div>
+    New Shipment : {0}<br/>{1}
+    <p style="text-align:left;padding-top:5px;">
+        <i>Notification Time : {2}</i>
+    </p>
+</body>
+
+</html>

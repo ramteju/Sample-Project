@@ -1,0 +1,41 @@
+﻿
+@using ProductTracking.Models.Core
+@using ProductTracking.Util
+@using Entities;
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Sno</th>
+        <th>StackTrace</th>
+        <th>Message</th>
+        <th>Status</th>
+        <th>Created Date</th>
+
+    </tr>
+    <tbody>
+        @{
+            int count = 1, total = 0;
+
+        }
+        @foreach (ShipmentException shipmentException in ViewBag.ShippmentExceptionList)
+        {
+
+            <tr>
+                <td>@(count++)</td>
+                <td>@shipmentException.StackTrace</td>
+                <td>@shipmentException.Message</td>
+                <td>@shipmentException.Status</td>
+                <td>
+                    @if (shipmentException.DateCreated != null)
+                    {
+                        @shipmentException.DateCreated.ToString("dd-MM-yyyy") <span>(@DateUtils.dateString(shipmentException.DateCreated))</span>
+                    }
+                </td>
+
+            </tr>
+        }
+        <tr style="font-weight:bold">
+            <td colspan="3" style="text-align:right">Total</td>
+            <td>@Enumerable.Count(ViewBag.ShippmentExceptionList)</td>
+        </tr>
+    </tbody>
+</table>

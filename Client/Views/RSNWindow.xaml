@@ -1,0 +1,326 @@
+﻿<Window x:Class="Client.Views.RSNDialog"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views"
+        xmlns:viewModels="clr-namespace:Client.ViewModels"
+        mc:Ignorable="d"
+        ResizeMode="CanResizeWithGrip"
+        WindowState="Normal"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="650"
+        MinWidth="780"
+        Title="{Binding RSNTitle,Mode=TwoWay}"
+        x:Name="RSNWindow"
+        Height="650"
+        Width="780"
+        Closing="Window_Closing">
+    <Window.DataContext>
+        <viewModels:RSNWindowVM />
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <viewModels:EnumBooleanConverter x:Key="enumBooleanConverter" />
+            <Style x:Name="ListBoxItemStyle"
+                   TargetType="{x:Type telerik:RadListBoxItem}">
+                <Style.Triggers>
+                    <Trigger Property="ItemsControl.AlternationIndex"
+                             Value="0">
+                        <Setter Property="Background"
+                                Value="Transparent"></Setter>
+                    </Trigger>
+                    <Trigger Property="ItemsControl.AlternationIndex"
+                             Value="1">
+                        <Setter Property="Background"
+                                Value="#D9E8F0"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Placeholder.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.Background>
+        <VisualBrush>
+            <VisualBrush.Visual>
+                <Grid>
+                    <Rectangle>
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.504,1.5"
+                                                 StartPoint="0.504,0.03">
+                                <GradientStop Color="#F5F5DC"
+                                              Offset="0" />
+                                <GradientStop Color="#FFFFFFFF"
+                                              Offset="0.567" />
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Image Source="/Images/beakers.jpg"
+                           Opacity="0.0" />
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="110" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0">
+            <Label Content="Select RSN Option"
+                   Margin="2" />
+            <telerik:RadRadioButton GroupName="Level"
+                                    Content="{Binding ReactionVM.DisplayName}"
+                                    Margin="2"
+                                    CornerRadius="2"
+                                    Foreground="Blue"
+                                    IsEnabled="{Binding RsnLevelEnable,Mode=TwoWay}"
+                                    IsChecked="{Binding Path=RsnLevel, Converter={StaticResource enumBooleanConverter}, ConverterParameter={x:Static viewModels:RsnLevel.REACTION}}" />
+            <telerik:RadRadioButton GroupName="Level"
+                                    Content="{Binding StageVM.Name}"
+                                    Margin="2"
+                                    CornerRadius="2"
+                                    Foreground="Green"
+                                    Visibility="{Binding StageVisible}"
+                                    IsChecked="{Binding Path=RsnLevel, Converter={StaticResource enumBooleanConverter}, ConverterParameter={x:Static viewModels:RsnLevel.STAGE}}" />
+            <Label Content="{Binding StageName}"
+                   Margin="2"
+                   FontWeight="Bold"
+                   FontStyle="Italic" />
+        </StackPanel>
+        <DockPanel Grid.Row="1">
+            <GroupBox Header="CVT"
+                      FontWeight="SemiBold"
+                      DockPanel.Dock="Left">
+                <StackPanel>
+                    <TextBox Width="250"
+                             Margin="2"
+                             Style="{StaticResource ResourceKey=PlaceHolder}"
+                             Tag="Search CVT"
+                             Text="{Binding FilterCVT,UpdateSourceTrigger=PropertyChanged}" />
+                    <telerik:RadListBox Height="145"
+                                        Margin="2"
+                                        ItemsSource="{Binding CVTView}"
+                                        AlternationCount="2"
+                                        FontWeight="Normal"
+                                        ItemContainerStyle="{Binding ListBoxItemStyle}"
+                                        SelectedItem="{Binding SelectedCVT, Mode=TwoWay}">
+                        <telerik:EventToCommandBehavior.EventBindings>
+                            <telerik:EventBinding Command="{Binding CVTSelected}"
+                                                  EventName="MouseDoubleClick" />
+                        </telerik:EventToCommandBehavior.EventBindings>
+                        <telerik:RadListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Text}"
+                                           Foreground="{Binding ForeColor}" />
+                            </DataTemplate>
+                        </telerik:RadListBox.ItemTemplate>
+                    </telerik:RadListBox>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Free Text"
+                      FontWeight="SemiBold"
+                      MinWidth="500">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <StackPanel Orientation="Horizontal"
+                                    DockPanel.Dock="Right">
+                            <telerik:RadRadioButton GroupName="Mode"
+                                                    Content="REPLACE"
+                                                    FontWeight="Normal"
+                                                    Margin="2"
+                                                    CornerRadius="2"
+                                                    Foreground="Blue"
+                                                    IsChecked="{Binding Path=FreeTextMode, Converter={StaticResource enumBooleanConverter}, ConverterParameter={x:Static viewModels:FreeTextMode.REPLACE}}" />
+                            <telerik:RadRadioButton GroupName="Mode"
+                                                    Content="APPEND"
+                                                    FontWeight="Normal"
+                                                    Margin="2"
+                                                    CornerRadius="2"
+                                                    Foreground="Green"
+                                                    IsChecked="{Binding Path=FreeTextMode, Converter={StaticResource enumBooleanConverter}, ConverterParameter={x:Static viewModels:FreeTextMode.APPEND}}" />
+                        </StackPanel>
+                        <TextBox MinWidth="340"
+                                 Margin="2"
+                                 Style="{StaticResource ResourceKey=PlaceHolder}"
+                                 Tag="Search Freetext"
+                                 Text="{Binding FilterFreeText,UpdateSourceTrigger=PropertyChanged}" />
+                    </DockPanel>
+                    <telerik:RadListBox Height="145"
+                                        Margin="2"
+                                        MinWidth="480"
+                                        ItemsSource="{Binding FreeTextView}"
+                                        DisplayMemberPath="Text"
+                                        AlternationCount="2"
+                                        ItemContainerStyle="{Binding ListBoxItemStyle}"
+                                        FontWeight="Normal"
+                                        SelectedItem="{Binding SelectedFreeText,Mode=TwoWay}">
+                        <telerik:EventToCommandBehavior.EventBindings>
+                            <telerik:EventBinding Command="{Binding FreeTextSelected}"
+                                                  EventName="MouseDoubleClick" />
+                        </telerik:EventToCommandBehavior.EventBindings>
+                    </telerik:RadListBox>
+                </DockPanel>
+            </GroupBox>
+        </DockPanel>
+        <GroupBox Header="Editing Area"
+                  FontWeight="SemiBold"
+                  Grid.Row="2">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Height="88"
+                            VerticalAlignment="Bottom">
+                    <telerik:RadButton CornerRadius="2"
+                                       Content="SAVE"
+                                       FontWeight="Normal"
+                                       Margin="2"
+                                       Width="60"
+                                       Foreground="Blue"
+                                       Command="{Binding SaveForm}" />
+                    <telerik:RadButton CornerRadius="2"
+                                       Content="CLEAR"
+                                       FontWeight="Normal"
+                                       Margin="4"
+                                       Width="60"
+                                       Foreground="Green"
+                                       Command="{Binding ClearEditForm}" />
+                </StackPanel>
+                <StackPanel>
+                    <DockPanel>
+                        <Label Content="CVT"
+                               FontWeight="Normal"
+                               Width="57"
+                               DockPanel.Dock="Left" />
+                        <Label MinWidth="620"
+                               Margin="2"
+                               Content="{Binding CVT}"
+                               FontWeight="Normal"
+                               BorderThickness="1"
+                               Background="AntiqueWhite" />
+                    </DockPanel>
+                    <DockPanel Margin="0,2,0,0">
+                        <Label Content="Free Text"
+                               FontWeight="Normal"
+                               DockPanel.Dock="Left" />
+                        <TextBox MinWidth="620"
+                                 SpellCheck.IsEnabled="True"
+                                 Margin="2"
+                                 Height="50"
+                                 Text="{Binding FreeText}"
+                                 KeyUp="TextBox_KeyUp"
+                                 Name="txtFreetext"
+                                 FontWeight="Normal"
+                                 VerticalContentAlignment="Top"
+                                 TextWrapping="Wrap" />
+                    </DockPanel>
+                </StackPanel>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Header="Existing RSNs"
+                  Grid.Row="3"
+                  FontWeight="SemiBold">
+            <telerik:RadGridView ShowSearchPanel="False"
+                                 ShowGroupPanel="False"
+                                 Margin="2"
+                                 ItemsSource="{Binding RsnsView}"
+                                 AutoGenerateColumns="False"
+                                 IsReadOnly="True">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="220"
+                                                Header="CVT"
+                                                DataMemberBinding="{Binding CvtText}"
+                                                TextWrapping="Wrap"
+                                                IsFilterable="False"
+                                                IsSortable="False" />
+                    <telerik:GridViewDataColumn Width="*"
+                                                Header="Free Text"
+                                                DataMemberBinding="{Binding FreeText}"
+                                                TextWrapping="Wrap"
+                                                IsFilterable="False"
+                                                IsSortable="False" />
+                    <telerik:GridViewDataColumn Width="80"
+                                                Header="Level"
+                                                DataMemberBinding="{Binding Level}"
+                                                TextWrapping="Wrap"
+                                                IsFilterable="False"
+                                                IsSortable="False" />
+                    <telerik:GridViewDataColumn Width="40"
+                                                Header=""
+                                                TextWrapping="Wrap"
+                                                IsFilterable="False"
+                                                IsSortable="False">
+                        <telerik:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <telerik:RadButton Command="{Binding EditRsn}"
+                                                   Width="24"
+                                                   Height="24"
+                                                   BorderThickness="0"
+                                                   CornerRadius="4"
+                                                   ToolTip="Edit This RSN">
+                                    <Image Source="{Binding EditIcon}" />
+                                </telerik:RadButton>
+                            </DataTemplate>
+                        </telerik:GridViewColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Width="40"
+                                                Header=""
+                                                DataMemberBinding="{Binding DeleteIcon}"
+                                                TextWrapping="Wrap"
+                                                IsFilterable="False"
+                                                IsSortable="False">
+                        <telerik:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <telerik:RadButton Command="{Binding DeleteRsn}"
+                                                   Width="24"
+                                                   Height="24"
+                                                   BorderThickness="0"
+                                                   CornerRadius="4"
+                                                   ToolTip="Delete This RSN">
+                                    <Image Source="{Binding DeleteIcon}" />
+                                </telerik:RadButton>
+                            </DataTemplate>
+                        </telerik:GridViewColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="4">
+            <Label Content="Current Stage RSN Length : "
+                   FontWeight="SemiBold" />
+            <Label Content="{Binding CurrentStageRSNLength}"
+                   MaxWidth="50"
+                   Width="50" />
+            <Label Content="Other Stages RSN Length : "
+                   FontWeight="SemiBold" />
+            <Label Content="{Binding OtherStagesRSNLength}"
+                   MaxWidth="50"
+                   Width="50" />
+            <Label Content="Total RSN Length : "
+                   FontWeight="SemiBold" />
+            <Label Content="{Binding TotalRSNLength}"
+                   MaxWidth="50" />
+            <telerik:RadButton CornerRadius="2"
+                               Content="CANCEL"
+                               Margin="50,2,2,2"
+                               Foreground="Green"
+                               Name="CancelBtn"
+                               Click="CancelBtn_Click" />
+            <telerik:RadButton CornerRadius="2"
+                               Content="SUBMIT"
+                               Margin="2"
+                               Foreground="Blue"
+                               Name="SubmitBtn"
+                               Click="SubmitBtn_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

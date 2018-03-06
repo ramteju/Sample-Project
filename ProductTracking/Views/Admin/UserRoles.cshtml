@@ -1,0 +1,130 @@
+﻿@using Entities
+@using ProductTracking.Models.Core
+@using Excelra.Utils.Library
+
+@{
+    ViewBag.Title = "User Roles";
+    List<ApplicationUser> users = ViewBag.users;
+    Dictionary<ApplicationUser, List<Role>> userWiseRoles = ViewBag.userWiseRoles;
+    int sno = 1;
+}
+
+@section head {
+    <link href="~/Content/App/plugins/jqgrid/css/trirand/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/jqgrid/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <style>
+        .full-height {
+            height: calc(100vh - 250px);
+            overflow-y: auto;
+        }
+
+        .snoColumn {
+            width: 50px;
+        }
+
+        .userNameColumn {
+            width: 250px;
+        }
+
+        .checkColumn {
+            width: 100px;
+        }
+    </style>
+}
+
+@section heading {
+    <h4 class="page-header"><i class="fa fa-users"></i> User Roles</h4>
+}
+
+<form method="post" action="@Url.Action("SaveUserRoles")">
+    <input type="submit" class="btn btn-primary" value="Save" style="margin-bottom:15px;margin-left:15px" />
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Manage user roles</div>
+                    <div class="panel-body full-height">
+                        <table class="table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>SNO</th>
+                                    <th>User Name</th>
+
+                                    <th>
+                                        @(Role.Curator.DescriptionAttribute())
+                                        <input type="hidden" name="role" value="@((int)Role.Curator)" />
+                                    </th>
+                                    <th>
+                                        @(Role.Reviewer.DescriptionAttribute())
+                                        <input type="hidden" name="role" value="@((int)Role.Reviewer)" />
+                                    </th>
+                                    <th>
+                                        @(Role.QC.DescriptionAttribute())
+                                        <input type="hidden" name="role" value="@((int)Role.QC)" />
+                                    </th>
+                                    <th>
+                                        @(Role.ToolManager.DescriptionAttribute())
+                                        <input type="hidden" name="role" value="@((int)Role.ToolManager)" />
+                                    </th>
+                                    <th>
+                                        @(Role.ProjectManger.DescriptionAttribute())
+                                        <input type="hidden" name="role" value="@((int)Role.ProjectManger)" />
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in users)
+                                {
+                                    List<int> userRoles = new List<int>();
+                                    var thisUserRoles = userWiseRoles.Where(e => e.Key.Id == user.Id).Select(d => d.Value);
+                                    if (thisUserRoles.Any())
+                                    {
+                                        foreach (var ur in thisUserRoles.First())
+                                        {
+                                            userRoles.Add((int)ur);
+                                        }
+                                    }
+                                    <tr>
+                                        <td class="snoColumn">@(sno++)</td>
+                                        <td class="userNameColumn">
+                                            @user.UserName
+                                            <input type="hidden" name="user" value="@user.Id" />
+                                        </td>
+
+                                        <td class="checkColumn" title="@user.UserName is a Curator">
+                                            <input type="checkbox" name="userRole_@(user.Id)_@((int)Role.Curator)" value="@((int)Role.Curator)"
+                                                   @(userRoles.Contains((int)Role.Curator) ? "checked=\" checked\"" : "" ) />
+                                        </td>
+
+                                        <td class="checkColumn" title="@user.UserName is a Reviewer">
+                                            <input type="checkbox" name="userRole_@(user.Id)_@((int)Role.Reviewer)" value="@((int)Role.Reviewer)"
+                                                   @(userRoles.Contains((int)Role.Reviewer) ? "checked=\" checked\"" : "" ) />
+                                        </td>
+
+                                        <td class="checkColumn" title="@user.UserName is a QC">
+                                            <input type="checkbox" name="userRole_@(user.Id)_@((int)Role.QC)" value="@((int)Role.QC)"
+                                                   @(userRoles.Contains((int)Role.QC) ? "checked=\" checked\"" : "" ) />
+                                        </td>
+
+                                        <td class="checkColumn" title="@user.UserName is a ToolManager">
+                                            <input type="checkbox" name="userRole_@(user.Id)_@((int)Role.ToolManager)" value="@((int)Role.ToolManager)"
+                                                   @(userRoles.Contains((int)Role.ToolManager) ? "checked=\" checked\"" : "" ) />
+                                        </td>
+
+                                        <td class="checkColumn" title="@user.UserName is a ProjectManger">
+                                            <input type="checkbox" name="userRole_@(user.Id)_@((int)Role.ProjectManger)" value="@((int)Role.ProjectManger)"
+                                                   @(userRoles.Contains((int)Role.ProjectManger) ? "checked=\" checked\"" : "" ) />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

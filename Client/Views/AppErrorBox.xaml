@@ -1,0 +1,39 @@
+﻿<Window x:Class="Client.Views.AppErrorBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+        xmlns:local="clr-namespace:Client.Views"
+        mc:Ignorable="d"
+        WindowState="Normal"
+        Topmost="True"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterScreen"
+        Title="Thats An Error . ." Height="260" Width="500">
+    <GroupBox Style="{StaticResource GroupStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="345"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Source="/images/icon.png" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="128"/>
+            <TextBlock Height="100" TextWrapping="WrapWithOverflow"  FontWeight="Normal" FontFamily="Segoe UI Light" FontSize="26" Name="UserMessage"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                       FontWeight="Normal"
+                       FontFamily="Segoe UI"
+                       FontSize="16"
+                       Text="We have collected some information, which helps the IT Team to investigate this scenario. Please click Copy and email to them, For quick resolution. Thank you." 
+                       TextWrapping="WrapWithOverflow"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2" Margin="2">
+                <telerik:RadButton CornerRadius="2" FontWeight="Normal" Content="Copy" Margin="2" Name="CopyBtn" Click="CopyBtn_Click"/>
+                <telerik:RadButton  CornerRadius="2" FontWeight="Normal" Content="Close" Margin="2" Name="CloseBtn" Click="CloseBtn_Click"/>
+            </StackPanel>
+        </Grid>
+    </GroupBox>
+</Window>

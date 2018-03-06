@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Reactions_prodDataSet" targetNamespace="http://tempuri.org/Reactions_prodDataSet.xsd" xmlns:mstns="http://tempuri.org/Reactions_prodDataSet.xsd" xmlns="http://tempuri.org/Reactions_prodDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="Reactions_prodConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="Reactions_prodConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Client.Properties.Settings.GlobalReference.Default.Reactions_prodConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AspNetUsersTableAdapter" GeneratorDataComponentClassName="AspNetUsersTableAdapter" Name="AspNetUsers" UserDataComponentName="AspNetUsersTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="Reactions_prodConnectionString (Settings)" DbObjectName="Reactions_Prod.dbo.AspNetUsers" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT UserName, AnalystId, BenchMark FROM dbo.AspNetUsers</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="UserName" DataSetColumn="UserName" />
+              <Mapping SourceColumn="AnalystId" DataSetColumn="AnalystId" />
+              <Mapping SourceColumn="BenchMark" DataSetColumn="BenchMark" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Reactions_prodDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="Reactions_prodDataSet" msprop:Generator_UserDSName="Reactions_prodDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AspNetUsers" msprop:Generator_TableClassName="AspNetUsersDataTable" msprop:Generator_TableVarName="tableAspNetUsers" msprop:Generator_TablePropName="AspNetUsers" msprop:Generator_RowDeletingName="AspNetUsersRowDeleting" msprop:Generator_RowChangingName="AspNetUsersRowChanging" msprop:Generator_RowEvHandlerName="AspNetUsersRowChangeEventHandler" msprop:Generator_RowDeletedName="AspNetUsersRowDeleted" msprop:Generator_UserTableName="AspNetUsers" msprop:Generator_RowChangedName="AspNetUsersRowChanged" msprop:Generator_RowEvArgName="AspNetUsersRowChangeEvent" msprop:Generator_RowClassName="AspNetUsersRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UserName" msprop:Generator_ColumnVarNameInTable="columnUserName" msprop:Generator_ColumnPropNameInRow="UserName" msprop:Generator_ColumnPropNameInTable="UserNameColumn" msprop:Generator_UserColumnName="UserName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AnalystId" msprop:Generator_ColumnVarNameInTable="columnAnalystId" msprop:Generator_ColumnPropNameInRow="AnalystId" msprop:Generator_ColumnPropNameInTable="AnalystIdColumn" msprop:Generator_UserColumnName="AnalystId" type="xs:int" minOccurs="0" />
+              <xs:element name="BenchMark" msprop:Generator_ColumnVarNameInTable="columnBenchMark" msprop:Generator_ColumnPropNameInRow="BenchMark" msprop:Generator_ColumnPropNameInTable="BenchMarkColumn" msprop:Generator_UserColumnName="BenchMark" type="xs:float" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

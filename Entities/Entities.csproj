@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E19B47BF-9C1E-4A2E-A44C-8F4BA4BDE6CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Entities</RootNamespace>
+    <AssemblyName>Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Excelra.Utils.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Excelra.Utils.1.0.29\lib\Excelra.Utils.Library.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationErrors.cs" />
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="Auditable.cs" />
+    <Compile Include="AuthorErrors.cs" />
+    <Compile Include="DateWiseRXNCount.cs" />
+    <Compile Include="DeliveryBatch.cs" />
+    <Compile Include="DTO\Core\OfflineDTO.cs" />
+    <Compile Include="DTO\Delivery\BatchTanDto.cs" />
+    <Compile Include="DTO\ChemicalName.cs" />
+    <Compile Include="DTO\ChemicalType.cs" />
+    <Compile Include="DTO\Delivery\DeliveryBatchDTO.cs" />
+    <Compile Include="DTO\Delivery\DeliveryTANDTO.cs" />
+    <Compile Include="DTO\Delivery\ExtractRSNDto.cs" />
+    <Compile Include="DTO\Delivery\FreeTextUpdateDto.cs" />
+    <Compile Include="DTO\DiffTan.cs" />
+    <Compile Include="DTO\ErrorPercentageDto.cs" />
+    <Compile Include="DTO\ErrorReportDto.cs" />
+    <Compile Include="DTO\GenerateXMLDTO.cs" />
+    <Compile Include="DTO\IdName.cs" />
+    <Compile Include="DTO\MoveTansDTO.cs" />
+    <Compile Include="DTO\MyQueriesDTO.cs" />
+    <Compile Include="DTO\ParticipantType.cs" />
+    <Compile Include="DTO\QueryDTO.cs" />
+    <Compile Include="DTO\QueryReportEntryDTO.cs" />
+    <Compile Include="DTO\QueryReportRequestDTO.cs" />
+    <Compile Include="DTO\QueryResponseDTO.cs" />
+    <Compile Include="DTO\QueryType.cs" />
+    <Compile Include="DTO\QueryWorkflowDTO.cs" />
+    <Compile Include="DTO\QueryWorkflowUserDTO.cs" />
+    <Compile Include="DTO\ReactionsDTO.cs" />
+    <Compile Include="DTO\RolesDTO.cs" />
+    <Compile Include="DTO\Delivery\S8000NameLocationDTO.cs" />
+    <Compile Include="DTO\Delivery\S8580CommentsDTO.cs" />
+    <Compile Include="DTO\Delivery\ShipmentDTO.cs" />
+    <Compile Include="DTO\SignalRCodes.cs" />
+    <Compile Include="DTO\Static\AppStaticDTO.cs" />
+    <Compile Include="DTO\Static\CommentDictionaryDTO.cs" />
+    <Compile Include="DTO\Static\RegulerExpressionDTO.cs" />
+    <Compile Include="DTO\Static\SolventBoilingPointDTO.cs" />
+    <Compile Include="DTO\TanDTO.cs" />
+    <Compile Include="DTO\TanHistoryDTO.cs" />
+    <Compile Include="DTO\TanInfoDTO.cs" />
+    <Compile Include="DTO\TasksDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\UserInfoDTO.cs" />
+    <Compile Include="DTO\Util\Constants.cs" />
+    <Compile Include="DTO\YesNo.cs" />
+    <Compile Include="DTO\ZipResultDTO.cs" />
+    <Compile Include="ErrorReport.cs" />
+    <Compile Include="FtpDetails.cs" />
+    <Compile Include="IdentityModel.cs" />
+    <Compile Include="IndexingErrors.cs" />
+    <Compile Include="JobResult.cs" />
+    <Compile Include="NamePriorities.cs" />
+    <Compile Include="Output.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query.cs" />
+    <Compile Include="QueryResponses.cs" />
+    <Compile Include="QueryRole.cs" />
+    <Compile Include="QueryWorkflow.cs" />
+    <Compile Include="QueryWorkflowRoles.cs" />
+    <Compile Include="RestApiStatus.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="RoleWiseTanHistory.cs" />
+    <Compile Include="Shipment.cs" />
+    <Compile Include="ShipmentException.cs" />
+    <Compile Include="SolventBoilingPoints.cs" />
+    <Compile Include="Tan.cs" />
+    <Compile Include="TanCategory.cs" />
+    <Compile Include="TanChemical.cs" />
+    <Compile Include="TanData.cs" />
+    <Compile Include="TanHistory.cs" />
+    <Compile Include="TanMetaDataUpdateHistory.cs" />
+    <Compile Include="TanState.cs" />
+    <Compile Include="UrlTrack.cs" />
+    <Compile Include="UserDefaultDensities.cs" />
+    <Compile Include="UserLogin.cs" />
+    <Compile Include="UserRole.cs" />
+    <Compile Include="XmlUtils.cs" />
+    <Compile Include="XSD\RXNFILE.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

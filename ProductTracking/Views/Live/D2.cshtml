@@ -1,0 +1,441 @@
+﻿@using ProductTracking.Util
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Report</title>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/fa/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/App/css/Site.css" rel="stylesheet" />
+    <link href="~/Content/jqplot/jquery.jqplot.min.css" rel="stylesheet" />
+    <link href="~/Content/odometer/odometer-theme-car.css" rel="stylesheet" />
+    <style>
+        .odometer {
+            font-size: 60px;
+            font-family: "Source Sans Pro", sans-serif;
+            margin: 5px;
+        }
+
+        .bold {
+            font-weight: bold;
+            color: green;
+        }
+
+        .jqplot-title {
+            font-family: "Source Sans Pro", sans-serif;
+        }
+
+        .panel-body {
+            min-height: 150px !important;
+        }
+
+        .graph {
+            margin: 10px;
+            min-height: 210px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    PROJECT  : <span class="projectTitle">PDF ANNOTATION</span>
+                    <span id="blink" style="color:white;padding-left:15px"> Live Dashboard</span>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="font-weight:bold;font-size:16px;padding-right:20px;">
+                        <a style=""> <span id="serverTime"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid body-content" style="padding-top:30px">
+
+        <div class="row">
+            <div class="col-md-6 hoverHighlight" heading="todayHeading" style="width: 49%;border:1px solid #bbdefb;border-radius:5px;margin-left:15px;background-color:rgba(198, 222, 118, 0.13)">
+                <h3 class="form-heading" id="todayHeading" style="text-align:center;text-transform:uppercase">TODAY's Status (@DateTime.Now.ToString("dd-MM-yyyy dddd"))</h3>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">TANs Curated</div>
+                            <div class="panel-body">
+                                <div class="odometer odometer-auto-theme" style="margin-left:10%;margin-top:2%" id="todayCurated"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">TANs QC'd</div>
+                            <div class="panel-body">
+                                <div class="odometer odometer-auto-theme" style="margin-left:10%;margin-top:2%" id="todayQc"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Automation Score</div>
+                            <div class="panel-body" style="margin-left:10%">
+                                <canvas id="todayAutomation"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Manual Score</div>
+                            <div class="panel-body" style="margin-left:10%">
+                                <canvas id="todayManual"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>@*Today*@
+
+            <div class="col-md-6" heading="overallHeading" style="width: 49%;border:1px solid #bbdefb;border-radius:5px;margin-left:5px;background-color:rgba(102, 191, 210, 0.13)">
+                <h3 class="form-heading" id="overallHeading" style="text-align:center;text-transform:uppercase">Overall Status</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">TANs Received</div>
+                            <div class="panel-body">
+                                <div class="odometer odometer-auto-theme" style="margin-left:10%;margin-top:2%" id="tanCount"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">TANs Delivered</div>
+                            <div class="panel-body">
+                                <div class="odometer odometer-auto-theme" style="margin-left:10%;margin-top:2%" id="delivered"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Automation Score</div>
+                            <div class="panel-body" style="margin-left:10%">
+                                <canvas id="automation"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Manual Score</div>
+                            <div class="panel-body" style="margin-left:10%">
+                                <canvas id="manual"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>@*overall*@
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 hoverHighlight" heading="todayHeading">
+                <h3 class="form-heading" style="text-align:center;text-transform:uppercase;border-bottom:1px solid #bbdefb;">Shipments <span style="text-transform:lowercase" n>Vs</span> Deliveries</h3>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Shipments <span style="text-transform:lowercase" n>Vs</span> Deliveries</div>
+                            <div class="panel-body graph" id="shipmentsDeliveries">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>@*Today*@
+        </div>
+
+        <footer class="footer">
+            <div style="padding-top:5px;padding-left:10px;">
+                <p>&copy; @DateTime.Now.Year - Powered By Excelra Knowledge Solutions</p>
+            </div>
+        </footer>
+
+        <div id="codeDiv" style="display:none">
+
+        </div>
+    </div>
+
+
+    <script src="~/Content/jqplot/jquery.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/jqplot/jquery.jqplot.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+
+    <script src="~/Content/odometer/odometer.min.js"></script>
+    <script src="~/Content/guage/gauge.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+
+        $.jqplot.config.enablePlugins = true;
+        var hourResult;
+        var hourPlot = null;
+        var todayAutomationGuage;
+        var todayManualGuage;
+        var automationGuage;
+        var manualGuage;
+
+        var automationMajorTicks = ['0', '10', '20', '30', '40', '50', '60', '70', '80'];
+        var automationHighlights = [
+                    { from: 0, to: 25, color: 'rgba(255,   255, 0, .15)' },
+                    { from: 26, to: 50, color: 'rgba(0, 255,  0, .25)' },
+                    { from: 51, to: 80, color: 'rgba(0, 0,  255, .25)' }
+        ];
+        var manulHighlights = [
+                    { from: 70, to: 74, color: 'rgba(255, 255, 0, .15)' },
+                    { from: 75, to: 85, color: 'rgba(0, 255,  0, .25)' },
+                    { from: 86, to: 100, color: 'rgba(0, 0,  255, .25)' }
+        ];
+        var manualMajorTicks = ['70', '75', '80', '85', '90', '95', '100'];
+        var automationTitle = "Automation %";
+        var manualTitle = "Manual %";
+        var width = 350;
+        var height = 180;
+        var minAutomation = 0;
+        var maxAutomation = 80;
+        var minManual = 70;
+        var maxManual = 100;
+
+        setInterval(function () {
+            showTime();
+        }, 1000);
+
+        (function blink() {
+            $('#blink').fadeOut(2500).fadeIn(800, blink);
+        })();
+
+        function n(n) {
+            return n > 9 ? "" + n : "0" + n;
+        }
+
+        function showTime() {
+            var d = new Date();
+            var dformat = [d.getHours(), d.getMinutes(), n(d.getSeconds())].join(' : ');
+            $('#serverTime').html(dformat)
+        }
+
+        $(document).ready(function () {
+            tanCount();
+            delivered();
+            initGuages();
+            shipmentsDeliveries();
+            refresh();
+            initSignalR();
+        })
+
+        function initSignalR() {
+            var chat = $.connection.liveHub;
+            chat.client.curated = function (msg) {
+                refresh();
+            };
+            chat.client.accepted = function (msg) {
+                refresh();
+            };
+            $.connection.hub.start().done(function () {
+            });
+        }
+
+        function refresh() {
+            curationToday();
+            qcToday();
+            automationPercentageToday();
+            manualPercentageToday();
+            automationPercentage();
+            manualPercentage();
+        }
+
+
+        function curationToday() {
+            $.ajax({
+                url: "@Url.Action("TansCountToday", "Live")",
+                data: { productRoleStateId: 4 },
+                success: function (result) {
+                    $('#todayCurated').html(result);
+                }
+            });
+        }
+
+
+        function qcToday() {
+            $.ajax({
+                url: "@Url.Action("TansCountToday", "Live")",
+                data: { productRoleStateId: 8 },
+                success: function (result) {
+                    $('#todayQc').html(result);
+                }
+            });
+        }
+
+
+        function tanCount() {
+            $.ajax({
+                url: "@Url.Action("Total", "Live")",
+                success: function (result) {
+                    $('#tanCount').html(result);
+                }
+            });
+        }
+
+        function delivered() {
+            $.ajax({
+                url: "@Url.Action("Delivered", "Live")",
+                success: function (result) {
+                    $('#delivered').html(result);
+                }
+            });
+        }
+
+        function automationPercentageToday() {
+            $.ajax({
+                url: "@Url.Action("AutomationPercentage", "Live")",
+                data: { isToday: true },
+                success: function (result) {
+                    window['todayAutomationGuage'].setValue(result);
+                }
+            });
+        }
+
+        function manualPercentageToday() {
+            $.ajax({
+                url: "@Url.Action("ManualPercentage", "Live")",
+                data: { isToday: true },
+                success: function (result) {
+                    window['todayManualGuage'].setValue(result);
+                }
+            });
+        }
+
+        function automationPercentage() {
+            $.ajax({
+                url: "@Url.Action("AutomationPercentage", "Live")",
+                data: { isToday: false },
+                success: function (result) {
+                    window['automationGuage'].setValue(result);
+                }
+            });
+        }
+
+        function manualPercentage() {
+            $.ajax({
+                url: "@Url.Action("ManualPercentage", "Live")",
+                data: { isToday: false },
+                success: function (result) {
+                    window['manualGuage'].setValue(result);
+                }
+            });
+        }
+
+        function initGuage(variable, id, title, minValue, maxValue, majorTicks, highlights) {
+            window[variable] = new Gauge({
+                renderTo: id,
+                width: 350,
+                height: 150,
+                glow: true,
+                title: title,
+                minValue: minValue,
+                maxValue: maxValue,
+                majorTicks: majorTicks,
+                minorTicks: 2,
+                strokeTicks: false,
+                valueFormat: { int: 2, dec: 1 },
+                highlights: highlights,
+                colors: {
+                    needle: { start: 'lightgreen', end: 'navy' },
+                    plate: 'lightyellow',
+                    title: 'green',
+                    units: 'lightgreen',
+                    majorTicks: 'darkgreen',
+                    minorTicks: 'lightgreen',
+                    numbers: 'darkgreen'
+                },
+                animation: {
+                    delay: 10,
+                    duration: 300,
+                    fn: 'bounce'
+                }
+            });
+            window[variable].draw();
+        }
+
+        function initGuages() {
+            initGuage('todayAutomationGuage', 'todayAutomation', automationTitle, minAutomation, maxAutomation, automationMajorTicks, automationHighlights);
+            initGuage('todayManualGuage', 'todayManual', manualTitle, minManual, maxManual, manualMajorTicks, manulHighlights);
+
+            initGuage('automationGuage', 'automation', automationTitle, minAutomation, maxAutomation, automationMajorTicks, automationHighlights);
+            initGuage('manualGuage', 'manual', manualTitle, minManual, maxManual, manualMajorTicks, manulHighlights);
+        }
+
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function shipmentsDeliveries() {
+            $.ajax({
+                url: "@Url.Action("ShipmentsDeliveries")",
+                method: 'post',
+                success: function (result) {
+                    hourResult = result;
+                    plotShipmentsDeliveries();
+                }
+            });
+        }
+
+        function plotShipmentsDeliveries() {
+            if (hourPlot)
+                hourPlot.destroy();
+            hourPlot = $.jqplot('shipmentsDeliveries', hourResult[2], {
+                legend: { show: true },
+                series: hourResult[1],
+                seriesDefaults: {
+                    renderer: $.jqplot.BarRenderer,
+                    showMarker: true,
+                    pointLabels: { show: true }
+                },
+                axes: {
+                    xaxis: {
+                        pad: 1,
+                        renderer: $.jqplot.CategoryAxisRenderer,
+                        ticks: hourResult[0]
+                    },
+                    yaxis: {
+                        min: 0
+                    }
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>

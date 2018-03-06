@@ -1,0 +1,47 @@
+﻿<Window x:Class="Client.Views.PullTaskDetails" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:Client.Views" mc:Ignorable="d" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+        Title="Pull Tasks" Height="600" Width="800"
+        WindowState="Normal" WindowStyle="ToolWindow" ResizeMode="NoResize" 
+        Closing="Window_Closing"
+        WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="2">
+            <Label Content="Allotted TAN : " FontWeight="SemiBold"/>
+            <Label Content="{Binding TanNumber}" />
+            <Label Content="Your Rank : " FontWeight="SemiBold" />
+            <Label Content="{Binding UserRank}" />
+            <Label Content="Alloted TAN Rank : " FontWeight="SemiBold" />
+            <Label Content="{Binding AllottedTanRank}" />
+        </StackPanel>
+        <Grid Height="550">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="100" />
+                <ColumnDefinition MinWidth="5" Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <telerik:RadGridView Grid.Column="0" ShowGroupPanel="False" ShowSearchPanel="True" 
+                                 ItemsSource="{Binding UserRanks}" AutoGenerateColumns="False" 
+                                 CanUserInsertRows="False" IsReadOnly="True" GroupRenderMode="Flat" 
+                                 Height="500">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="45" Header="S.No." DataMemberBinding="{Binding DisplayOrder}" IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="220" Header="UserName" DataMemberBinding="{Binding Key}" IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="50" Header="Rank" DataMemberBinding="{Binding Rank}" IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="50" Header="Score" DataMemberBinding="{Binding Score}" IsFilterable="False" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            <GridSplitter Grid.Column="1" Width="5" BorderThickness="5" BorderBrush="Aqua" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+
+            <telerik:RadGridView Grid.Column="2" ShowGroupPanel="False" ShowSearchPanel="True" ItemsSource="{Binding TanRanks}" AutoGenerateColumns="False" 
+                                 CanUserInsertRows="False" IsReadOnly="True" GroupRenderMode="Flat"
+                                 Height="500">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="45" Header="S.No." DataMemberBinding="{Binding DisplayOrder}" IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="220" Header="TanNumber" DataMemberBinding="{Binding Key}" IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="50" Header="Rank" DataMemberBinding="{Binding Rank}" IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="50" Header="NUMs" DataMemberBinding="{Binding Score}" IsFilterable="False" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Grid>
+    </StackPanel>
+   
+</Window>

@@ -1,0 +1,270 @@
+﻿<UserControl x:Class="Client.Views.ParticipantsDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Client.ViewModels"
+             xmlns:styles="clr-namespace:Client.Styles"
+             mc:Ignorable="d"
+             MinHeight="52"
+             d:DesignWidth="600">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ParticipantDisplayEntry">
+            <TextBlock Text="{Binding Name}"
+                       FontSize="15"
+                       FontWeight="Normal"
+                       MouseLeftButtonDown="Participant_MouseLeftButtonDown"
+                       Name="Participant">
+                <TextBlock.ToolTip>
+                    <StackPanel>
+                        <StackPanel.Background>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Grid>
+                                        <Rectangle>
+                                            <Rectangle.Fill>
+                                                <LinearGradientBrush EndPoint="0.504,1.5"
+                                                                     StartPoint="0.504,0.03">
+                                                    <GradientStop Color="#F5F5DC"
+                                                                  Offset="0" />
+                                                    <GradientStop Color="#FFFFFFFF"
+                                                                  Offset="0.567" />
+                                                </LinearGradientBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <Image Source="/images/landing-bg.jpg"
+                                               Opacity="0.05" />
+                                    </Grid>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </StackPanel.Background>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="NUM: "
+                                        FontWeight="SemiBold" />
+                            <TextBlock  Text="{Binding Num}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="REG: "
+                                        FontWeight="SemiBold" />
+                            <TextBlock  Text="{Binding Reg}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="NAME: "
+                                        FontWeight="SemiBold" />
+                            <TextBlock  Text="{Binding Name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="FORMULA: "
+                                        FontWeight="SemiBold" />
+                            <TextBlock  Text="{Binding Formula}" />
+                        </StackPanel>
+                        <Image Source="{Binding Image}" />
+                    </StackPanel>
+                </TextBlock.ToolTip>
+           </TextBlock>
+        </DataTemplate>
+
+        <Style TargetType="ListBoxItem"
+               x:Key="ParticipantItemStyle">
+            <Setter Property="FontSize"
+                    Value="12" />
+            <Setter Property="BorderThickness"
+                    Value="0" />
+            <Setter Property="Margin"
+                    Value="2,0,0,0" />
+        </Style>
+
+    </UserControl.Resources>
+    <Grid Background="WhiteSmoke">
+        <StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         VerticalAlignment="Top" >
+                <TextBlock Width="18"
+                           FontWeight="Bold"
+                           Visibility="{Binding ShowReactants}"
+                           ToolTip="Reactants"
+                           TextWrapping="Wrap"
+                           Text="R : "
+                           Margin="2,2,0,2"
+                           VerticalAlignment="Top"
+                           Height="15"
+                           Foreground="Red" />
+                <ListBox  ItemsSource="{Binding ReactantsViews}"
+                          HorizontalContentAlignment="Stretch"
+                          ItemContainerStyle="{StaticResource ParticipantItemStyle}"
+                          ItemTemplate="{StaticResource ParticipantDisplayEntry}"
+                          Background="Transparent"
+                          BorderThickness="0">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+                <TextBlock Width="18"
+                           Margin="2,2,0,2"
+                           FontWeight="Bold"
+                           ToolTip="Agents"
+                           Visibility="{Binding ShowAgents}"
+                           TextWrapping="Wrap"
+                           Text="A : "
+                           VerticalAlignment="Top"
+                           Height="15"
+                           Foreground="Red" />
+                <ListBox  ItemsSource="{Binding AgentsViews}"
+                          HorizontalContentAlignment="Stretch"
+                          ItemContainerStyle="{StaticResource ParticipantItemStyle}"
+                          ItemTemplate="{StaticResource ParticipantDisplayEntry}"
+                          Background="Transparent"
+                          BorderThickness="0">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+                <TextBlock Width="18"
+                           Margin="2,2,0,2"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"
+                           Text="C : "
+                           VerticalAlignment="Top"
+                           Height="15"
+                           Visibility="{Binding ShowCatalysts}"
+                           Foreground="Red" />
+                <ListBox ItemsSource="{Binding CatalystsViews}"
+                         HorizontalContentAlignment="Stretch"
+                         ToolTip="Temperature"
+                         ItemContainerStyle="{StaticResource ParticipantItemStyle}"
+                         ItemTemplate="{StaticResource ParticipantDisplayEntry}"
+                         Background="Transparent"
+                         BorderThickness="0">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+                <TextBlock Width="18"
+                           Margin="2,2,0,2"
+                           FontWeight="Bold"
+                           VerticalAlignment="Top"
+                           Visibility="{Binding ShowSolvents}"
+                           ToolTip="Solvents"
+                           TextWrapping="Wrap"
+                           Text="S : "
+                           Height="15"
+                           Foreground="Red" />
+                <ListBox  ItemsSource="{Binding SolventsViews}"
+                          HorizontalContentAlignment="Stretch"
+                          ItemContainerStyle="{StaticResource ParticipantItemStyle}"
+                          ItemTemplate="{StaticResource ParticipantDisplayEntry}"
+                          Background="Transparent"
+                          BorderThickness="0">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Height="25" Visibility="{Binding ConditionsVisibility,Mode=TwoWay}">
+                <TextBlock FontWeight="Bold"
+                           Margin="2,0,0,2"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="TP : "
+                           Height="15"
+                           Visibility="{Binding ShowTemperature}"
+                           Foreground="Red" />
+                <TextBlock Margin="2,0,0,2"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="{Binding Temperature}"
+                           Height="15"
+                           Foreground="Black" />
+                <TextBlock FontWeight="Bold"
+                           Margin="2,0,0,2"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="TM : "
+                           Height="15"
+                           Foreground="Red"
+                           Visibility="{Binding ShowTime}" />
+                <TextBlock Margin="2,0,0,2"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="{Binding Time}"
+                           Height="15"
+                           Foreground="Black" />
+                <TextBlock FontWeight="Bold"
+                           Margin="2,0,0,2"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="pH : "
+                           Height="15"
+                           Visibility="{Binding ShowPh}"
+                           Foreground="Red" />
+                <TextBlock Margin="2,0,0,2"
+                           TextWrapping="Wrap"
+                           VerticalAlignment="Center"
+                           Text="{Binding Ph}"
+                           Height="15"
+                           Foreground="Black"
+                           Visibility="{Binding ShowPh}" />
+                <TextBlock FontWeight="Bold"
+                           Margin="2,0,0,2"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="PR : "
+                           Height="15"
+                           Visibility="{Binding ShowPressure}"
+                           Foreground="Red" />
+                <TextBlock Margin="2,0,0,2"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="{Binding Pressure}"
+                           Height="15"
+                           Foreground="Black"
+                           Visibility="{Binding ShowPressure}" />
+            </StackPanel>
+            <StackPanel Margin="0,0,0,0"
+                        Orientation="Horizontal"
+                        Height="25">
+                <TextBlock Text="RSN CVT : "
+                           Height="15"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold"
+                           Foreground="Red"
+                           Margin="2,0,0,2"
+                           Visibility="{Binding ShowCVT}" />
+                <TextBlock Margin="2,2,0,2"
+                           VerticalAlignment="Center"
+                           Height="15"
+                           TextWrapping="Wrap"
+                           Text="{Binding CVT}"
+                           FontSize="13"
+                           Visibility="{Binding ShowCVT}" />
+                <TextBlock Text="Free Text :"
+                           Height="15"
+                           VerticalAlignment="Center"
+                           ToolTip="Free Text"
+                           FontWeight="Bold"
+                           Foreground="Red"
+                           Margin="2,0,0,2"
+                           Visibility="{Binding ShowFreeText}" />
+                <TextBlock Margin="2,2,0,0"
+                           VerticalAlignment="Center"
+                           Height="15"
+                           TextWrapping="Wrap"
+                           Text="{Binding FreeText}"
+                           FontSize="13"
+                           Visibility="{Binding ShowFreeText}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

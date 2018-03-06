@@ -1,0 +1,80 @@
+﻿@using Entities
+@using ProductTracking.Models.Core
+@using System.ComponentModel
+
+@{
+    Dictionary<int, List<ApplicationUser>> roleWiseUsers = ViewBag.roleWiseUsers;
+}
+
+<form id="editorForm" method="post">
+    <table class="table-bordered table-condensed">
+        <thead>
+            <tr>
+                @{
+                    <th>@Role.Curator</th>
+                    <th>@Role.Reviewer</th>
+                    <th>@Role.QC</th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @*@foreach (var role in roles)
+                {
+                    List<ApplicationUser> users = roleWiseUsers[role.Id];
+                    <td>
+                        @Html.DropDownList("role_" + @role.Id, new SelectList(users, "Id", "Username"), "Select . .", new { @class = "form-control select2 role", role = @role.Id, id = "role_" + @role.Id })
+                    </td>
+                }*@
+                @{
+                    List<ApplicationUser> users = roleWiseUsers[(int)Role.Curator];
+                    <td>
+                        @Html.DropDownList("role_" + (int)Role.Curator, new SelectList(users, "Id", "Username"), "Select . .", new { @class = "form-control select2 role", role = (int)Role.Curator, id = "role_" + (int)Role.Curator })
+                    </td>
+                    users = roleWiseUsers[(int)Role.Reviewer];
+                    <td>
+                        @Html.DropDownList("role_" + (int)Role.Reviewer, new SelectList(users, "Id", "Username"), "Select . .", new { @class = "form-control select2 role", role = (int)Role.Reviewer, id = "role_" + (int)Role.Reviewer })
+                    </td>
+                    users = roleWiseUsers[(int)Role.QC];
+                    <td>
+                        @Html.DropDownList("role_" + (int)Role.QC, new SelectList(users, "Id", "Username"), "Select . .", new { @class = "form-control select2 role", role = (int)Role.QC, id = "role_" + (int)Role.QC })
+                    </td>
+                  
+                }
+
+
+                <td>
+                    <input type="button" class="btn btn-primary" id="saveData" value="Save" />
+                </td>
+        </tbody>
+    </table>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('.select2').select2({ dropdownAutoWidth: true, width: 'resolve' });
+    })
+
+    $('#saveData').click(function () {
+        console.log($("#editorForm").serialize());
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveWorkflow")",
+            data: $("#editorForm").serialize(),
+            success: function (data) {
+                reload();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 404)
+                    alert("Request not valid . .");
+                else if (jqXHR.status == 409)
+                    alert("Curator Role Already assigned for selected User");
+                else if (jqXHR.status == 204)
+                    alert("Invalid Data");
+                else
+                    alert("Error while saving details . .");
+            }
+        });
+    });
+</script>

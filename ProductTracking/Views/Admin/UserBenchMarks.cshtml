@@ -1,0 +1,160 @@
+﻿@using Entities
+@using ProductTracking.Models.Core
+@using Excelra.Utils.Library
+
+@{
+    ViewBag.Title = "Users BenchMarks";
+    List<ApplicationUser> users = ViewBag.users;
+    int sno = 1;
+}
+
+@section head {
+    <link href="~/Content/App/plugins/jqgrid/css/trirand/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/jqgrid/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <style>
+        .full-height {
+            height: calc(100vh - 250px);
+            overflow-y: auto;
+        }
+
+        .snoColumn {
+            width: 50px;
+        }
+
+        .userNameColumn {
+            width: 250px;
+        }
+
+        .checkColumn {
+            width: 100px;
+        }
+    </style>
+
+}
+@section scripts{
+    <script src="~/Content/jquery.validate.min.js"></script>
+    <script>
+        $.validator.addClassRules("analyst_id", {
+            required: true,
+            number: true,
+            checkDuplicate: true,
+        });
+        $.validator.messages.checkDuplicate = 'Analyst Id is unique.';
+        $.validator.addMethod("checkDuplicate", function (value, element) {
+            var thisValue = value.trim();
+            var id = $(element).attr("id");
+            var returnValue = true;
+            $(".analyst_id:not(#" + id + ")").each(function () {
+                if ($(this).val() == thisValue) {
+                    console.log(thisValue + " = " + $(this).val());
+                    returnValue = false;
+                    return returnValue;
+                }
+            });
+            // console.log(returnValue);
+            return returnValue;
+        });
+
+        $.validator.addClassRules("benchmark", {
+            required: true,
+            number: true
+        });
+
+
+        $("#user-benchmarks-form").validate({
+            /* messages: {
+                 checkDuplicate: "Please enter unique value"
+             }*/
+        });
+
+
+        function formSubmit() {
+            if ($("#user-benchmarks-form").valid() != true) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+    </script>
+}
+
+@section heading {
+    <h4 class="page-header"><i class="fa fa-users"></i> User Benchmarks</h4>
+}
+<form method="post" action="@Url.Action("SaveUserBenchMarks")" id="user-benchmarks-form" onsubmit="return formSubmit();">
+    <input type="submit" class="btn btn-primary" value="Save" style="margin-bottom:15px;margin-left:15px" />
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Users Analyst Ids and Benchmarks</div>
+                    <div class="panel-body full-height">
+                        <table class="table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>SNO</th>
+                                    <th>
+                                        UserName
+                                    </th>
+                                    <th>
+                                        AnalystID
+                                    </th>
+                                    <th>
+                                        BenchMark
+                                    </th>
+                                    <th>
+                                        Allow For Curation
+                                    </th>
+                                    <th>
+                                        Allow For Review
+                                    </th>
+                                    <th>
+                                        Allow For QC
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in users)
+                                {
+                                    <tr>
+                                        <td class="snoColumn">@(sno++)</td>
+                                        <td class="userNameColumn">
+                                            @user.UserName
+                                            <input type="hidden" name="user" value="@user.Id" />
+                                        </td>
+
+                                        <td class="checkColumn" title="@user.UserName's AnalystId">
+                                            <input type="text" id="@(user.Id)_AnalystId" name="@(user.Id)_AnalystId" value="@user.AnalystId" class="analyst_id" />
+                                        </td>
+
+                                        <td class="checkColumn" title="@user.UserName's BenchMark">
+                                            <input type="text" id="@(user.Id)_BenchMark" name="@(user.Id)_BenchMark" value="@user.BenchMark" class="benchmark" />
+                                        </td>
+                                        <td class="checkColumn" title="@user.UserName Allow For Curation">
+                                            <input type="checkbox" id="@(user.Id)_AllowCuration" name="@(user.Id)_AllowCuration" value="@user.AllowedForCuration" 
+                                                    @(user.AllowedForCuration.HasValue && user.AllowedForCuration.Value ? "checked=\" checked\"" : "" ) />
+                                        </td>
+                                        <td class="checkColumn" title="@user.UserName's Allow For Review">
+                                            <input type="checkbox" id="@(user.Id)_AllowReview" name="@(user.Id)_AllowReview" value="@user.AllowedForReview" 
+                                                    @(user.AllowedForReview.HasValue && user.AllowedForReview.Value ? "checked=\" checked\"" : "" ) />
+                                        </td>
+                                        <td class="checkColumn" title="@user.UserName's Allow For QC">
+                                            <input type="checkbox" id="@(user.Id)_AllowQC" name="@(user.Id)_AllowQC" value="@user.AllowedForQC"
+                                                    @(user.AllowedForQC.HasValue && user.AllowedForQC.Value ? "checked=\" checked\"" : "" ) />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+

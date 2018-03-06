@@ -1,0 +1,1093 @@
+﻿<UserControl xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             x:Class="Client.Views.WorkingArea"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Client.Views"
+             xmlns:viewModels="clr-namespace:Client.ViewModels"
+             xmlns:views="clr-namespace:Client.Views"
+             xmlns:styles="clr-namespace:Client.Styles"
+             xmlns:wb="clr-namespace:Client.Util"
+             mc:Ignorable="d"
+             Name="WorkingAreaControl"
+             xmlns:foxit="clr-namespace:AxFoxitPDFSDKProLib;assembly=AxInterop.FoxitPDFSDKProLib"
+             d:DesignHeight="1000"
+             d:DesignWidth="1200"
+             xmlns:WPFMVVMPrism="clr-namespace:WPFMVVMPrism;assembly=WPFMVVMPrism">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <viewModels:EnumBooleanConverter x:Key="enumBooleanConverter" />
+            <viewModels:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
+            <viewModels:StringConverter x:Key="stringConverter" />
+            <viewModels:RxnCompleteToColorConverter x:Key="rxnCompleteToColorConverter" />
+            <viewModels:RxnTypeToIconConverter x:Key="rxnTypeToIconConverter" />
+            <viewModels:EmptyTextFilteringBehavior x:Key="EmptyTextFilteringBehavior" />
+
+            <CollectionViewSource x:Key="cvtData"
+                                  Source="{Binding CVTData}" />
+            <CollectionViewSource x:Key="freeTextData"
+                                  Source="{Binding FreeTextData}" />
+
+            <Style x:Key="disableLinkStyle"
+                   TargetType="Hyperlink">
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled"
+                             Value="False">
+                        <Setter Property="TextDecorations"
+                                Value="None" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="telerik:GridViewCell"
+                   x:Key="textFont"
+                   BasedOn="{StaticResource GridViewCellStyle}">
+                <Setter Property="FontSize"
+                        Value="14" />
+            </Style>
+
+            <styles:ParticipantCellStyle x:Key="participantCellStyle">
+                <styles:ParticipantCellStyle.AllStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Foreground"
+                                Value="{x:Static styles:StyleConstants.AllBrush}" />
+                    </Style>
+                </styles:ParticipantCellStyle.AllStyle>
+                <styles:ParticipantCellStyle.ProductStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Foreground"
+                                Value="{x:Static styles:StyleConstants.ProductBrush}" />
+                    </Style>
+                </styles:ParticipantCellStyle.ProductStyle>
+                <styles:ParticipantCellStyle.ReactantStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Foreground"
+                                Value="{x:Static styles:StyleConstants.ReactantBrush}" />
+                    </Style>
+                </styles:ParticipantCellStyle.ReactantStyle>
+                <styles:ParticipantCellStyle.SolventStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Foreground"
+                                Value="{x:Static styles:StyleConstants.SolventBrush}" />
+                    </Style>
+                </styles:ParticipantCellStyle.SolventStyle>
+                <styles:ParticipantCellStyle.AgentStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Foreground"
+                                Value="{x:Static styles:StyleConstants.AgentBrush}" />
+                    </Style>
+                </styles:ParticipantCellStyle.AgentStyle>
+                <styles:ParticipantCellStyle.CatalystStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Foreground"
+                                Value="{x:Static styles:StyleConstants.CatalystBrush}" />
+                    </Style>
+                </styles:ParticipantCellStyle.CatalystStyle>
+            </styles:ParticipantCellStyle>
+
+            <styles:YieldCellStyle x:Key="yieldCellStyle">
+                <styles:YieldCellStyle.ReadOnlyStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Background"
+                                Value="WhiteSmoke" />
+                    </Style>
+                </styles:YieldCellStyle.ReadOnlyStyle>
+                <styles:YieldCellStyle.EditableStyle>
+                    <Style TargetType="telerik:GridViewCell"
+                           BasedOn="{StaticResource GridViewCellStyle}">
+                        <Setter Property="Foreground"
+                                Value="{x:Static styles:StyleConstants.ProductBrush}" />
+                    </Style>
+                </styles:YieldCellStyle.EditableStyle>
+            </styles:YieldCellStyle>
+            <DataTemplate x:Key="ReactionTemplate">
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Placeholder.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <telerik:RadDocking x:Name="parentDock">
+            <telerik:RadSplitContainer InitialPosition="DockedLeft"
+                                       Width="350">
+                <telerik:RadPaneGroup>
+                    <telerik:RadPane Header="Navigation"
+                                     CanUserClose="False"
+                                     CanFloat="True"
+                                     CanUserPin="True"
+                                     CanDockInDocumentHost="False">
+                        <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              IsEnabled="{Binding IsRsnWindowOpened,Converter={StaticResource ReverseBooleanConverter}, ConverterParameter=IsRsnWindowOpened}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"
+                                               ScrollViewer.CanContentScroll="True" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="175" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0"
+                                  Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0"
+                                      Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="35" />
+                                        <RowDefinition Height="35" />
+                                        <RowDefinition Height="28" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0"
+                                           Content="Reactions" />
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button x:Name="BtnGotoFirst"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="0"
+                                                Margin="2"
+                                                ToolTip="Go to First Reaction"
+                                                Command="{Binding GotoFirst}"
+                                                CommandParameter="{Binding ElementName=BtnGotoFirst}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/go-first.ico" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="BtnGotoPrevious"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="1"
+                                                Margin="2"
+                                                ToolTip="Go to Previous Reaction"
+                                                Command="{Binding GotoFirst}"
+                                                CommandParameter="{Binding ElementName=BtnGotoPrevious}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/go-previous.ico" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="BtnGotoNext"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="2"
+                                                Margin="2,2,2,2"
+                                                ToolTip="Go to Next Reaction"
+                                                Command="{Binding GotoFirst}"
+                                                CommandParameter="{Binding ElementName=BtnGotoNext}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/go-next.png" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="BtnGotoLast"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="3"
+                                                Margin="2,2,2,2"
+                                                ToolTip="Go to Last Reaction"
+                                                Command="{Binding GotoFirst}"
+                                                CommandParameter="{Binding ElementName=BtnGotoLast}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/go-last.ico" />
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button x:Name="BeforeInsert"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="0"
+                                                Margin="2"
+                                                ToolTip="New Reaction Before Selected Reaction"
+                                                Command="{Binding AddReaction}"
+                                                CommandParameter="{Binding ElementName=BeforeInsert}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/addBefore.png" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="AfterInsert"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="1"
+                                                Margin="2"
+                                                ToolTip="New Reaction After Selected Reaction"
+                                                Command="{Binding AddReaction}"
+                                                CommandParameter="{Binding ElementName=AfterInsert}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/addAfter.png" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Grid.Column="3"
+                                                Style="{StaticResource bgBtn}"
+                                                Margin="2,2,6,2"
+                                                ToolTip="Delete Reaction(s)"
+                                                Name="DelReactionBtn"
+                                                Command="{Binding DeleteReaction}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/edit-delete.png" />
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Row="3"
+                                                DataContext="{Binding TanVM}">
+                                        <Image Source="/images/filter.png"
+                                               Width="24"
+                                               Height="24"
+                                               Margin="2,0,0,0" />
+                                        <TextBox Name="SnoFilter"
+                                                 Height="25"
+                                                 Width="70"
+                                                 Style="{StaticResource ResourceKey=PlaceHolder}"
+                                                 Margin="2,0,0,0"
+                                                 Tag="SNO"
+                                                 ToolTip="Search By SNO"
+                                                 Text="{Binding SnoFilter,UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox Margin="4,0,0,0"
+                                                 Width="69"
+                                                 Height="25"
+                                                 Style="{StaticResource ResourceKey=PlaceHolder}"
+                                                 Name="NumFilter"
+                                                 Tag="NUM"
+                                                 ToolTip="Search By NUM"
+                                                 Text="{Binding NumFilter,UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                    <telerik:RadListBox Grid.Row="4"
+                                                        Grid.ColumnSpan="4"
+                                                        Margin="2"
+                                                        DataContext="{Binding TanVM}"
+                                                        ItemsSource="{Binding ReactionsView}"
+                                                        IsSynchronizedWithCurrentItem="True"
+                                                        SelectedValuePath="{Binding Id}"
+                                                        SelectedItem="{Binding SelectedReaction, Mode=TwoWay}"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                        Name="ReactionsList">
+                                        <telerik:RadListBox.InputBindings>
+                                            <KeyBinding Key="Delete"
+                                                        Command="{Binding DeleteReaction}" />
+                                        </telerik:RadListBox.InputBindings>
+
+                                        <telerik:RadListBox.ContextMenu>
+
+                                            <ContextMenu>
+                                                <MenuItem Header="Show Analogous"
+                                                          Command="{Binding Path=ShowAnalogous}" />
+                                                <MenuItem Header="Create Analogous"
+                                                          Command="{Binding Path=CreateAnalogous}" />
+                                            </ContextMenu>
+                                        </telerik:RadListBox.ContextMenu>
+
+                                        <telerik:RadListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Width="24"
+                                                           Height="24"
+                                                           Source="{Binding AnalogousVMId,Converter={StaticResource rxnTypeToIconConverter}}" />
+                                                    <Label Content="{Binding Name}"
+                                                           Foreground="{Binding IsCurationCompleted, Converter={StaticResource rxnCompleteToColorConverter}}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </telerik:RadListBox.ItemTemplate>
+
+                                    </telerik:RadListBox>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="0"
+                                  Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0"
+                                      Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="35" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0"
+                                           Content="Stages" />
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Name="BeforeStage"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="0"
+                                                Margin="2"
+                                                ToolTip="Insert New Stage, Before Selected One"
+                                                Command="{Binding AddStage}"
+                                                CommandParameter="{Binding ElementName=BeforeStage}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/addBefore.png" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Name="AfterStage"
+                                                Style="{StaticResource bgBtn}"
+                                                Grid.Column="1"
+                                                Margin="2"
+                                                ToolTip="Insert New Stage, After Selected One"
+                                                Command="{Binding AddStage}"
+                                                CommandParameter="{Binding ElementName=AfterStage}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/addAfter.png" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Grid.Column="2"
+                                                Style="{StaticResource bgBtn}"
+                                                Margin="2,2,2,2"
+                                                ToolTip="Copy Stage(s)"
+                                                Command="{Binding CopyStages}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/edit-paste-2.png" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Grid.Column="3"
+                                                Style="{StaticResource bgBtn}"
+                                                Margin="2"
+                                                ToolTip="Delete Stage(s)"
+                                                Command="{Binding DeleteStage}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/edit-delete.png" />
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                    <telerik:RadListBox Grid.Row="2"
+                                                        Height="Auto"
+                                                        Margin="2"
+                                                        MinHeight="500"
+                                                        DataContext="{Binding TanVM.SelectedReaction}"
+                                                        ItemsSource="{Binding Stages}"
+                                                        SelectedItem="{Binding SelectedStage,Mode=TwoWay}"
+                                                        DisplayMemberPath="Name"
+                                                        SelectedValuePath="Id">
+                                        <telerik:RadListBox.InputBindings>
+                                            <KeyBinding Key="Delete"
+                                                        Command="{Binding DeleteStage}" />
+                                        </telerik:RadListBox.InputBindings>
+                                    </telerik:RadListBox>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </telerik:RadPane>
+                    <telerik:RadPane Header="Tan Keywords"
+                                     CanUserClose="False"
+                                     CanFloat="True"
+                                     CanUserPin="True"
+                                     CanDockInDocumentHost="True">
+                        <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"
+                                               ScrollViewer.CanContentScroll="True" />
+                            </Grid.RowDefinitions>
+
+                            <telerik:RadGridView Grid.Row="3"
+                                                 IsReadOnly="True"
+                                                 Grid.ColumnSpan="4"
+                                                 Margin="2"
+                                                 DataContext="{Binding TanVM}"
+                                                 ItemsSource="{Binding TankeyWords}"
+                                                 SelectedItem="{Binding SelectedKeyWord,Mode=TwoWay}"
+                                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                 AlternationCount="2"
+                                                 AlternateRowBackground="#F7F7E4"
+                                                 ShowGroupPanel="False"
+                                                 ShowSearchPanel="False"
+                                                 AutoGenerateColumns="False"
+                                                 Name="TanKeyWordsList">
+                                <telerik:RadGridView.InputBindings>
+                                    <KeyBinding Key="C"
+                                                Modifiers="Ctrl"
+                                                Command="{Binding CopyToClipBoard}"
+                                                CommandParameter="{Binding SelectedKeyWord}" />
+                                    <KeyBinding Key="F"
+                                                Modifiers="Ctrl"
+                                                Command="{Binding SearchInPdf}"
+                                                CommandParameter="{Binding SelectedKeyWord}" />
+                                </telerik:RadGridView.InputBindings>
+                                <telerik:RadContextMenu.ContextMenu>
+                                    <telerik:RadContextMenu x:Name="ContextMenu"
+                                                            Placement="MousePoint">
+                                        <telerik:RadMenuItem Header="Copy"
+                                                             Command="{Binding CopyToClipBoard}"
+                                                             CommandParameter="{Binding SelectedItem}" />
+                                        <telerik:RadMenuItem Header="Search In Pdf"
+                                                             Command="{Binding SearchInPdf}"
+                                                             CommandParameter="{Binding SelectedItem}" />
+                                    </telerik:RadContextMenu>
+                                </telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn Width="80"
+                                                                Header="S.No."
+                                                                DataMemberBinding="{Binding DisplayOrder}" />
+                                    <telerik:GridViewDataColumn Width="350"
+                                                                Header="KeyWord"
+                                                                DataMemberBinding="{Binding KeyWord}" />
+                                </telerik:RadGridView.Columns>
+
+                            </telerik:RadGridView>
+
+                        </Grid>
+                    </telerik:RadPane>
+                    <telerik:RadPane Header="Un Used Nums"
+                                     CanUserClose="False"
+                                     CanFloat="True"
+                                     CanUserPin="True"
+                                     CanDockInDocumentHost="True"
+                                     Height="26"
+                                     VerticalAlignment="Bottom">
+                        <GroupBox HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  Style="{StaticResource GroupStyle}">
+                            <ListView Grid.Row="3"
+                                      Grid.ColumnSpan="4"
+                                      Margin="2"
+                                      DataContext="{Binding TanVM}"
+                                      ItemsSource="{Binding UnusedNums}"
+                                      SelectedItem="{Binding SelectedAMD}"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      Name="UnUsedNumsList"
+                                      Background="Transparent">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border CornerRadius="4"
+                                                BorderThickness="1"
+                                                BorderBrush="#ddd"
+                                                Margin="2"
+                                                Background="Transparent">
+                                            <Label Content="{Binding Num}"
+                                                   Width="50"
+                                                   FontWeight="Normal" />
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.GroupStyle>
+                                    <GroupStyle />
+                                </ListView.GroupStyle>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Width="{Binding (FrameworkElement.ActualWidth),
+                                            RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                                   ItemWidth="{Binding (ListView.View).ItemWidth, 
+                                            RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                   MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                                                   ItemHeight="{Binding (ListView.View).ItemHeight,  RelativeSource={RelativeSource AncestorType=ListView}}" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView>
+                        </GroupBox>
+                    </telerik:RadPane>
+
+                    <telerik:RadPane Header="AMDs"
+                                     CanUserClose="False"
+                                     CanFloat="True"
+                                     CanUserPin="True"
+                                     CanDockInDocumentHost="True">
+                        <telerik:RadGridView Grid.Row="3"
+                                             IsReadOnly="True"
+                                             Grid.ColumnSpan="4"
+                                             Margin="2"
+                                             DataContext="{Binding TanVM}"
+                                             ItemsSource="{Binding AMDNums}"
+                                             SelectedItem="{Binding SelectedAMD,Mode=TwoWay}"
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                             AlternationCount="2"
+                                             AlternateRowBackground="#F7F7E4"
+                                             ShowGroupPanel="False"
+                                             ShowSearchPanel="False"
+                                             AutoGenerateColumns="False"
+                                             Name="AMDList">
+                            <telerik:RadGridView.Columns>
+                                <telerik:GridViewDataColumn Header="Num"
+                                                            Width="*"
+                                                            DataMemberBinding="{Binding Num,Mode=TwoWay}"
+                                                            IsReadOnly="True" />
+                                <telerik:GridViewDataColumn Header="CSH"
+                                                            Width="*"
+                                                            DataMemberBinding="{Binding CSH,Mode=TwoWay}"
+                                                            IsReadOnly="True" />
+                            </telerik:RadGridView.Columns>
+
+                        </telerik:RadGridView>
+                    </telerik:RadPane>
+
+                </telerik:RadPaneGroup>
+            </telerik:RadSplitContainer>
+            <telerik:RadSplitContainer InitialPosition="DockedBottom">
+                <telerik:RadPaneGroup SelectedIndex="{Binding BottomTabIndex,Mode=TwoWay}" MinHeight="60">
+                    <telerik:RadPane Header="Reaction Live Preview"
+                                     CanUserClose="False"
+                                     CanFloat="False"
+                                     CanUserPin="True"
+                                     CanDockInDocumentHost="False">
+                        <views:StagePreviewControl DataContext="{Binding TanVM.ReactionView}" />
+                    </telerik:RadPane>
+
+                    <telerik:RadPane Header="Errors"
+                                     CanUserClose="False"
+                                     CanFloat="False"
+                                     CanUserPin="False"
+                                     CanDockInDocumentHost="False"
+                                     DataContext="{Binding ValidationVM}"
+                                     FontWeight="SemiBold">
+                        <Border BorderBrush="{Binding ErrorTabColor}"
+                                BorderThickness="4">
+                            <telerik:RadGridView IsReadOnly="True"
+                                                 ShowGroupPanel="False"
+                                                 ShowSearchPanel="False"
+                                                 ItemsSource="{Binding ValidationErrors}"
+                                                 AutoGenerateColumns="False"
+                                                 VerticalAlignment="Stretch"
+                                                 SelectedItem="{Binding SelectedError}">
+                                <WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                                    <WPFMVVMPrism:BehaviorBinding Event="MouseDoubleClick"
+                                                                  Command="{Binding Path=SwitchToSelectedError}"
+                                                                  CommandParameter="{Binding ElementName=ErrorGrid, Path=SelectedItem}" />
+                                </WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn Header="RXN"
+                                                                DataMemberBinding="{Binding ReactionVM.Name}"
+                                                                Width="80" />
+                                    <telerik:GridViewDataColumn Header="Stage"
+                                                                DataMemberBinding="{Binding StageVM.Name}"
+                                                                Width="80" />
+                                    <telerik:GridViewDataColumn Header="Category"
+                                                                DataMemberBinding="{Binding Category}"
+                                                                Width="100" />
+                                    <telerik:GridViewDataColumn Header="Error"
+                                                                DataMemberBinding="{Binding Message}"
+                                                                Width="*"
+                                                                TextWrapping="Wrap" />
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+                        </Border>
+                    </telerik:RadPane>
+                    <telerik:RadPane CanUserClose="False"
+                                     CanFloat="False"
+                                     CanUserPin="True"
+                                     CanDockInDocumentHost="False"
+                                     Header="{Binding WarningInfo}"
+                                     DataContext="{Binding ValidationVM}"
+                                     FontWeight="SemiBold">
+                        <Border BorderBrush="{Binding  WarningTabColor}"
+                                BorderThickness="4">
+                            <telerik:RadGridView IsReadOnly="True"
+                                                 ShowGroupPanel="False"
+                                                 Name="WarningGrid"
+                                                 ShowSearchPanel="False"
+                                                 ItemsSource="{Binding ValidationWarnings}"
+                                                 AutoGenerateColumns="False"
+                                                 VerticalAlignment="Stretch"
+                                                 SelectedItem="{Binding SelectedWarning}">
+                                <WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                                    <WPFMVVMPrism:BehaviorBinding Event="MouseDoubleClick"
+                                                                  Command="{Binding Path=SwitchToSelectedWarning}"
+                                                                  CommandParameter="{Binding ElementName=WarningGrid, Path=SelectedItem}" />
+                                </WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn Header="RXN"
+                                                                DataMemberBinding="{Binding ReactionVM.Name}"
+                                                                Width="80" />
+                                    <telerik:GridViewDataColumn Header="Stage"
+                                                                DataMemberBinding="{Binding StageVM.Name}"
+                                                                Width="80" />
+                                    <telerik:GridViewDataColumn Header="Category"
+                                                                DataMemberBinding="{Binding Category}"
+                                                                Width="100" />
+                                    <telerik:GridViewDataColumn Header="Warning"
+                                                                DataMemberBinding="{Binding Message}"
+                                                                Width="*"
+                                                                TextWrapping="Wrap" />
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+                        </Border>
+                    </telerik:RadPane>
+
+                </telerik:RadPaneGroup>
+            </telerik:RadSplitContainer>
+
+            <telerik:RadDocking.DocumentHost>
+                <telerik:RadSplitContainer>
+                    <telerik:RadPaneGroup SelectedIndex="{Binding PreviewTabIndex}">
+                        <telerik:RadPane Name="curationPane"
+                                         Header="Curation View"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                         CanFloat="False"
+                                         CanUserPin="False"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         CanUserClose="False">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0"
+                                      VerticalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"
+                                                          MaxWidth="1000" />
+                                        <ColumnDefinition MinWidth="5"
+                                                          Width="5" />
+                                        <ColumnDefinition Width="*"
+                                                          MaxWidth="800" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <telerik:RadButton Name="ChooseBtn"
+                                                           Style="{StaticResource bgBtn}"
+                                                           HorizontalAlignment="Left"
+                                                           Grid.Row="0"
+                                                           Content="Choose"
+                                                           Click="ChooseLink_Click"
+                                                           Margin="5,0,0,0"
+                                                           CornerRadius="2" />
+                                        <CheckBox Content="Complete Reaction"
+                                                  HorizontalAlignment="Right"
+                                                  Grid.Row="0"
+                                                  IsChecked="{Binding TanVM.SelectedReaction.IsCurationCompleted,Mode=TwoWay}"
+                                                  Margin="50,0,0,0"
+                                                  Click="CheckBox_Click" />
+                                        <GroupBox Header="Products &amp; Participants"
+                                                  FontWeight="SemiBold"
+                                                  Grid.Row="1">
+
+                                            <telerik:RadGridView ShowGroupPanel="False"
+                                                                 VerticalAlignment="Stretch"
+                                                                 Name="ChemicalsGrid"
+                                                                 AutoGenerateColumns="False"
+                                                                 ItemsSource="{Binding TanVM.ParticipantsView,Mode=TwoWay}"
+                                                                 SelectedItem="{Binding TanVM.SelectedParticipant}"
+                                                                 DataLoaded="ChemicalsGrid_DataLoaded"
+                                                                 CanUserDeleteRows="False"
+                                                                 CanUserReorderColumns="False"
+                                                                 CellEditEnded="ChemicalsGrid_CellEditEnded">
+                                                <WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                                                    <WPFMVVMPrism:BehaviorBinding Event="MouseDoubleClick"
+                                                                                  Command="{Binding Path=EditSelectedParticipant}"
+                                                                                  CommandParameter="{Binding ElementName=ChemicalsGrid, Path=SelectedItem}" />
+                                                </WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                                                <telerik:RadGridView.InputBindings>
+                                                    <KeyBinding Key="Delete"
+                                                                Command="{Binding DeleteParticipant}"
+                                                                CommandParameter="{Binding TanVM.SelectedParticipant}" />
+                                                </telerik:RadGridView.InputBindings>
+                                                <telerik:RadContextMenu.ContextMenu>
+                                                    <telerik:RadContextMenu x:Name="radContextMenu"
+                                                                            Placement="MousePoint">
+                                                        <telerik:RadMenuItem Header="Show Chemical Used Places"
+                                                                             Command="{Binding ShowNumUsedPlaces}"
+                                                                             CommandParameter="{Binding TanVM.SelectedParticipant}" />
+                                                        <telerik:RadMenuItem Header="Show Chemical Information"
+                                                                             Command="{Binding ShowNumInfo}"
+                                                                             CommandParameter="{Binding TanVM.SelectedParticipant}" />
+                                                    </telerik:RadContextMenu>
+                                                </telerik:RadContextMenu.ContextMenu>
+                                                <telerik:RadGridView.Columns>
+                                                    <telerik:GridViewDataColumn Header="NUM"
+                                                                                DataMemberBinding="{Binding Num}"
+                                                                                Width="80"
+                                                                                IsSortable="False"
+                                                                                IsFilterable="False"
+                                                                                IsReadOnly="True">
+                                                        <telerik:GridViewDataColumn.CellStyle>
+                                                            <Style TargetType="{x:Type telerik:GridViewCell}">
+                                                                <Setter Property="FontWeight"
+                                                                        Value="Bold" />
+                                                            </Style>
+                                                        </telerik:GridViewDataColumn.CellStyle>
+                                                    </telerik:GridViewDataColumn>
+                                                    <telerik:GridViewDataColumn Header="Reg"
+                                                                                DataMemberBinding="{Binding Reg}"
+                                                                                Width="100"
+                                                                                IsSortable="False"
+                                                                                IsFilterable="False"
+                                                                                IsReadOnly="True" />
+                                                    <telerik:GridViewDataColumn Header="Name"
+                                                                                DataMemberBinding="{Binding Name}"
+                                                                                Width="*"
+                                                                                IsSortable="False"
+                                                                                IsFilterable="False"
+                                                                                IsReadOnly="True" />
+                                                    <telerik:GridViewDataColumn Header="Yield"
+                                                                                DataMemberBinding="{Binding Yield,Converter={StaticResource stringConverter}, ConverterParameter=Yield}"
+                                                                                Width="50"
+                                                                                IsSortable="False"
+                                                                                IsFilterable="False"
+                                                                                IsReadOnlyBinding="{Binding IsYieldEditable,Mode=OneWay}" />
+                                                    <telerik:GridViewDataColumn Header="Type"
+                                                                                DataMemberBinding="{Binding ParticipantType}"
+                                                                                Width="100"
+                                                                                IsSortable="False"
+                                                                                IsFilterable="False"
+                                                                                IsReadOnly="True"
+                                                                                CellStyleSelector="{StaticResource participantCellStyle}" />
+                                                </telerik:RadGridView.Columns>
+                                            </telerik:RadGridView>
+                                        </GroupBox>
+                                    </Grid>
+                                    <GridSplitter Grid.Column="1"
+                                                  Width="5"
+                                                  BorderThickness="5"
+                                                  BorderBrush="Aqua"
+                                                  VerticalAlignment="Stretch"
+                                                  HorizontalAlignment="Stretch" />
+                                    <Grid Grid.Column="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="5" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="30" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button x:Name="BeforeInsertCondition"
+                                                            Style="{StaticResource bgBtn}"
+                                                            Grid.Column="0"
+                                                            Margin="2"
+                                                            ToolTip="New Condition Before Selected Condition"
+                                                            Click="BeforeInsertCondition_Click">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="/Images/addBefore.png" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button x:Name="AfterInsertCondition"
+                                                            Style="{StaticResource bgBtn}"
+                                                            Grid.Column="1"
+                                                            Margin="2"
+                                                            ToolTip="New Condition After Selected Condition"
+                                                            Click="AfterInsertCondition_Click">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="/Images/addAfter.png" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button Grid.Column="3"
+                                                            Style="{StaticResource bgBtn}"
+                                                            Margin="2,2,6,2"
+                                                            ToolTip="Add / Edit Conditions"
+                                                            Name="AddConditionBtn"
+                                                            Click="AddConditionBtn_Click">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="/Images/popUp.png">
+                                                            </Image>
+                                                        </StackPanel>
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                            <GroupBox Grid.Row="1"
+                                                      Header="Conditions"
+                                                      DataContext="{Binding TanVM.SelectedReaction}"
+                                                      FontWeight="SemiBold">
+
+
+                                                <telerik:RadGridView VerticalAlignment="Stretch"
+                                                                     HorizontalAlignment="Stretch"
+                                                                     Name="ConditionGridView"
+                                                                     ShowGroupPanel="False"
+                                                                     DataContext="{Binding SelectedStage}"
+                                                                     ItemsSource="{Binding Conditions}"
+                                                                     AutoGenerateColumns="False"
+                                                                     CanUserInsertRows="True"
+                                                                     MouseDoubleClick="ConditionGridView_MouseDoubleClick"
+                                                                     SelectedItem="{Binding SelectedCondition,Mode=TwoWay}"
+                                                                     CanUserSortColumns="False"
+                                                                     CanUserDeleteRows="False"
+                                                                     CanUserReorderColumns="False">
+                                                    <telerik:RadGridView.InputBindings>
+                                                        <KeyBinding Key="Delete"
+                                                                    Command="{Binding DeleteStageCondition}"
+                                                                    CommandParameter="{Binding SelectedItem}" />
+                                                    </telerik:RadGridView.InputBindings>
+                                                    <telerik:RadGridView.Columns>
+                                                        <telerik:GridViewDataColumn Header="S.No."
+                                                                                    Width="60"
+                                                                                    DataMemberBinding="{Binding DisplayOrder,Mode=TwoWay}"
+                                                                                    IsReadOnly="True" />
+                                                        <telerik:GridViewDataColumn Header="Temperature"
+                                                                                    Width="*"
+                                                                                    DataMemberBinding="{Binding Temperature,Mode=TwoWay}"
+                                                                                    IsReadOnly="True" />
+                                                        <telerik:GridViewDataColumn Header="Time"
+                                                                                    Width="*"
+                                                                                    DataMemberBinding="{Binding Time,Mode=TwoWay}"
+                                                                                    IsReadOnly="True" />
+                                                        <telerik:GridViewDataColumn Header="Ph"
+                                                                                    Width="*"
+                                                                                    DataMemberBinding="{Binding PH,Mode=TwoWay}"
+                                                                                    IsReadOnly="True" />
+                                                        <telerik:GridViewDataColumn Header="Pressure"
+                                                                                    Width="*"
+                                                                                    DataMemberBinding="{Binding Pressure,Mode=TwoWay}"
+                                                                                    IsReadOnly="True" />
+                                                    </telerik:RadGridView.Columns>
+                                                </telerik:RadGridView>
+                                            </GroupBox>
+                                        </Grid>
+                                        <GridSplitter Grid.Row="1"
+                                                      BorderThickness="5"
+                                                      BorderBrush="Aqua"
+                                                      Width="250"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Stretch" />
+                                        <Grid Grid.Row="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Button Grid.Row="0"
+                                                    Style="{StaticResource bgBtn}"
+                                                    HorizontalAlignment="Left"
+                                                    Margin="2"
+                                                    ToolTip="Open RSN Window"
+                                                    Name="ChooseRSNBtn"
+                                                    Click="ChooseRSNBtn_Click">
+                                                <Image Source="/Images/popUp.png"
+                                                       Width="24"
+                                                       Height="20">
+                                                </Image>
+                                            </Button>
+                                            <GroupBox Header="RSN"
+                                                      FontWeight="SemiBold"
+                                                      Grid.Row="1">
+                                                <telerik:RadGridView ShowGroupPanel="False"
+                                                                     VerticalAlignment="Stretch"
+                                                                     HorizontalAlignment="Stretch"
+                                                                     ItemsSource="{Binding TanVM.RsnsView,Mode=TwoWay}"
+                                                                     AutoGenerateColumns="False"
+                                                                     GroupRenderMode="Flat"
+                                                                     SelectedItem="{Binding TanVM.SelectedRsn}"
+                                                                     Name="RSNGrid"
+                                                                     FontWeight="Normal"
+                                                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                                     IsReadOnly="True">
+                                                    <telerik:RadGridView.Columns>
+                                                        <telerik:GridViewDataColumn Header="CVT"
+                                                                                    Width="150"
+                                                                                    IsFilterable="False"
+                                                                                    IsSortable="False"
+                                                                                    DataMemberBinding="{Binding CvtText}" />
+                                                        <telerik:GridViewDataColumn Header="Free Text"
+                                                                                    Width="*"
+                                                                                    TextWrapping="Wrap"
+                                                                                    Name="FreeTextColumn"
+                                                                                    DataMemberBinding="{Binding FreeText}"
+                                                                                    IsFilterable="False"
+                                                                                    IsSortable="False" />
+                                                        <telerik:GridViewDataColumn Header="Level"
+                                                                                    Width="70"
+                                                                                    DataMemberBinding="{Binding Level}"
+                                                                                    IsFilterable="False"
+                                                                                    IsSortable="False" />
+                                                    </telerik:RadGridView.Columns>
+                                                </telerik:RadGridView>
+                                            </GroupBox>
+                                        </Grid>
+
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                        </telerik:RadPane>
+                        <telerik:RadPane Header="Review/QC View"
+                                         DataContext="{Binding TanVM.ReviewViewVM}"
+                                         Name="reviewPane"
+                                         CanFloat="False"
+                                         CanUserClose="False"
+                                         CanUserPin="False">
+
+                            <views:ReviewView />
+                        </telerik:RadPane>
+                        <telerik:RadPane Header="Consolidated View"
+                                         DataContext="{Binding TanVM.ReviewViewVM}"
+                                         CanFloat="False"
+                                         CanUserClose="False"
+                                         CanUserPin="False"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <!--<views:QCView Visibility="{Binding ConsolidatedView,Mode=TwoWay}"/>-->
+                            <views:QCTableView />
+                        </telerik:RadPane>
+                        <telerik:RadPane Header="NUMs"
+                                         CanFloat="False"
+                                         CanUserClose="False"
+                                         CanUserPin="False">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <!--<MenuItem Header="Toggle Splitter"
+                                                  Command="{Binding Path=ToggleSplitter}" />-->
+                                        <MenuItem Header="{Binding UnUsedNumsText}"
+                                                  Command="{Binding Path=ShowUnUsedNums}" />
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
+                                <views:NUMs Grid.Row="0" />
+                                <GridSplitter Grid.Row="1"
+                                              BorderThickness="5"
+                                              BorderBrush="Aqua"
+                                              Width="550"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Stretch" />
+                                <views:NUMSDuplicate Grid.Row="2" />
+                            </Grid>
+                        </telerik:RadPane>
+                        <telerik:RadPane Header="PDF Editor"
+                                         CanFloat="False"
+                                         CanUserClose="False"
+                                         CanUserPin="False">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="1"
+                                            DockPanel.Dock="Top">
+
+                                    <telerik:RadComboBox Name="ListPdfDocuments"
+                                                         Background="WhiteSmoke"
+                                                         ItemsSource="{Binding TanVM.PdfDocumentsList}"
+                                                         SelectedItem="{Binding TanVM.SelectedDocumentVM,Mode=TwoWay}"
+                                                         SelectionChanged="ListPdfDocuments_SelectionChanged"
+                                                         DisplayMemberPath="FileName"
+                                                         MinWidth="350"
+                                                         Margin="1" />
+                                    <telerik:RadButton CornerRadius="2"
+                                                       Background="WhiteSmoke"
+                                                       Content="Set As Markup"
+                                                       Margin="1"
+                                                       Command="{Binding SetMarkupPdf}" />
+                                    <telerik:RadButton CornerRadius="2"
+                                                       Background="WhiteSmoke"
+                                                       Content="Open"
+                                                       ToolTip="Open in new window"
+                                                       Margin="1"
+                                                       Command="{Binding OpenDocumentInOtherWindow}" />
+                                    <telerik:RadButton CornerRadius="2"
+                                                       Background="WhiteSmoke"
+                                                       Content="Merge"
+                                                       ToolTip="Merge with markup Pdf"
+                                                       Margin="1"
+                                                       Command="{Binding MergeTwoPDF}" />
+                                    <telerik:RadButton CornerRadius="2"
+                                                       x:Name="SearchText"
+                                                       Background="WhiteSmoke"
+                                                       Content="Search"
+                                                       ToolTip="Search"
+                                                       Margin="1"
+                                                       Click="SearchText_Click" />
+                                    <telerik:RadButton CornerRadius="2"
+                                                       x:Name="SearchAnnotations"
+                                                       Background="WhiteSmoke"
+                                                       Content="Annotations"
+                                                       ToolTip="Show All Annotations"
+                                                       Margin="1"
+                                                       Click="SearchAnnotations_Click" />
+                                    <telerik:RadButton CornerRadius="2"
+                                                       Background="WhiteSmoke"
+                                                       Content="Google Search"
+                                                       ToolTip="Search selected text in Google"
+                                                       Margin="1"
+                                                       Click="RadButton_Click" />
+                                    <CheckBox Name="AddMarkingForS8000"
+                                              Background="WhiteSmoke"
+                                              Grid.Column="0"
+                                              Content="Add 8000 Marking"
+                                              IsChecked="{Binding AddS8000Marking}"
+                                              FontStyle="Italic"
+                                              Margin="5,1,1,1" />
+                                    <telerik:RadComboBox Grid.Column="1"
+                                                         Background="WhiteSmoke"
+                                                         Margin="1"
+                                                         Name="S8000Series"
+                                                         DisplayMemberPath="NUM"
+                                                         ItemsSource="{Binding S8000Chemicals}"
+                                                         SelectedItem="{Binding Selected8000Chemical,Mode=TwoWay}"
+                                                         MinWidth="80" />
+                                    <telerik:RadButton Name="HandPdfBtn"
+                                                       Background="WhiteSmoke"
+                                                       Click="HandPdfBtn_Click"
+                                                       ToolTip="Hand Cursor">
+                                        <Image Source="/images/handicon.png"
+                                               Width="16" />
+                                    </telerik:RadButton>
+                                    <telerik:RadButton Name="TextPdfBtn"
+                                                       Background="WhiteSmoke"
+                                                       Click="TextPdfBtn_Click"
+                                                       ToolTip="Text Selection">
+                                        <Image Source="/images/text.png"
+                                               Width="16" />
+                                    </telerik:RadButton>
+                                </StackPanel>
+                                <WindowsFormsHost Name="PdfHost">
+                                    <foxit:AxFoxitPDFSDK Name="Foxit" />
+                                </WindowsFormsHost>
+                            </DockPanel>
+                        </telerik:RadPane>
+                        <telerik:RadPane Header="{Binding BrowserTitle}"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                         Name="BrowserPane"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         CanUserClose="False"
+                                         CanFloat="False">
+                            <WebBrowser Name="webBrowser"
+                                        wb:WebBrowserUtility.BindableSource="{Binding BrowserUrl}" />
+                        </telerik:RadPane>
+                        <telerik:RadPane Header="Analogous View"
+                                         Visibility="{Binding AnalogourVisibility,Mode=TwoWay}"
+                                         CanFloat="False"
+                                         CanUserClose="False"
+                                         CanUserPin="False">
+                            <views:AnalogousUC DataContext="{Binding AnalogVM}" />
+                        </telerik:RadPane>
+                    </telerik:RadPaneGroup>
+                </telerik:RadSplitContainer>
+            </telerik:RadDocking.DocumentHost>
+
+
+
+        </telerik:RadDocking>
+    </Grid>
+</UserControl>

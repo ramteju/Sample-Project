@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Reactions_TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tans">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tanNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TanCategory" Type="int" Nullable="false" />
+          <Property Name="TanState" Type="int" />
+          <Property Name="BatchId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="WorkflowId" Type="int" />
+          <Property Name="CurrentWorkflowUserRoleId" Type="int" />
+          <Property Name="DocumentPath" Type="nvarchar(max)" />
+          <Property Name="LocalDocumentPath" Type="nvarchar(max)" />
+          <Property Name="LastAccessedTime" Type="datetime" />
+          <Property Name="DocumentReviwedUser" Type="nvarchar" MaxLength="128" />
+          <Property Name="DocumentReadStartTime" Type="datetime" />
+          <Property Name="DocumentReadCompletedTime" Type="datetime" />
+          <Property Name="QCRequired" Type="bit" Nullable="false" />
+          <Property Name="AllocatedType" Type="int" Nullable="false" />
+          <Property Name="IsQCCompleted" Type="bit" Nullable="false" />
+          <Property Name="NumsCount" Type="int" Nullable="false" />
+          <Property Name="RxnCount" Type="int" Nullable="false" />
+          <Property Name="MarkedAsQuery" Type="bit" Nullable="false" />
+          <Property Name="DocumentCurrentPage" Type="int" Nullable="false" />
+          <Property Name="IsDuplicate" Type="nvarchar(max)" />
+          <Property Name="CAN" Type="nvarchar(max)" />
+          <Property Name="TanType" Type="nvarchar(max)" />
+          <Property Name="JournalName" Type="nvarchar(max)" />
+          <Property Name="Issue" Type="nvarchar(max)" />
+          <Property Name="JournalYear" Type="nvarchar(max)" />
+          <Property Name="TotalDocumentsPath" Type="nvarchar(max)" />
+          <Property Name="OCRStatus" Type="nvarchar(max)" />
+          <Property Name="TargetedDate" Type="datetime" />
+          <Property Name="LastAccessedBy_Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityContainer Name="Reactions_TestModelStoreContainer">
+          <EntitySet Name="Tans" EntityType="Self.Tans" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Reactions_TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tanNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TanCategory" Type="Int32" Nullable="false" />
+          <Property Name="TanState" Type="Int32" />
+          <Property Name="BatchId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="WorkflowId" Type="Int32" />
+          <Property Name="CurrentWorkflowUserRoleId" Type="Int32" />
+          <Property Name="DocumentPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LocalDocumentPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastAccessedTime" Type="DateTime" Precision="3" />
+          <Property Name="DocumentReviwedUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentReadStartTime" Type="DateTime" Precision="3" />
+          <Property Name="DocumentReadCompletedTime" Type="DateTime" Precision="3" />
+          <Property Name="QCRequired" Type="Boolean" Nullable="false" />
+          <Property Name="AllocatedType" Type="Int32" Nullable="false" />
+          <Property Name="IsQCCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="NumsCount" Type="Int32" Nullable="false" />
+          <Property Name="RxnCount" Type="Int32" Nullable="false" />
+          <Property Name="MarkedAsQuery" Type="Boolean" Nullable="false" />
+          <Property Name="DocumentCurrentPage" Type="Int32" Nullable="false" />
+          <Property Name="IsDuplicate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TanType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JournalName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Issue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JournalYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TotalDocumentsPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OCRStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TargetedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastAccessedBy_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="Reactions_TestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tans" EntityType="Self.Tan" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Reactions_TestModelStoreContainer" CdmEntityContainer="Reactions_TestEntities">
+          <EntitySetMapping Name="Tans">
+            <EntityTypeMapping TypeName="Reactions_TestModel.Tan">
+              <MappingFragment StoreEntitySet="Tans">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="tanNumber" ColumnName="tanNumber" />
+                <ScalarProperty Name="TanCategory" ColumnName="TanCategory" />
+                <ScalarProperty Name="TanState" ColumnName="TanState" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="WorkflowId" ColumnName="WorkflowId" />
+                <ScalarProperty Name="CurrentWorkflowUserRoleId" ColumnName="CurrentWorkflowUserRoleId" />
+                <ScalarProperty Name="DocumentPath" ColumnName="DocumentPath" />
+                <ScalarProperty Name="LocalDocumentPath" ColumnName="LocalDocumentPath" />
+                <ScalarProperty Name="LastAccessedTime" ColumnName="LastAccessedTime" />
+                <ScalarProperty Name="DocumentReviwedUser" ColumnName="DocumentReviwedUser" />
+                <ScalarProperty Name="DocumentReadStartTime" ColumnName="DocumentReadStartTime" />
+                <ScalarProperty Name="DocumentReadCompletedTime" ColumnName="DocumentReadCompletedTime" />
+                <ScalarProperty Name="QCRequired" ColumnName="QCRequired" />
+                <ScalarProperty Name="AllocatedType" ColumnName="AllocatedType" />
+                <ScalarProperty Name="IsQCCompleted" ColumnName="IsQCCompleted" />
+                <ScalarProperty Name="NumsCount" ColumnName="NumsCount" />
+                <ScalarProperty Name="RxnCount" ColumnName="RxnCount" />
+                <ScalarProperty Name="MarkedAsQuery" ColumnName="MarkedAsQuery" />
+                <ScalarProperty Name="DocumentCurrentPage" ColumnName="DocumentCurrentPage" />
+                <ScalarProperty Name="IsDuplicate" ColumnName="IsDuplicate" />
+                <ScalarProperty Name="CAN" ColumnName="CAN" />
+                <ScalarProperty Name="TanType" ColumnName="TanType" />
+                <ScalarProperty Name="JournalName" ColumnName="JournalName" />
+                <ScalarProperty Name="Issue" ColumnName="Issue" />
+                <ScalarProperty Name="JournalYear" ColumnName="JournalYear" />
+                <ScalarProperty Name="TotalDocumentsPath" ColumnName="TotalDocumentsPath" />
+                <ScalarProperty Name="OCRStatus" ColumnName="OCRStatus" />
+                <ScalarProperty Name="TargetedDate" ColumnName="TargetedDate" />
+                <ScalarProperty Name="LastAccessedBy_Id" ColumnName="LastAccessedBy_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

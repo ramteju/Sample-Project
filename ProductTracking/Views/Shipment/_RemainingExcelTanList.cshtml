@@ -1,0 +1,39 @@
+﻿@using ProductTracking.Models.Core
+@using ProductTracking.Util
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Sno</th>
+        <th>Tan Number</th>
+        <th>VOL</th>
+        <th>IS</th>
+        <th>Doc Class</th>
+        <th>Processing Node</th>
+    </tr>
+    <tbody>
+        @{
+            int count = 1, total = 0;
+
+        }
+        @foreach (Entities.ShippmentBatchExcel Excel in ViewBag.RemainingTans)
+        {
+
+            <tr>
+                <td>@(count++)</td>
+                <td>@Excel.TAN</td>
+                <td>
+                        @Excel.IS
+                </td>
+                <td>
+                        @Excel.VOL
+                </td>
+                <td>@Excel.DocClass</td>
+                <td>@Excel.ProcessingNotes</td>
+            </tr>
+        }
+        <tr style="font-weight:bold">
+            <td colspan="3" style="text-align:right">Total</td>
+            <td>@Enumerable.Count(ViewBag.RemainingTans)</td>
+        </tr>
+    </tbody>
+</table>

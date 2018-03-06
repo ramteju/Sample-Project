@@ -1,0 +1,82 @@
+﻿@using Entities
+@using ProductTracking.Models.Core
+
+@{
+    ViewBag.Title = "Workflows";
+}
+
+@section head{
+    <link href="~/Content/select2/select2.min.css" rel="stylesheet" />
+}
+
+@section heading {
+    <h4 class="page-header"><i class="fa fa-gear"></i> Workflows</h4>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Configure Workflow</div>
+                <div class="panel-body full-height">
+                    <div id="editor" style="padding-bottom:10px">
+                    </div>
+
+                    <div id="workflows">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/Content/select2/select2.full.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            reload();
+        });
+
+        function reload() {
+            loadEditor();
+            loadWorkflows();
+        }
+
+        function loadEditor() {
+            $.ajax({
+                url: "@Url.Action("Editor")",
+                method: 'post',
+                beforeSend: function () {
+                    $("#editor").html("<img src='@Url.Content("~/Content/App/images/loading.gif")' width=64 height=64 />");
+                },
+                success: function (result) {
+                    $("#editor").html(result);
+                },
+                error: function () {
+                    $("#editor").html("Error while loading editor");
+                }
+            });
+        }
+
+        function loadWorkflows() {
+            $.ajax({
+                url: "@Url.Action("Workflows")",
+                method: 'post',
+                beforeSend: function () {
+                    $("#workflows").html("<img src='@Url.Content("~/Content/App/images/loading.gif")' width=64 height=64 />");
+                },
+                success: function (result) {
+                    $("#workflows").html(result);
+                },
+                error: function () {
+                    $("#workflows").html("Error while loading Workflows");
+                }
+            });
+        }
+    </script>
+}

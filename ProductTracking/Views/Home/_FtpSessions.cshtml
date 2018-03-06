@@ -1,0 +1,28 @@
+﻿@using ProductTracking.Models.Core
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th>Time</th>
+            <th>Is Success</th>
+            <th>TANs</th>
+            <th>Error If Any</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            List<SessionResult> ftpSessions = ViewBag.ftpSessions;
+        }
+        @foreach (SessionResult sessionResult in ftpSessions)
+        {
+            <tr>
+                <td>@(++count)</td>
+                <td>@sessionResult.TimeStamp.ToString("dd-MM-yyyy hh:mm tt")</td>
+                <td>@sessionResult.IsSuccess</td>
+                <td>@sessionResult.TansCount</td>
+                <td>@sessionResult.Exception</td>
+            </tr>
+        }
+    </tbody>
+</table>

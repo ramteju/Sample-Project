@@ -1,0 +1,73 @@
+﻿<Window x:Class="Client.Views.PdfReaderForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:foxit="clr-namespace:AxFoxitPDFSDKProLib;assembly=AxInterop.FoxitPDFSDKProLib"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Pdf Reader"
+        Height="600"
+        Width="900"
+        Closing="Window_Closing"
+        x:Name="PdfReaderWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="250*" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    HorizontalAlignment="Right">
+            <telerik:RadButton CornerRadius="2"
+                               x:Name="SearchPdf"
+                               Background="WhiteSmoke"
+                               Content="Search"
+                               ToolTip="Search"
+                               Margin="2"
+                               Click="SearchPdf_Click" />
+            <telerik:RadButton CornerRadius="2"
+                               x:Name="SearchSplittedPdf"
+                               Background="WhiteSmoke"
+                               Content="Search In Splitted"
+                               ToolTip="Search"
+                               Margin="2"
+                               Click="SearchSplittedPdf_Click" />
+            <telerik:RadButton CornerRadius="2"
+                               x:Name="ShowAnnotations"
+                               Background="WhiteSmoke"
+                               Content="Annotations"
+                               ToolTip="Show All Annotations"
+                               Margin="2"
+                               Click="ShowAnnotations_Click" />
+        </StackPanel>
+        <WindowsFormsHost Name="PdfHost"
+                          Grid.Row="1"
+                          Grid.Column="0" >
+            <foxit:AxFoxitPDFSDK Name="Foxit" />
+        </WindowsFormsHost>
+        <GridSplitter Grid.Row="2"
+                      Width="250"
+                      BorderThickness="5"
+                      BorderBrush="Aqua"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch" />
+        <WindowsFormsHost Name="PdfHostSplitted"
+                          Grid.Row="3"
+                          Grid.Column="2">
+            <foxit:AxFoxitPDFSDK Name="Foxit" />
+        </WindowsFormsHost>
+        <Button Name="CompleteBtn"
+                Grid.Row="4"
+                Content="CompleteRead"
+                Width="110"
+                Height="25"
+                HorizontalAlignment="Right"
+                Click="Button_Click" />
+    </Grid>
+</Window>

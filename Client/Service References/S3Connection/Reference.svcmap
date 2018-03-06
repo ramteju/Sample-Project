@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="28e0d576-0735-4ef3-9557-613ee34fb7d1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.21.10.245/S3Bucket/Services/S3Connection.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="S3Connection.disco" MetadataType="Disco" ID="ca8fcdde-021f-4790-966e-aa2358a26af4" SourceId="1" SourceUrl="http://172.21.10.245/S3Bucket/Services/S3Connection.svc?disco" />
+    <MetadataFile FileName="S3Connection2.xsd" MetadataType="Schema" ID="e1dabdfb-05ba-446b-941a-a550c5924e0f" SourceId="1" SourceUrl="http://172.21.10.245/S3Bucket/Services/S3Connection.svc?xsd=xsd2" />
+    <MetadataFile FileName="S3Connection1.xsd" MetadataType="Schema" ID="cad59d0c-8d71-40e4-82a4-c718ec74eda1" SourceId="1" SourceUrl="http://172.21.10.245/S3Bucket/Services/S3Connection.svc?xsd=xsd1" />
+    <MetadataFile FileName="S3Connection4.xsd" MetadataType="Schema" ID="a12ee1e6-a3ff-4e12-8f08-834676c434e7" SourceId="1" SourceUrl="http://172.21.10.245/S3Bucket/Services/S3Connection.svc?xsd=xsd4" />
+    <MetadataFile FileName="S3Connection.wsdl" MetadataType="Wsdl" ID="a9eb2bd3-9b53-484c-9e7c-d283a8b89d76" SourceId="1" SourceUrl="http://172.21.10.245/S3Bucket/Services/S3Connection.svc?wsdl" />
+    <MetadataFile FileName="S3Connection3.xsd" MetadataType="Schema" ID="40ff86f5-14b2-47f7-864e-13a01a0b92c3" SourceId="1" SourceUrl="http://172.21.10.245/S3Bucket/Services/S3Connection.svc?xsd=xsd3" />
+    <MetadataFile FileName="S3Connection.xsd" MetadataType="Schema" ID="2ab6aefa-028e-4aed-ae71-dc97d23cb7c9" SourceId="1" SourceUrl="http://172.21.10.245/S3Bucket/Services/S3Connection.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

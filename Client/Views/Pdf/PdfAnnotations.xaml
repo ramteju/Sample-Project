@@ -1,0 +1,79 @@
+﻿<Window x:Class="Client.Views.Pdf.PdfAnnotations"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:foxit="clr-namespace:AxFoxitPDFSDKProLib;assembly=AxInterop.FoxitPDFSDKProLib"
+        xmlns:local="clr-namespace:Client.Views.Pdf"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:Client.ViewModels.Pdf"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        WindowState="Normal"
+        ResizeMode="CanResize"
+        Topmost="True"
+        Title="Pdf Annotations"
+        Name="PdfAnnotationsWindow"
+        Height="650"
+        Width="450"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <viewModels:PdfAnnotationsVM  x:Key="context" />
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="context" />
+    </Window.DataContext>
+    <GroupBox Header="{Binding FileName}"
+              FontWeight="Bold">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom"
+                        Orientation="Horizontal">
+                <Label Margin="2"
+                       Content="{Binding TotalCount}"
+                       MinWidth="150"
+                       FontWeight="Normal" />
+                <Image Source="/Images/help-hint.ico"
+                       Width="16" />
+                <Label HorizontalAlignment="Right"
+                       FontStyle="Italic"
+                       FontWeight="Normal"
+                       Content="Navigate To Page On Double Click Is Supported" />
+            </StackPanel>
+            <telerik:RadGridView FontWeight="Normal"
+                                 IsReadOnly="True"
+                                 AutoGenerateColumns="False"
+                                 ShowGroupPanel="False"
+                                 ShowSearchPanel="True"
+                                 ItemsSource="{Binding Results}"
+                                 SelectedItem="{Binding SelectedAnnotation}"
+                                 MouseDoubleClick="AnnotationsGrid_MouseDoubleClick"
+                                 Name="AnnotationsGrid">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                                                Header="S.No."
+                                                Width="55"
+                                                DataMemberBinding="{Binding DisplayOrder}" />
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                                                Header="Annotation"
+                                                Width="*"
+                                                DataMemberBinding="{Binding Text}" />
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                                                Header="Page"
+                                                Width="80"
+                                                DataMemberBinding="{Binding PageNum}" />
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                                                Header="Type"
+                                                Width="100"
+                                                DataMemberBinding="{Binding Type}" />
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                                                Header="Author"
+                                                Width="80"
+                                                DataMemberBinding="{Binding Author}" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            <WindowsFormsHost Name="PdfHost"
+                              DockPanel.Dock="Top">
+                <foxit:AxFoxitPDFSDK Name="Foxit" />
+            </WindowsFormsHost>
+        </DockPanel>
+    </GroupBox>
+</Window>

@@ -1,0 +1,47 @@
+﻿@using ProductTracking.Models.Core
+@using ProductTracking.Util
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Sno</th>
+        <th>Tan Number</th>
+        <th>Shipment Received Date</th>
+        <th>Targeted Date</th>
+        <th>Doc_Class</th>
+        <th>Processing Node</th>
+    </tr>
+    <tbody>
+        @{
+            int count = 1, total = 0;
+
+        }
+        @foreach (Tan tan in ViewBag.batchWiseTans)
+        {
+
+            <tr>
+                <td>@(count++)</td>
+                <td>@tan.tanNumber</td>
+                <td>
+                    @if (tan.ShipmentreceivedDate != null)
+                    {
+                        @tan.ShipmentreceivedDate 
+                    }
+                </td>
+                <td>
+                    @if (tan.TargetedDate != null)
+                    {
+                        @tan.TargetedDate.ToString() 
+                    }
+                </td>
+                <td>@tan.DocClass</td>
+               
+                <td>@tan.ProcessingNode</td>
+            </tr>
+        }
+        <tr style="font-weight:bold">
+            <td colspan="3" style="text-align:right">Total</td>
+            <td>@Enumerable.Count(ViewBag.batchWiseTans)</td>
+        </tr>
+    </tbody>
+</table>
+

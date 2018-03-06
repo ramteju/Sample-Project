@@ -1,0 +1,154 @@
+﻿@using System.Collections;
+@{
+    ViewBag.Title = "UserWiseReports";
+    ArrayList tanStates = ViewBag.TanStates;
+}
+
+<h2>UserWiseReports</h2>
+@section head{
+    <link href="~/Content/jqplot/jquery.jqplot.min.css" rel="stylesheet" />
+    <link href="~/Content/multidate/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/multidate/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/Content/multidate/jquery-ui.theme.css" rel="stylesheet" />
+    <link href="~/Content/select2/select2.min.css" rel="stylesheet" />
+    <style>
+        .graph {
+            margin: 10px;
+            height: 420px;
+        }
+
+        /*#dates, #twoDates {
+            width: 350px;
+            display: inline;
+        }*/
+
+        #avgtime {
+            display: none;
+        }
+    </style>
+}
+
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Select dates to view report</div>
+            <div class="panel-body dashboardWidget full-height">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="">From Date</label>
+                        <input type="text" class="form-control" id="dates" />
+                    </div>
+                    <div class="form-group">
+                        <label for="">To Date</label>
+                        <input type="text" class="form-control" id="Todate" />
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("states", new SelectList(tanStates, "Id", "State"), new { @class = "form-control select2", @multiple = true, @style = "width: 400px" })
+                    </div>
+                    <div class="btn-group">
+
+                        <button type="button" class="btn btn-primary" id="showBtn">Show Report</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>  <!-- caret -->
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+
+                        <ul class="dropdown-menu showreport" role="menu">
+                            <!-- class dropdown-menu -->
+                            <li><a href="#">Show Report</a></li>
+                            @*<li><a href="#">Show Updated Date Report</a></li>
+                            <li><a href="#">Show Completed Date Report</a></li>*@
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" class="btn btn-warning" value="Clear" id="clearBtn" />
+                    </div>
+
+                    <div class="panel-body half-height" id="userWiseSummaryDetails">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>@*Report-1*@
+
+</div>
+
+@section Scripts {
+    <script src="~/Content/jquery-2.0.0b1.js"></script>
+    <script src="~/Content/jquery-migrate-1.0.0.js"></script>
+
+    <script src="~/Content/jqplot/jquery.jqplot.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.highlighter.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Content/select2/select2.full.min.js"></script>
+
+    <script type="text/javascript">
+        var hourResult;
+        var hourPlot = null;
+
+        $(document).ready(function () {
+            $('#dates').datepicker();
+            $('#Todate').datepicker();
+            $('.select2').select2({
+                placeholder: "Select TAN States"
+            });
+            // $('#user').select2({ dropdownAutoWidth: true, width: 'resolve' });
+        })
+
+        $('#showBtn').click(function () {
+            if ($('#dates').val() == '' || $('#Todate').val() == '' || $('#states').val() == null)
+                alert("Please select from and to dates and Atleast one state");
+            else if (new Date($('#dates').val()) > new Date($('#Todate').val()))
+                alert("from date must be lessthan to date");
+            else {
+                TanWiseSummary();
+            }
+        });
+
+        $('.showreport a').click(function () {
+            $('#showBtn').text($(this).text());
+            $('#showBtn').click();
+        });
+
+        $("#clearBtn").click(function () {
+            $('#dates').val("");
+            $('#Todate').val("");
+            $("#states").select2("val", "");
+        });
+
+        function TanWiseSummary() {
+            var values = $('#states').val().toString();
+            $.ajax({
+                url: "@Url.Action("UserWiseSummary")",
+                data: {
+                    FromDate: $('#dates').val(),
+                    ToDate: $('#Todate').val(),
+                    tanStates: $('#states').val().toString(),
+                    fromUpdatedDate: $('#showBtn').text() == "Show Updated Date Report" ? true : false,
+                    fromCompletedDate: $('#showBtn').text() == "Show Completed Date Report" ? true : false
+                },
+                beforeSend: function () {
+                    $("#userWiseSummaryDetails").addClass("loading");
+                },
+                success: function (result) {
+                    $("#userWiseSummaryDetails").html(result);
+                },
+                error: function () {
+                    $("#userWiseSummaryDetails").html("Error . .");
+                },
+                complete: function () {
+                    $("#userWiseSummaryDetails").removeClass("loading");
+                }
+            });
+        }
+    </script>
+}
+

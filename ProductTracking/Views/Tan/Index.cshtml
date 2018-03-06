@@ -1,0 +1,61 @@
+﻿@using ProductTracking.Models.Core
+@{
+    ViewBag.Heading = "Tans";
+}
+
+@section head {
+    <style>
+        .tanUpload {
+            cursor: pointer;
+        }
+
+        .full-height {
+            height: calc(100vh - 280px);
+            overflow-y: auto;
+        }
+    </style>
+}
+@{
+    List<Tan> tans = ViewBag.tans;
+    int sno = 1;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">TANs</div>
+            <div class="panel-body full-height" id="shipments">
+                <table class="tables table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th width="50">Sno</th>
+                            <th width="100">TAN</th>
+                            <th width="100">Batch</th>
+                            <th>Status</th>
+                            <th>Accessed By</th>
+                            <th>Accessed Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tan in tans)
+                        {
+                            <tr>
+                                <td>@(sno++)</td>
+                                <td>@tan.tanNumber</td>
+                                <td>@tan.Batch.Name</td>
+                                <td>@(tan.TanState)</td>
+                                <td>@(tan.LastAccessedBy?.UserName)</td>
+                                <td>
+                                    @if (tan.LastAccessedTime != null)
+                                    {
+                                        @tan.LastAccessedTime.Value.ToString("dd-MM-yy hh:mm:tt")
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

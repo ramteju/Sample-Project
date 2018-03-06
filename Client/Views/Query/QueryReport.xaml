@@ -1,0 +1,55 @@
+﻿<Window x:Class="Client.Views.Query.QueryReport"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views.Query"
+         xmlns:html="clr-namespace:TheArtOfDev.HtmlRenderer.WPF;assembly=HtmlRenderer.WPF"
+        xmlns:dto="clr-namespace:Entities;assembly=Entities"
+        xmlns:viewModels="clr-namespace:Client.ViewModels"
+        xmlns:queryViewModles="clr-namespace:Client.ViewModels.Query"
+        xmlns:utils="clr-namespace:Client.Util"
+        ResizeMode="CanResize"
+        Icon="/images/icon.png"
+        Title="Query &amp; Doubt Module - Report" Height="700" Width="600" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <queryViewModles:QueryReportVM  x:Key="context"/>
+            <viewModels:EnumDescriptionConverter x:Key="enumDescriptionConverter" />
+            <viewModels:EnumBooleanConverter x:Key="enumBooleanConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Placeholder.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="context"/>
+    </Window.DataContext>
+    <telerik:RadBusyIndicator IsBusy="{Binding Loading}">
+        <GroupBox Style="{StaticResource GroupStyleTwo}">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="2">
+                    <Label Content="From" Margin="2"/>
+                    <telerik:RadDatePicker Name="From" Width="120" Margin="2" SelectedDate="{Binding From, Mode=TwoWay}" />
+                    <Label Content="To" Margin="2"/>
+                    <telerik:RadDatePicker Name="To" Width="120" Margin="2" SelectedDate="{Binding To, Mode=TwoWay}"/>
+                    <telerik:RadButton Content="Search" CornerRadius="3" Margin="2" Command="{Binding Search}"/>
+                </StackPanel>
+                <telerik:RadGridView ShowGroupPanel="False" 
+                                 AutoGenerateColumns="False" 
+                                 Margin="2"
+                                 AlternateRowBackground="WhiteSmoke"
+                                 AlternationCount="2"
+                                 ItemsSource="{Binding UserEntries}">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Header="User" Width="250" DataMemberBinding="{Binding User}"/>
+                        <telerik:GridViewDataColumn Header="Created" Width="100" DataMemberBinding="{Binding Created}"/>
+                        <telerik:GridViewDataColumn Header="Responded" Width="100" DataMemberBinding="{Binding Responded}"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </DockPanel>
+        </GroupBox>
+    </telerik:RadBusyIndicator>
+</Window>

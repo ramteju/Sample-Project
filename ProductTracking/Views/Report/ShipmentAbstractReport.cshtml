@@ -1,0 +1,122 @@
+﻿@using System.Collections;
+@{
+    ViewBag.Title = "Shipment Abstract Report";
+    ArrayList users = ViewBag.Years;
+
+}
+@section head{
+    <link href="~/Content/jqplot/jquery.jqplot.min.css" rel="stylesheet" />
+    <link href="~/Content/multidate/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/multidate/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/Content/multidate/jquery-ui.theme.css" rel="stylesheet" />
+    <link href="~/Content/select2/select2.min.css" rel="stylesheet" />
+    <style>
+        .Review {
+            background-color: #D1EFFA;
+            color: #2FC0F4;
+        }
+
+        .Qc {
+            background: #DFECEB;
+            color: #3DB24F;
+        }
+
+        .Curation {
+            background-color: red;
+        }
+
+        .table td, .table th {
+            border: 2px solid #000 !important;
+            white-space: nowrap;
+            text-align: left;
+            padding: 4px !important;
+        }
+        /*#dates, #twoDates {
+            width: 350px;
+            display: inline;
+        }*/
+
+        #avgtime {
+            display: none;
+        }
+    </style>
+}
+
+<h2>ShipmentWiseReport</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Select Shipments to view report</div>
+            <div class="panel-body dashboardWidget full-height">
+                <form class="form-inline">
+                    @Html.DropDownList("Year", new SelectList(users, "Id", "Year"), "Select . .", new { @class = "form-control select2", @multiple = true, @style = "width: 900px" })
+                    <input type="button" class="btn btn-primary" value="ShowReport" id="showBtn" />
+                </form>
+                <br />
+                <div id="ShipmentReport" style="width:40%"></div>
+            </div>
+        </div>
+    </div>@*Report-1*@
+
+</div>
+
+
+@section Scripts {
+    <script src="~/Content/jquery-2.0.0b1.js"></script>
+    <script src="~/Content/jquery-migrate-1.0.0.js"></script>
+    <script src="~/Content/select2/select2.full.min.js"></script>
+
+    <script src="~/Content/jqplot/jquery.jqplot.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.highlighter.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+
+    <script type="text/javascript">
+        var hourResult;
+        var hourPlot = null;
+
+        $(document).ready(function () {
+            $('.select2').select2({
+                placeholder: "Select Year"
+            });
+        })
+
+        $('#showBtn').click(function (param) {
+            if ($("#Year").val() != null)
+                ShipmentWiseSummary();
+            else
+                alert("Please select atleast one batch");
+        });
+
+        function ShipmentWiseSummary() {
+            var myTest = new Array();
+            myTest = $("#Year").val()
+            $.ajax({
+                url: "@Url.Action("AbstractReport")",
+                data: {
+                    Year: myTest
+                },
+                beforeSend: function () {
+                    $("#ShipmentReport").addClass("loading");
+                },
+                success: function (result) {
+                    $("#ShipmentReport").html(result);
+                },
+                error: function () {
+                    $("#ShipmentReport").html("Error . .");
+                },
+                complete: function () {
+                    $("#ShipmentReport").removeClass("loading");
+                    $('#ShipmentTable').closest(".ui-jqgrid-bdiv").css({ "overflow-y": "scroll" });
+                }
+            });
+        }
+
+
+    </script>
+}
+

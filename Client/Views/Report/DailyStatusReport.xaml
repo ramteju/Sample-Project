@@ -1,0 +1,15 @@
+﻿<Window x:Class="Client.Views.Report.DailyStatusReport"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views.Report"
+        xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms" 
+        mc:Ignorable="d"
+        Title="DailyStatusReport" Height="300" Width="300">
+    <Grid>
+        <WindowsFormsHost Loaded="WindowsFormsHost_Loaded">
+            <rv:ReportViewer x:Name="_reportViewer"/>
+        </WindowsFormsHost>
+    </Grid>
+</Window>

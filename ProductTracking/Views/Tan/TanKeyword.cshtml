@@ -1,0 +1,98 @@
+﻿@using ProductTracking.Models.Core
+@{
+    ViewBag.Title = "TanKeyword";
+    //TanKeywords tankeywords = ViewBag.TanKeyword;
+}
+
+@section head{
+    <link href="~/Content/App/css/animate.min.css" rel="stylesheet" />
+ 
+    <style>
+        .fc-time {
+            display: none;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px yellow;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Tan Keywords List</div>
+                <div class="row">
+                   
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="field1" style="margin-bottom:0">Add Tan Keyword :</label>
+                            <div class="input-group">
+                                <input type="hidden" name="productRole" id="hdnfldId" value="@(ViewBag.TanKeyword?.Id)" />
+                                <input type="text" value="@(ViewBag.TanKeyword?.keyword)" id="txttanKeyword" 
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="field1" style="margin-bottom:0"></label>
+                        <button class="btn btn-success" id="ApplyBtn">Save</button>
+                    </div>
+                    <div class="panel-body" id="Tans">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          LoadKeywords();
+        });
+
+        function LoadKeywords() {
+
+            $.ajax({
+                url: "@Url.Action("LoadKeywordsList", "Tan")",
+                data: {},
+                success: function (result) {
+                    $("#Tans").html(result);
+
+                }
+            });
+        }
+
+
+        $('#ApplyBtn').click(function (e) {
+            addKeyword();
+        });
+
+        function addKeyword(){
+            var Keyword = $('#txttanKeyword').val()
+            if (Keyword == '') {
+                alert("Please Enter Tan Keyword")
+                return;
+            }
+            $.ajax({
+                url: "@Url.Action("MaintainKeyword", "Tan")",
+                data: { id: $('#hdnfldId').val(), Keyword: Keyword },
+                success: function (result) {
+                    if (result == "Success") {
+                        $('#txttanKeyword').val('');
+                        alert("Saved Tan Keyword...")
+                        window.location = "@Url.Action("TanKeyword", "Tan")";
+                    }
+            }
+        });
+        }
+
+    </script>
+}

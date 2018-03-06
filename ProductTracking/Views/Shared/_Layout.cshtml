@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Reactions</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/fa/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/App/css/Site.css" rel="stylesheet" />
+    <style>
+        .loading{
+            background-image:url('@Url.Content("~/Content/App/images/loading.gif")');
+            background-repeat: no-repeat;
+            background-size: 48px 48px;
+        }
+
+        #loadingDiv {
+    opacity: 0.5;
+    position: fixed;
+    z-index: 1500;
+    background-color: #fff;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+}
+        #loadingDiv img {
+    position: fixed;
+    width: 140px;
+    height: 146px;
+    left: 50%;
+    top: 50%;
+    margin-left: -70px;
+    margin-top: -73px;
+}
+    </style>
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                    REACTIONS <sup style="font-size:15px;font-family:Mistral;color:yellow">Next Gen</sup>
+                </a>
+            </div>
+            @if (Request.IsAuthenticated)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-file-pdf-o"></i> TANs <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index","Tan")"><i class="fa fa-tasks"></i> Tasks</a>
+                                </li>
+                                <li><a href="@Url.Action("DuplicateTans","Tan")"><i class="fa fa-tasks"></i> DuplicateTans</a></li>
+                                <li><a href="@Url.Action("Upload","Shipment")"><i class="fa fa-archive"></i> Shipments</a></li>
+                                <li><a href="@Url.Action("TargetedDate","Shipment")"><i class="fa fa-archive"></i> Targeted Date</a></li>
+                                <li><a href="@Url.Action("ShipmentExceptionDetails","Shipment")"><i class="fa fa-archive"></i> Shipment Exception</a></li>
+                                <li><a href="@Url.Action("TanKeyword","Tan")"><i class="fa fa-tasks"></i>Master Entry TanKeyword</a></li>
+                                <li><a href="@Url.Action("ShipmentmissingNodes", "Shipment")"><i class="fa fa-tasks"></i>Shipment Missing</a></li>
+                                <li><a href="@Url.Action("ShipmentWiseReport", "Report")"><i class="fa fa-tasks"></i>Shipment Wise Report</a></li>
+                                @*<li><a href="@Url.Action("AbstractReport", "Report")"><i class="fa fa-tasks"></i>Shipment Abstract Report</a></li>*@
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-cog"></i> Administration <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @*<li><a href="@Url.Action("Workflow","Admin")"><i class="fa fa-cogs"></i> Workflows</a></li>*@
+                                <li><a href="@Url.Action("UserBenchMarks","Admin")"><i class="fa fa-group"></i> User BanchMarks/Analyst Ids</a></li>
+                                <li><a href="@Url.Action("UserRoles","Admin")"><i class="fa fa-group"></i> User Roles</a></li>
+                                <li><a href="@Url.Action("Index","Admin")"><i class="fa fa-cogs"></i> Configure</a></li>
+                                <li><a href="@Url.Action("CVTsCrud","Admin")"><i class="fa fa-cogs"></i> CVT & Freetext Master</a></li>
+                                <li><a href="@Url.Action("Index","NamePriorities")"><i class="fa fa-cogs"></i>Name Priorities for Tan Chemicals</a></li>
+                                <li><a href="@Url.Action("Index","Report")"><i class="fa fa-cogs"></i>User wise Reports</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            }
+        </div>
+    </div>
+    <div class="container-fluid body-content" style="padding-top: 25px;">
+        @RenderSection("heading", required: false)
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <div style="padding-top:5px;padding-left:10px;">
+            <p>&copy; @DateTime.Now.Year - Powered By Excelra Knowledge Solutions</p>
+        </div>
+    </footer>
+
+    <script src="~/Content/App/js/jquery-1.12.1.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ajaxStart(function () {
+            $("input [type='button'],button").prop("disabled", true);
+            $("#loadingDiv").show();
+        }).ajaxComplete(function () {
+            $("input [type='button'],button").prop("disabled", false);
+            $("#loadingDiv").hide();
+        });
+
+    </script>
+    <div id="loadingDiv" style="display: none;">
+        <img src="~/Content/App/images/ajax-loader.gif" />
+    </div>
+</body>
+</html>

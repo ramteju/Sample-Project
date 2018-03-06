@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="10875da0-e82b-4e45-93d8-c3586d71ea61" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.21.0.112:90/AppAs/AppAS.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AppAS.wsdl" MetadataType="Wsdl" ID="a91adca1-76d8-45c8-a8fe-174d2ef2dffd" SourceId="1" SourceUrl="http://172.21.0.112:90/AppAs/AppAS.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="AppAS.xsd" MetadataType="Schema" ID="2bfef907-c9d2-4db4-820a-88dc727b8e55" SourceId="1" SourceUrl="http://172.21.0.112:90/AppAs/AppAS.svc?xsd=xsd1" />
+    <MetadataFile FileName="AppAS1.xsd" MetadataType="Schema" ID="488936d7-d9b4-4154-b6a0-f1616eabac01" SourceId="1" SourceUrl="http://172.21.0.112:90/AppAs/AppAS.svc?xsd=xsd0" />
+    <MetadataFile FileName="AppAS1.wsdl" MetadataType="Wsdl" ID="a4c9f02c-2025-41dc-9525-c5467cb6b4ca" SourceId="1" SourceUrl="http://172.21.0.112:90/AppAs/AppAS.svc?wsdl" />
+    <MetadataFile FileName="AppAS.disco" MetadataType="Disco" ID="b877fed0-f59c-4ce4-bafc-d13dd4eaf992" SourceId="1" SourceUrl="http://172.21.0.112:90/AppAs/AppAS.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

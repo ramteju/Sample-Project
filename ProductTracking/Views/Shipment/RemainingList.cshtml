@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "RemainingList";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Shipments</div>
+                <div class="panel-body" id="Selectedshipments">
+                    @{Html.RenderPartial("~/Views/Shipment/_ShippmentTansList.cshtml");}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

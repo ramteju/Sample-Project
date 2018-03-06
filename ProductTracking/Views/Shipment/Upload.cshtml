@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+}
+@section head{
+    <link href="~/Content/App/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <style>
+        .progressImage {
+            width: 30px;
+            height: 30px;
+            visibility: visible;
+        }
+    </style>
+}
+<div class="col-md-12" style="margin-top:25px;">
+    <div class="panel panel-default">
+        <div class="panel-heading">Shipment Upload</div>
+        <div class="panel-body" id="productWiseTaks">
+            @*@using (Html.BeginForm("Upload", "Shipment", FormMethod.Post))
+            {
+                @Html.Label("Enter Path Of CGM File")
+                <br />
+                @Html.TextBox("txtXmlPath", null, new { style = "width:550px;" })
+
+                <input type="submit" name="Process" value="Process" id="btnShipmentSubmit" /><br />
+                <img src="~/Images/Shipment_loadingimg.gif" alt="HTML5 Icon" id="progressImage" style="width: 30px;
+            height: 30px;
+            visibility: hidden;" />
+                <label id="status" style="margin:5px" />
+            }*@
+            <input type="text" id="txtXmlPath" style="width:550px" />
+            <input type="submit" name="Process" value="Process" id="btnShipmentSubmit" /><br />
+            <img src="~/Images/Shipment_loadingimg.gif" alt="HTML5 Icon" id="progressImage" style="width: 30px;
+            height: 30px;
+            visibility: hidden;" />
+            <label id="status" style="margin:5px" />
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+
+    <script src="~/Content/jqplot/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initSignalR();
+        });
+
+        function initSignalR() {
+            var chat = $.connection.liveHub;
+            chat.client.progress = function (msg) {
+                $('#status').html(msg);
+                $('#progressImage').css({ "visibility": "visible" });
+            };
+            $.connection.hub.start().done(function () {
+
+            });
+        }
+
+        $('#btnShipmentSubmit').click(function (e) {
+            if ($("#txtXmlPath").val() != '') {
+                $('#progressImage').css({ "visibility": "visible" });
+                $.ajax({
+                    url: "@Url.Action("UploadShipment", "Shipment")",
+                    data: { txtXmlPath: $("#txtXmlPath").val() },
+                    success: function (result) {
+                        if (result == "Shipment upload completed.") {
+                            alert(result);
+                            $('#progressImage').css({ "visibility": "hidden" });
+                            window.location = "@Url.Action("Index", "Home")";
+                        }
+                        else if (result == "Shipment Already Exist.") {
+                            alert(result);
+                            $('#progressImage').css({ "visibility": "hidden" });
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+            else {
+                alert("Please give shipment path");
+                return;
+            }
+        });
+    </script>
+
+}
+

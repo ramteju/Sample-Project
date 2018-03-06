@@ -1,0 +1,59 @@
+﻿<Window x:Class="Client.Views.Delivery.DeliveryReport"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views.Delivery"
+        mc:Ignorable="d"
+        Icon="/images/icon.png"
+        xmlns:deliveryViewModels="clr-namespace:Client.ViewModels.Delivery"
+        WindowStartupLocation="CenterScreen"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        WindowState="Normal"
+        WindowStyle="SingleBorderWindow"        
+        Title="Delivery Report" Height="800" Width="800" Closing="Window_Closing">
+    <Window.Resources>
+        <deliveryViewModels:DeliveryReportVM  x:Key="context"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="context"/>
+    </Window.DataContext>
+
+    <telerik:RadBusyIndicator IsBusy="{Binding WorkInProgress}">
+        <GroupBox Style="{StaticResource GroupStyle}">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="2" Orientation="Horizontal">
+                    <GroupBox Header="Search Options" Margin="2">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsZeroRxns,Mode=TwoWay}"  Content="Zero Reactions Only" Margin="2" FontWeight="Normal"/>
+                            <CheckBox IsChecked="{Binding IsQueried,Mode=TwoWay}" Content="Query TANs Only" Margin="2" FontWeight="Normal"/>
+                            <telerik:RadButton Content="Search" Margin="2" CornerRadius="2" Command="{Binding Search}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Revert" Margin="2">
+                        <StackPanel Orientation="Horizontal">
+                            <telerik:RadComboBox Width="120" FontWeight="Normal" Margin="2" ItemsSource="{Binding Roles}" SelectedItem="{Binding Role}" DisplayMemberPath="DisplayName"/>
+                            <Label Content="Message" FontWeight="Normal"/>
+                            <TextBox MinWidth="150" FontWeight="Normal" ToolTip="Message for reverting TAN" Text="{Binding DeliveryMessage}"/>
+                            <telerik:RadButton Content="Revert" Margin="2" CornerRadius="2" Command="{Binding Revert}"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+                <telerik:RadGridView Width="250" ItemsSource="{Binding BatchSummaries}" DockPanel.Dock="Left" Margin="2" ShowGroupPanel="False" ShowSearchPanel="False" Background="Transparent" SelectedItem="{Binding BatchSummary}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding BatchNumber}"  Header="Batch" Width="*"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding TansCount}"  Header="TANs" Width="80"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+                <telerik:RadGridView ItemsSource="{Binding TANs}" SelectedItem="{Binding TAN}" Margin="2" ShowGroupPanel="False" ShowSearchPanel="False" Background="Transparent" AutoGenerateColumns="False" IsReadOnly="True">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding TanNumber}"  Header="TAN Number" Width="100*"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding RXNCount}"  Header="RXN Count" Width="80*"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding IsQueried}"  Header="Is Queried" Width="100"/>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding DeliveryRevertMessage}"  Header="Revert Message" Width="150*"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </DockPanel>
+        </GroupBox>
+    </telerik:RadBusyIndicator>
+</Window>

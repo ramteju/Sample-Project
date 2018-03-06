@@ -1,0 +1,56 @@
+﻿<Window x:Class="Client.Views.Manuals"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+          xmlns:foxit="clr-namespace:AxFoxitPDFSDKProLib;assembly=AxInterop.FoxitPDFSDKProLib"
+        xmlns:viewModels="clr-namespace:Client.ViewModels"
+        mc:Ignorable="d"
+          Height="800" Width="1300" 
+        Title="Manuals"  Closing="Window_Closing">
+    <Window.DataContext>
+        <viewModels:UserManualVM x:Name="UserManualVM" />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <telerik:RadDocking x:Name="parentDock" Grid.Column="0">
+            <telerik:RadSplitContainer InitialPosition="DockedLeft"
+                                       Width="250">
+                <telerik:RadPaneGroup>
+                    <telerik:RadPane Header="Navigation"
+                                     CanUserClose="False"
+                                     CanFloat="False"
+                                     CanUserPin="False"
+                                     CanDockInDocumentHost="False">
+                        <telerik:RadListBox Margin="2"  Name="ReactionsList" ItemsSource="{Binding Mode=OneWay, Source={x:Static viewModels:StaticCollection.UserManual}}"  SelectedItem="{Binding SelectedUserManual,Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="{Binding Value}" SelectionChanged="ReactionsList_SelectionChanged" >
+
+
+                        </telerik:RadListBox>
+
+                    </telerik:RadPane>
+                </telerik:RadPaneGroup>
+            </telerik:RadSplitContainer>
+        </telerik:RadDocking>
+
+
+        <telerik:RadSplitContainer Grid.Column="1">
+            <telerik:RadPaneGroup>
+                <telerik:RadPane >
+                    <DockPanel>
+                        <WindowsFormsHost Name="UserPdfHost">
+                            <foxit:AxFoxitPDFSDK Name="Foxit"/>
+                        </WindowsFormsHost>
+                    </DockPanel>
+                </telerik:RadPane>
+            </telerik:RadPaneGroup>
+        </telerik:RadSplitContainer>
+
+    </Grid>
+</Window>
+

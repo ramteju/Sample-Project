@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section head{
+    <link href="~/Content/App/css/animate.min.css" rel="stylesheet" />
+    <style>
+        .fc-time {
+            display: none;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px yellow;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Shipments</div>
+                <div class="panel-body" id="shipments">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            shipments();
+            initSignalR();
+        });
+
+        function shipments() {
+            $.ajax({
+                url: "@Url.Action("ShipmentSummary","Shipment")",
+                success: function (result) {
+                    $("#shipments").html(result);
+                }
+            });
+        }
+
+        function initSignalR() {
+            var chat = $.connection.liveHub;
+            chat.client.ftpJobStatus = function (msg) {
+                $('#ftpJobStatus').html(msg);
+                $('#ftpJobStatus').addClass('animated flash glow');
+                setInterval(function () {
+                    $('#ftpJobStatus').removeClass('animated flash glow');
+                }, 500);
+            };
+            $.connection.hub.start().done(function () {
+            });
+        }
+    </script>
+}

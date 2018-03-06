@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "TargetDateUpdatedList";
+}
+
+@section head{
+    <link href="~/Content/App/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <style>
+        .fc-time {
+            display: none;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px yellow;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Shipments</div>
+                <div class="panel-body" id="Selectedshipments">
+                    @{Html.RenderPartial("~/Views/Shipment/_ShippmentTansList.cshtml");}
+                </div>
+            </div>
+        </div>
+       
+        </div>
+    </div>
+

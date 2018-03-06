@@ -1,0 +1,111 @@
+﻿
+@using ProductTracking.Models.Core
+<div class="container-fluid body-content" style="padding-top:30px">
+
+    <div class="row">
+        <div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading center">Curation Report</div>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>UserName</th>
+                                <th>Curated Reactions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                List<UserWiseReports> CuratorsReports = ViewBag.UserWiseReports;
+                                int sno = 1;
+                            }
+                            @foreach (UserWiseReports user in CuratorsReports.Where(r=>r.CuratedReactionsCount > 0))
+                            {
+                                <tr>
+
+                                    <td>@(sno++)</td>
+                                    <td>@user.UserName</td>
+                                    <td>@user.CuratedReactionsCount</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td></td>
+                                <td>Total</td>
+                                <td>@CuratorsReports.Select(s => s.CuratedReactionsCount).Sum()</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading center">Reviewers Report</div>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>UserName</th>
+                                <th>Reviewed Reactions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                List<UserWiseReports> ReviewersReports = ViewBag.UserWiseReports;
+                                int rsno = 1;
+                            }
+                            @foreach (UserWiseReports user in ReviewersReports.Where(r => r.ReviewedReactionsCount > 0))
+                            {
+                                <tr>
+
+                                    <td>@(rsno++)</td>
+                                    <td>@user.UserName</td>
+                                    <td>@user.ReviewedReactionsCount</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td></td>
+                                <td>Total</td>
+                                <td>@ReviewersReports.Select(s => s.ReviewedReactionsCount).Sum()</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading center">Qcs Report</div>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>UserName</th>
+                                <th>Qc'd Reactions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                List<UserWiseReports> QCsReports = ViewBag.UserWiseReports;
+                                int qcsno = 1;
+                            }
+                            @foreach (UserWiseReports user in QCsReports.Where(r => r.QcReactionsCount > 0))
+                            {
+                                <tr>
+
+                                    <td>@(qcsno++)</td>
+                                    <td>@user.UserName</td>
+                                    <td>@user.QcReactionsCount</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td></td>
+                                <td>Total</td>
+                                <td>@QCsReports.Select(s => s.QcReactionsCount).Sum()</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

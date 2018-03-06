@@ -1,0 +1,41 @@
+﻿<telerik:RadRibbonWindow x:Class="Client.MainWindow"
+                         x:Name="ThisWindow"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                         xmlns:local="clr-namespace:Client"
+                         xmlns:views="clr-namespace:Client.Views"
+                         Icon="/images/icon.png"
+                         xmlns:viewModels="clr-namespace:Client.ViewModels"
+                         Height="350"
+                         Width="525"
+                         WindowState="Maximized"
+                         WindowStartupLocation="CenterScreen"
+                         IsEnabled="{Binding MainWindowEnable}">
+    <Window.DataContext>
+        <viewModels:MainVM x:Name="MainVM" />
+    </Window.DataContext>
+    
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <views:ToolBar Grid.Row="0" />
+        <views:ToolStrip Grid.Row="2" />
+        <!--<views:TaskAllocation Grid.Row="1"
+                              Visibility="{Binding AssignTaskVisble}" />-->
+        <views:Landing Grid.Row="1"
+                       Visibility="{Binding EnableLanding}" />
+        <views:WorkingArea Grid.Row="1"
+                           Visibility="{Binding EnableEditor}"
+                           x:Name="MainEditor"
+                           telerik:StyleManager.Theme="Expression_Dark" />
+
+    </Grid>
+</telerik:RadRibbonWindow>

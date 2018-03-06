@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section head {
+    <style>
+        .panel-body {
+            height: 150px !important;
+            min-height: 150px !important;
+            max-height: 150px !important;
+            text-align: center;
+        }
+
+        .fa {
+            color: #3670cc !important;
+        }
+    </style>
+}
+
+@section heading {
+    <h2 class="page-header"><i class="fa fa-database"></i> Data Insights</h2>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Total TANs</div>
+                <div class="panel-body">
+                    <h1><i class="fa fa-file-pdf-o"></i> @ViewBag.totalTans</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Added Annotations</div>
+                <div class="panel-body">
+                    <h1><i class="fa fa-plus-circle"></i> @ViewBag.userCreated</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Deleted Annotations</div>
+                <div class="panel-body">
+                    <h1><i class="fa fa-minus-circle"></i> @ViewBag.userDeleted</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>@*First Row*@
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Added Chemical Names</div>
+                <div class="panel-body">
+                    <h1><i class="fa fa-flask"></i> @ViewBag.addedNames</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Disc Usage is more than</div>
+                <div class="panel-body">
+                    <h1><i class="fa fa-hdd-o"></i> @ViewBag.discUsage Gb</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Total Time spent</div>
+                <div class="panel-body">
+                    <h1><i class="fa fa-clock-o"></i> @ViewBag.totalTime</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>@*Second Row*@
+
+@section scripts {
+    <script>
+    </script>
+}
+
+
+
+
+
+

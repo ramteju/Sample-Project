@@ -1,0 +1,54 @@
+﻿@using ProductTracking.Models.Core
+@using ProductTracking.Util
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Sno</th>
+        <th>Batch No</th>
+        <th>Tan Number</th>
+        <th>Issue Description</th>
+        <th>TanIssueType</th>
+        <th>CSH</th>
+        <th>CSM</th>
+        <th>Edit</th>
+        <th>Update Status</th>
+    </tr>
+    <tbody>
+        @{
+            int count = 1;
+
+        }
+        @foreach (TanIssues tanIssues in ViewBag.tanIssues)
+        {
+
+            <tr>
+                <td>@(count++)</td>
+                <td>@tanIssues.Tan.Batch.Name</td>
+                <td>@tanIssues.Tan.tanNumber</td>
+                <td>@tanIssues.IssueDescription</td>
+                <td>@tanIssues.TanIssueType</td>
+                <td>@tanIssues.strCSH</td>
+                <td>@tanIssues.strCSM</td>
+                <td>
+                    <a href="javascript:void(0)" @*class=" @(tanIssues.Status != Entities.Status.Live.ToString() ? "btnEdit" : "hiddenTab")"*@ class="btnEdit" data-id="@tanIssues.Id"  >
+                        <i class="fa fa-pencil-square-o" title="@tanIssues.Tan.tanNumber" style="cursor: pointer !important;" ></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="javascript:void(0)" class="btnLive" data-id="@tanIssues.Id">
+                        <i class="fa fa-caret-square-o-right" title="@tanIssues.Tan.tanNumber" style="cursor: pointer !important;"></i>
+                    </a>
+                </td>
+                @*<td>
+                    <a href="@Url.Action("Deleteshipment", new { id = tanIssues.Id })" onclick="return confirm('Are you sure to Delete ?');">
+                        <i class="fa fa-times" title="@tanIssues.Tan.tanNumber" style="cursor: pointer !important;"></i>
+                    </a>
+                </td>*@
+            </tr>
+        }
+        <tr style="font-weight:bold">
+            <td colspan="9" style="text-align:right">Total : @Enumerable.Count(ViewBag.tanIssues)</td>
+        </tr>
+    </tbody>
+</table>
+
+

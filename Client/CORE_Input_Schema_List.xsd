@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <xsd:simpleType name="ScopeNote">
+  <xsd:restriction base="xsd:normalizedString">
+   <xsd:pattern value="[&#x09;&#x0A;&#x0D;&#x20;-&#x7e;]*"/>
+  </xsd:restriction>
+ </xsd:simpleType>
+ <xsd:simpleType name="Condition">
+  <xsd:restriction base="xsd:normalizedString">
+   <xsd:pattern value="[&#x09;&#x0A;&#x0D;&#x20;-&#x7e;]*"/>
+  </xsd:restriction>
+ </xsd:simpleType>
+ <xsd:element name="RXNFILE">
+  <xsd:complexType>
+   <xsd:sequence>
+    <xsd:element name="SOURCE" type="xsd:normalizedString" minOccurs="1"/>
+    <xsd:element name="FILENUM" type="xsd:int" minOccurs="1"/>
+    <xsd:element name="VERSION" type="xsd:int" minOccurs="1"/>
+    <xsd:element name="DOCUMENT" minOccurs="1" maxOccurs="unbounded">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="VIEW" type="xsd:normalizedString" minOccurs="1" maxOccurs="1"/>
+       <xsd:element name="CAN" type="xsd:normalizedString" minOccurs="0" maxOccurs="1"/>
+       <xsd:element name="TAN" minOccurs="1" maxOccurs="1">
+        <xsd:simpleType>
+         <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[0-9]{8}[A-Z]"/>
+         </xsd:restriction>
+        </xsd:simpleType>
+       </xsd:element>
+       <xsd:element name="ANALYST" type="xsd:normalizedString" minOccurs="1"/>
+       <xsd:element name="COMMENTS" type="xsd:string" minOccurs="0"/>
+       <xsd:element name="RXNGRP" minOccurs="0">
+        <xsd:complexType>
+         <xsd:sequence>
+          <xsd:element name="RXN" minOccurs="0" maxOccurs="unbounded">
+           <xsd:complexType>
+            <xsd:sequence>
+             <xsd:element name="RXNID" minOccurs="0">
+              <xsd:complexType>
+               <xsd:sequence>
+                <xsd:element name="RXNNUM" minOccurs="0">
+                 <xsd:simpleType>
+                  <xsd:restriction base="xsd:int">
+                   <xsd:minInclusive value="1"/>
+                   <xsd:maxInclusive value="9999"/>
+                  </xsd:restriction>
+                 </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="RXNSEQ" minOccurs="0">
+                 <xsd:simpleType>
+                  <xsd:restriction base="xsd:int">
+                   <xsd:minInclusive value="1"/>
+                   <xsd:maxInclusive value="9999"/>
+                  </xsd:restriction>
+                 </xsd:simpleType>
+                </xsd:element>
+               </xsd:sequence>
+              </xsd:complexType>
+             </xsd:element>
+             <xsd:element name="RSD" minOccurs="0">
+              <xsd:simpleType>
+               <xsd:restriction base="xsd:normalizedString">
+                <xsd:pattern value="[&#x09;&#x0A;&#x0D;&#x20;-&#x7e;]*"/>
+               </xsd:restriction>
+              </xsd:simpleType>
+             </xsd:element>
+             <xsd:element name="XREFGRP" minOccurs="0">
+              <xsd:complexType>
+               <xsd:sequence>
+                <xsd:element name="NRN" maxOccurs="unbounded">
+                 <xsd:complexType>
+                  <xsd:sequence>
+                   <xsd:element name="NRNNUM" type="xsd:int" minOccurs="0"/>
+                   <xsd:element name="NRNREG" type="xsd:integer" minOccurs="0"/>
+                  </xsd:sequence>
+                 </xsd:complexType>
+                </xsd:element>
+               </xsd:sequence>
+              </xsd:complexType>
+             </xsd:element>
+             <xsd:element name="SUBDESC" minOccurs="0">
+              <xsd:complexType>
+               <xsd:sequence>
+                <xsd:element name="SUBDEFN" maxOccurs="unbounded">
+                 <xsd:complexType>
+                  <xsd:sequence>
+                   <xsd:element name="NRNNUM" type="xsd:int" minOccurs="0"/>
+                   <xsd:element name="SUBLOC" minOccurs="0">
+                    <xsd:simpleType>
+                     <xsd:restriction base="xsd:string">
+                      <xsd:pattern value="[&#x09;&#x0A;&#x0D;&#x20;-&#x7e;]*"/>
+                     </xsd:restriction>
+                    </xsd:simpleType>
+                   </xsd:element>
+                   <xsd:element name="SUBNAME" minOccurs="0">
+                    <xsd:simpleType>
+                     <xsd:restriction base="xsd:string">
+                      <xsd:pattern value="[&#x09;&#x0A;&#x0D;&#x20;-&#x7e;]*"/>
+                     </xsd:restriction>
+                    </xsd:simpleType>
+                   </xsd:element>
+                  </xsd:sequence>
+                 </xsd:complexType>
+                </xsd:element>
+               </xsd:sequence>
+              </xsd:complexType>
+             </xsd:element>
+             <xsd:element name="RXNPROCESS" minOccurs="0">
+              <xsd:complexType>
+               <xsd:sequence>
+                <xsd:element name="RSN" minOccurs="0" maxOccurs="unbounded">
+                 <xsd:complexType>
+                  <xsd:simpleContent>
+                   <xsd:extension base="ScopeNote">
+                    <xsd:attribute name="TYPE" use="required">
+                     <xsd:simpleType>
+                      <xsd:restriction base="xsd:normalizedString">
+                       <xsd:enumeration value="FREE"/>
+                       <xsd:enumeration value="anaerobic"/>
+                       <xsd:enumeration value="biotransformation"/>
+                       <xsd:enumeration value="chemoselective"/>
+                       <xsd:enumeration value="combinatorial"/>
+                       <xsd:enumeration value="electrochemical"/>
+                       <xsd:enumeration value="enzymic"/>
+                       <xsd:enumeration value="explosion"/>
+                       <xsd:enumeration value="failed reaction"/>
+                       <xsd:enumeration value="fermentation"/>
+                       <xsd:enumeration value="gas phase"/>
+                       <xsd:enumeration value="green chemistry"/>
+                       <xsd:enumeration value="green chemistry-catalyst"/>
+                       <xsd:enumeration value="green chemistry-process simplification"/>
+                       <xsd:enumeration value="green chemistry-reagent"/>
+                       <xsd:enumeration value="green chemistry-renewable feedstock"/>
+                       <xsd:enumeration value="green chemistry-solvent"/>
+                       <xsd:enumeration value="green chemistry-waste reduction"/>
+                       <xsd:enumeration value="high pressure"/>
+                       <xsd:enumeration value="in the dark"/>
+                       <xsd:enumeration value="low pressure"/>
+                       <xsd:enumeration value="microwave irradiation"/>
+                       <xsd:enumeration value="photochemical"/>
+                       <xsd:enumeration value="prophetic reaction"/>
+                       <xsd:enumeration value="radiochemical"/>
+                       <xsd:enumeration value="regioselective"/>
+                       <xsd:enumeration value="safety"/>
+                       <xsd:enumeration value="solid state"/>
+                       <xsd:enumeration value="solid-supported catalyst"/>
+                       <xsd:enumeration value="solid-supported reaction"/>
+                       <xsd:enumeration value="solid-supported reagent"/>
+                       <xsd:enumeration value="stereoselective"/>
+                       <xsd:enumeration value="thermal"/>
+                       <xsd:enumeration value="ultrasound"/>
+                      </xsd:restriction>
+                     </xsd:simpleType>
+                    </xsd:attribute>
+                   </xsd:extension>
+                  </xsd:simpleContent>
+                 </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="STAGE" minOccurs="0" maxOccurs="unbounded">
+                 <xsd:complexType>
+                  <xsd:sequence>
+                   <xsd:element name="SUBSTAGE" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                     <xsd:sequence>
+                      <xsd:element name="COND" minOccurs="0" maxOccurs="unbounded">
+                       <xsd:complexType>
+                        <xsd:simpleContent>
+                         <xsd:extension base="Condition">
+                          <xsd:attribute name="TYPE" use="required">
+                           <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                             <xsd:enumeration value="TP"/>
+                             <xsd:enumeration value="TM"/>
+                             <xsd:enumeration value="PR"/>
+                             <xsd:enumeration value="PH"/>
+                            </xsd:restriction>
+                           </xsd:simpleType>
+                          </xsd:attribute>
+                         </xsd:extension>
+                        </xsd:simpleContent>
+                       </xsd:complexType>
+                      </xsd:element>
+                     </xsd:sequence>
+                    </xsd:complexType>
+                    <xsd:unique name="UniqueCONDType">
+                     <xsd:selector xpath="./COND"/>
+                     <xsd:field xpath="@TYPE"/>
+                    </xsd:unique>
+                   </xsd:element>
+                  </xsd:sequence>
+                 </xsd:complexType>
+                </xsd:element>
+               </xsd:sequence>
+              </xsd:complexType>
+              <xsd:unique name="UniqueRSNType">
+               <xsd:selector xpath="./RSN"/>
+               <xsd:field xpath="@TYPE"/>
+              </xsd:unique>
+             </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute name="NO" type="xsd:int" use="required"/>
+           </xsd:complexType>
+           <xsd:unique name="uniqueNum">
+            <xsd:selector xpath=".//NRNNUM"/>
+            <xsd:field xpath="."/>
+           </xsd:unique>
+          </xsd:element>
+         </xsd:sequence>
+        </xsd:complexType>
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+   </xsd:sequence>
+  </xsd:complexType>
+ </xsd:element>
+</xsd:schema>

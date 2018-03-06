@@ -1,0 +1,39 @@
+﻿<Window x:Class="Client.Views.PdfSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:Client.ViewModels.Core"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        WindowState="Normal"
+        ResizeMode="NoResize"
+        Topmost="True"
+        Title="Pdf Search" 
+        x:Name="PdfSearchWindow"
+        xmlns:styles="clr-namespace:Client.Styles" 
+        Height="400" 
+        Width="270"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <viewModels:PdfSearchVM  x:Key="context"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="context"/>
+    </Window.DataContext>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Margin="2" Content="Match Case" FontWeight="Normal" Name="MatchCase" FontSize="14"/>
+                <CheckBox Margin="2" Content="Whole Word" FontWeight="Normal" Name="WholeWord" FontSize="14"/>
+            </StackPanel>
+            <DockPanel>
+                <Label Margin="2" Content="Search"/>
+                <TextBox Margin="2" Background="Transparent" FontWeight="Normal" Name="Query" KeyUp="Query_KeyUp"/>
+            </DockPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding TotalCount}" DockPanel.Dock="Bottom" Margin="2" FontWeight="Normal"/>
+        <ListBox Background="Transparent" ItemsSource="{Binding Results}" Margin="2" FontWeight="Normal" Name="SearchList"/>
+    </DockPanel>
+</Window>

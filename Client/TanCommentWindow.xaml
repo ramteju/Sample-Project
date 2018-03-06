@@ -1,0 +1,360 @@
+﻿<Window x:Class="Client.TanCommentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views"
+        mc:Ignorable="d"
+        Icon="/images/icon.png"
+        xmlns:viewModels="clr-namespace:Client.ViewModels"
+        xmlns:views="clr-namespace:Client.Views"
+        xmlns:styles="clr-namespace:Client.Styles"
+        xmlns:wb="clr-namespace:Client.Util"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        Title="TAN Comments"
+        x:Name="TanCommentsWindow"
+        Height="650"
+        Width="750"
+        ResizeMode="NoResize"
+        xmlns:WPFMVVMPrism="clr-namespace:WPFMVVMPrism;assembly=WPFMVVMPrism"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <viewModels:DoubleConverter x:Key="DoubleConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0"
+                    SelectedIndex="{Binding SelectedTab,Mode=TwoWay}">
+            <TabItem Header="Indexing Errors">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="2">
+                                <Label Content="NUM" />
+                                <TextBox Width="50"
+                                         Background="#FFE9ECDA"
+                                         Text="{Binding IndexNUM,Mode=TwoWay,Converter={StaticResource DoubleConverter}, ConverterParameter=IndexNUM}">
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Page" />
+                                <TextBox Width="50"
+                                         Background="#FFE9ECDA"
+                                         Text="{Binding IndexPAGE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Line" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexLINE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Para" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexPARA,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Column" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexCOLUMN,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Table" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexTABLE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Figure" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexFIGURE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Scheme" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexSCHEMES,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Sheet" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexSHEET,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Footnote" />
+                                <TextBox Width="50"
+                                         Text="{Binding IndexFOOTNOTE,Mode=TwoWay}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                Margin="2">
+                        <Label Content="Comment"
+                               VerticalAlignment="Center" />
+                        <TextBox Width="650"
+                                 Background="#FFE9ECDA"
+                                 Text="{Binding IndexCOMMENT,Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right"
+                                Grid.Row="2">
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal">
+                            <Button Margin="2"
+                                    Content="Clear"
+                                    Command="{Binding Path=ClearAllFields}" />
+                            <Button Margin="2"
+                                    Content="Save"
+                                    Command="{Binding Path=SaveIndexComment}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Author Errors">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="NUM" />
+                                    <CheckBox Content="Corrected"
+                                              IsChecked="{Binding IsAuthorNumCorrected,Mode=TwoWay}" />
+                                </StackPanel>
+                                <TextBox Width="50"
+                                         Background="#FFE9ECDA"
+                                         Text="{Binding AuthorNUM,Mode=TwoWay,Converter={StaticResource DoubleConverter}, ConverterParameter=AuthorNUM}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Page" />
+                                <TextBox Width="50"
+                                         Background="#FFE9ECDA"
+                                         Text="{Binding AuthorPAGE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Line" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorLINE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Para" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorPARA,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Column" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorCOLUMN,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Table" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorTABLE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Figure" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorFIGURE,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Scheme" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorSCHEMES,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Sheet" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorSHEET,Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="2">
+                                <Label Content="Footnote" />
+                                <TextBox Width="50"
+                                         Text="{Binding AuthorFOOTNOTE,Mode=TwoWay}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                Margin="2">
+                        <Label Content="Comment"
+                               VerticalAlignment="Center" />
+                        <TextBox Width="670"
+                                 Background="#FFE9ECDA"
+                                 Text="{Binding AuthorCOMMENT,Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right"
+                                Grid.Row="2">
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal">
+                            <Button Margin="2"
+                                    Content="Clear"
+                                    Command="{Binding Path=ClearAllFields}" />
+                            <Button Margin="2"
+                                    Content="Save"
+                                    Command="{Binding Path=SaveAuthorComment}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Others">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Margin="2">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="NUM" />
+                            <TextBox Width="50"
+                                     Background="#FFE9ECDA"
+                                     Margin="23,0,0,0"
+                                     Text="{Binding OtherNUM,Mode=TwoWay,Converter={StaticResource DoubleConverter}, ConverterParameter=OtherNUM}">
+
+                            </TextBox>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Comment"
+                               VerticalAlignment="Center" />
+                        <TextBox Height="180"
+                                 Width="680"
+                                 Background="#FFE9ECDA"
+                                 Text="{Binding OtherCOMMENT,Mode=TwoWay}">
+
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Button Content="Add Comment"
+                                Margin="5,2,2,2"
+                                Command="{Binding Path=SaveOtherComment}" />
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Temeperature / Default">
+                <StackPanel>
+                    <TextBox Height="150"
+                             Margin="2"
+                             Text="{Binding TemperatureCOMMENT,Mode=TwoWay}"
+                             IsReadOnly="True" />
+                    <Label Content="Default Comment:" />
+                    <TextBox Height="70"
+                             ScrollViewer.VerticalScrollBarVisibility="Visible"
+                             Margin="2"
+                             IsReadOnly="True"
+                             Text="{Binding DefaultCOMMENT,Mode=TwoWay}" />
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="CAS Consulted For">
+                <StackPanel>
+                    <TextBox Height="220"
+                             Background="#FFE9ECDA"
+                             Text="{Binding CasConsultedCOMMENT,Mode=TwoWay}" />
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Note: 'CAS Consulted for' comments are available to query TANs only" />
+                        <Button Content="Add Comment"
+                                Margin="5,2,2,2"
+                                Command="{Binding Path=SaveCASComment}" />
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <telerik:RadGridView Grid.Row="1"
+                             AutoGenerateColumns="False"
+                             Name="TanCommentsGrid"
+                             SelectedItem="{Binding SelectedComment,Mode=TwoWay}"
+                             ShowGroupPanel="False"
+                             ItemsSource="{Binding TanComments, Mode=TwoWay}"
+                             CanUserDeleteRows="False">
+            <WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                <WPFMVVMPrism:BehaviorBinding Event="MouseDoubleClick"
+                                              Command="{Binding Path=EditCommentCommand}"
+                                              CommandParameter="{Binding ElementName=TanCommentsGrid, Path=SelectedItem}" />
+            </WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+            <telerik:RadGridView.InputBindings>
+                <KeyBinding Key="F2"
+                            Command="{Binding Path=EditCommentCommand}"
+                            CommandParameter="{Binding ElementName=TanCommentsGrid, Path=SelectedItem}" />
+                <KeyBinding Key="Delete"
+                            Command="{Binding DeleteTanComment}" />
+            </telerik:RadGridView.InputBindings>
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Header="S.No."
+                                            Width="60"
+                                            DataMemberBinding="{Binding DisplayOrder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            IsReadOnly="True"
+                                            TextWrapping="Wrap" />
+                <telerik:GridViewDataColumn Header="Comment"
+                                            Width="*"
+                                            DataMemberBinding="{Binding TotalComment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            IsReadOnly="True"
+                                            TextWrapping="Wrap" />
+                <telerik:GridViewDataColumn Header="Comment Type"
+                                            Width="150"
+                                            DataMemberBinding="{Binding CommentType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            IsReadOnly="True" />
+                <telerik:GridViewDataColumn Header="Length"
+                                            Width="70"
+                                            DataMemberBinding="{Binding Length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            IsReadOnly="True" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="345" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="27" />
+                    <RowDefinition Height="27" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Comments Length (Excluding default 8000 / 85000 comments):"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <Label Content="{Binding CommentLegth,Mode=TwoWay}"
+                       Grid.Row="0"
+                       Grid.Column="1" />
+                <Label Content="Comments Maximum Length :"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       HorizontalAlignment="Right" />
+                <Label Content="4000"
+                       Grid.Row="1"
+                       Grid.Column="1" />
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+                <telerik:RadButton Grid.Column="0"
+                                   Content="Refresh"
+                                   HorizontalAlignment="Right"
+                                   Command="{Binding Path=ClearAllFields}"
+                                   Width="140"
+                                   Margin="0,10,10,10" />
+                <telerik:RadButton Grid.Column="1"
+                                   Content="Save"
+                                   HorizontalAlignment="Right"
+                                   Click="RadButton_Click"
+                                   Width="140"
+                                   Margin="0,10,10,10" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

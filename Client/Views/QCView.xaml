@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="Client.Views.QCView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.Views"
+             xmlns:styles="clr-namespace:Client.Styles" 
+             xmlns:views="clr-namespace:Client.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="900">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="HeaderStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
+                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </UserControl.Resources>
+
+    <DataGrid Background="WhiteSmoke" ItemsSource="{Binding ReactionViews}" AutoGenerateColumns="False" IsReadOnly="True" ToolTip="Press ctrl+t to Tabuler Format">
+        
+        <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </DataGrid.ColumnHeaderStyle>
+       
+        <DataGrid.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFFFee"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey }" Color="#000000"/>
+        </DataGrid.Resources>
+        
+        <DataGrid.Columns>     
+            <DataGridTextColumn Binding="{Binding Name}" Header="REACTION" Width="150">
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextBlock.Background" Value="WhiteSmoke" />
+                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
+
+            <DataGridTemplateColumn Width="150" Header="PRODUCT &amp; YIELD">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ListBox ItemsSource="{Binding YieldProducts}" VerticalAlignment="Center" BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Background="WhiteSmoke" Text="{Binding}" VerticalAlignment="Stretch" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
+            <DataGridTemplateColumn Width="*" Header="REACTION PARTICIPANTS">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                            <DataGrid ItemsSource="{Binding Stages}" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="0" MinHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding StageVM.Name}" Width="100">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Stretch" />
+                                                <Setter Property="Background" Value="WhiteSmoke" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn Width="Auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <views:ParticipantsDisplay/>
+                                            </DataTemplate>                                            
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

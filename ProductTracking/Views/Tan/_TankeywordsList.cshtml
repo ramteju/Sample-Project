@@ -1,0 +1,39 @@
+﻿@using ProductTracking.Models.Core
+@using ProductTracking.Util
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Sno</th>
+        <th>Keyword</th>
+       
+    </tr>
+    <tbody>
+        @{
+            int count = 1;
+
+        }
+        @foreach (TanKeywords tanKeyword in ViewBag.TanKeywords)
+        {
+
+            <tr>
+                <td>@(count++)</td>
+                <td>@tanKeyword.keyword</td>
+                <td><a href="@Url.Action("TanKeyword", new { id = tanKeyword.Id })" >
+    <i class="fa fa-pencil-square-o"  style="cursor: pointer !important;"></i>
+</a></td>
+                <td>
+                    <a href="@Url.Action("DeleteTanKeyword", new { id = tanKeyword.Id })" onclick="return confirm('Are you sure to Delete ?');">
+                        <i class="fa fa-times"  style="cursor: pointer !important;"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        <tr style="font-weight:bold">
+            <td colspan="3" style="text-align:right">Total</td>
+            <td>@Enumerable.Count(ViewBag.TanKeywords)</td>
+        </tr>
+    </tbody>
+</table>
+
+
+

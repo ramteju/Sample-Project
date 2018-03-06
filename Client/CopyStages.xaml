@@ -1,0 +1,95 @@
+﻿<Window x:Class="Client.CopyStages" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        WindowStartupLocation="CenterScreen" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        xmlns:viewModels="clr-namespace:Client.ViewModels"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+        mc:Ignorable="d" Title="Copy Stages" Height="450" Width="400" 
+        x:Name="CopyStageForm" ResizeMode="NoResize" Visibility="{Binding Visible,Mode=TwoWay}">
+    <Window.Background>
+        <VisualBrush>
+            <VisualBrush.Visual>
+                <Grid>
+                    <Rectangle>
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                <GradientStop Color="#F0F8FF" Offset="0" />
+                                <GradientStop Color="#FFFFFFFF" Offset="0.567" />
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Image Source="/Images/beakers.jpg" Opacity="0.2" />
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+    </Window.Background>
+    <Window.Resources>
+        <viewModels:EnumBooleanConverter x:Key="enumBooleanConverter" />
+    </Window.Resources>
+    <Grid Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Stages" FontWeight="Bold">
+            <telerik:RadListBox Grid.Column="0" ItemsSource="{Binding Stages}" 
+                                DisplayMemberPath="Name" SelectedValuePath="Id" 
+                                SelectedItem="{Binding SelectedStage, Mode=TwoWay}" 
+                                SelectionMode="Multiple" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                Margin="2" Grid.RowSpan="2" Background="Transparent" FontWeight="Normal" 
+                                SelectionChanged="RadListBox_SelectionChanged" />
+        </GroupBox>
+        <GroupBox Header="Options" Grid.Column="1" FontWeight="Bold">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <telerik:RadRadioButton Content="Append"
+                                            ToolTip="Append To Existing Stages"
+                                            GroupName="SelectedStageOption"
+                                            Margin="1"
+                                            IsChecked="{Binding Path=SelectedStageOption, Converter={StaticResource enumBooleanConverter}, ConverterParameter={x:Static viewModels:CopyStageOptions.APPEND}}"
+                                            Foreground="Violet"
+                                            CornerRadius="3" />
+                    <telerik:RadRadioButton Content="After"
+                                            ToolTip="Insert after to the Selected stage"
+                                            GroupName="SelectedStageOption"
+                                            Margin="1"
+                                            IsChecked="{Binding Path=SelectedStageOption, Converter={StaticResource enumBooleanConverter}, ConverterParameter={x:Static viewModels:CopyStageOptions.AFTER}}"
+                                            Foreground="BlueViolet"
+                                            CornerRadius="3" />
+                    <telerik:RadRadioButton Content="Before"
+                                            ToolTip="Insert before to the Selected stage"
+                                            GroupName="SelectedStageOption"
+                                            Margin="1"
+                                            IsChecked="{Binding Path=SelectedStageOption, Converter={StaticResource enumBooleanConverter}, ConverterParameter={x:Static viewModels:CopyStageOptions.BEFORE}}"
+                                            Foreground="Green"
+                                            CornerRadius="3" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Generate" Grid.Column="0" Margin="2" FontWeight="Normal" VerticalAlignment="Center" />
+                    <telerik:RadNumericUpDown IsEditable="True" Minimum="1" Value="{Binding StagesCountToCopy, 
+                        Mode=TwoWay}" Maximum="100" Grid.Column="1" Height="30" NumberDecimalDigits="0" Margin="2" NullValue="2" FontWeight="Normal" />
+                    <TextBlock Text="Stages" Grid.Column="0" Margin="2" FontWeight="Normal" VerticalAlignment="Center" />
+                </StackPanel>
+                <CheckBox Grid.Column="1" Content="Solvents" IsChecked="{Binding IsSolventsSelected, Mode=TwoWay}" FontWeight="Normal" Margin="2" />
+                <CheckBox Grid.Column="1" Content="Agents" IsChecked="{Binding IsAgentsSelected, Mode=TwoWay}" FontWeight="Normal" Margin="2" />
+                <CheckBox Grid.Column="1" Content="Catalyst" IsChecked="{Binding IsCatalystSelected, Mode=TwoWay}" FontWeight="Normal" Margin="2" />
+                <CheckBox Grid.Column="1" Content="Conditions" IsChecked="{Binding IsConditionsSelected, Mode=TwoWay}" FontWeight="Normal" Margin="2" />
+                <CheckBox Grid.Column="1" Content="RSNS" IsChecked="{Binding IsRSNSelected, Mode=TwoWay}" FontWeight="Normal" Margin="2" />
+                <CheckBox Grid.Column="1" Content="Reactants" IsChecked="{Binding IsReactantsSelected, Mode=TwoWay}" FontWeight="Normal" Margin="2" Visibility="Hidden" />
+                <telerik:RadButton Content="Copy Stage(s)" Grid.Column="1" Command="{Binding CopyStages}" FontWeight="Normal" Margin="2" Width="120" />
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>

@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--<xs:schema id="CAS_React_Schema" targetNamespace="http://tempuri.org/CAS_React_Schema.xsd" elementFormDefault="qualified" xmlns="http://tempuri.org/CAS_React_Schema.xsd" xmlns:mstns="http://tempuri.org/CAS_React_Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" version="1.0">-->
+<!--<xs:schema id="CAS_React_Schema" targetNamespace="CAS_React_Schema.xsd" elementFormDefault="qualified" xmlns="CAS_React_Schema.xsd" xmlns:mstns="CAS_React_Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" version="1.0">-->
+  <xs:schema id="CASREACT" targetNamespace="CAS_React_Schema.xsd" elementFormDefault ="qualified" xmlns ="CAS_React_Schema.xsd" xmlns:mstns ="CAS_React_Schema.xsd" xmlns:xs ="http://www.w3.org/2001/XMLSchema" attributeFormDefault ="unqualified" version ="1.0">
+  <xs:simpleType name="tanType">
+    <xs:annotation>
+      <xs:documentation>"TAN" is a CAS-supplied document identifier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[1-9][0-9]{7}[A-HJ-KM-NP-Z]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="canType">
+    <xs:annotation>
+      <xs:documentation>"CAN" is a Chemical Abstracts Number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[1-9][0-9]{2}:[1-9][0-9]{3,5}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="analystType">
+    <xs:annotation>
+      <xs:documentation>"Analyst is a 4 digit positive number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:pattern value="[8][0][0-1][0-9]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="sourceType">
+    <xs:annotation>
+      <xs:documentation>
+        Vendor Name
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="commentsType">
+    <xs:annotation>
+      <xs:documentation>
+       Comments used in the reactions
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="versionType">
+    <xs:annotation>
+      <xs:documentation>
+        CAS version
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:pattern value="[1-9]{1}"/>
+    </xs:restriction >
+  </xs:simpleType>
+  
+  <xs:simpleType name="filenameType">
+    <xs:annotation>
+      <xs:documentation>
+        File Number
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>    
+  </xs:simpleType>
+  
+  <xs:simpleType name="viewType">    
+    <xs:restriction base="xs:string">    
+      <xs:enumeration value="RXN"/>      
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="rxnnumType">
+    <xs:annotation>
+      <xs:documentation>"rxnnum is a positive number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="rxnseqType">
+    <xs:annotation>
+      <xs:documentation>"rxnseq is a positive number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="rsdType">
+    <xs:annotation>
+      <xs:documentation>
+        RSD pattern
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <!--<xs:pattern value="P=[1-9][0-9]{0,3}.*R=[1-9][0-9]{0,3}(([^;]+;[^;]+)*|[^;]*)"/>-->
+      <xs:pattern value="^([^;]+;)+[^;]+$|^[^;]*$"/>      
+    </xs:restriction>
+  </xs:simpleType>  
+  
+  <xs:simpleType name="nrnregType">
+    <xs:annotation>
+      <xs:documentation>"nrn registrasion is a positive number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger"/>
+  </xs:simpleType>
+  
+  <xs:complexType name="rxnType" mixed="true"> 
+    <xs:annotation>
+      <xs:documentation>
+        Reactions in the TAN
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded"/>
+  </xs:complexType>
+  
+  <xs:simpleType name="condType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TM"/>
+      <xs:enumeration value="TP"/>
+      <xs:enumeration value="PR"/>
+      <xs:enumeration value="PH"/>
+    </xs:restriction>
+    
+  </xs:simpleType>
+  <xs:simpleType name="valType">
+    <xs:restriction base="xs:string">    
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="NrnNumType">
+    <xs:annotation>
+      <xs:documentation>"NrnNum is a positive 1-4 digit number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:pattern value="[1-9][0-9]{0,3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="NrnRegType">
+    <xs:annotation>
+      <xs:documentation>"NrnReg is a positive 5-10 digit positive number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:pattern value="[1-9][0-9]{4,9}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SubDescNrnNumType">
+    <xs:annotation>
+      <xs:documentation>"NrnNum is a positive 4 digit number.It starts with 8000</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:pattern value="[8][0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:annotation>
+    <xs:documentation>
+      ================================================================================
+      CASREACT Element definitions.
+      ================================================================================
+    </xs:documentation>
+  </xs:annotation>
+
+<!--DOCUMENT Element-->
+<xs:element name="DOCUMENT">
+    <xs:annotation>
+      <xs:documentation>
+        ================================================================================
+        The "DOCUMENT" element contains all the reactions data in the TAN
+        ================================================================================
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="VIEW" type="viewType"/>
+        <xs:element name="CAN" type="canType"/>
+        <xs:element name="TAN" type="tanType"/>
+        <xs:element name="ANALYST" type="analystType"/>
+        <xs:element name="COMMENTS" type="commentsType"/>
+        <xs:element ref ="RXNGRP" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<!--RXNGRP Element-->
+<xs:element name="RXNGRP">
+    <xs:complexType>
+      <xs:sequence  minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref ="RXN"/>
+      </xs:sequence>
+    </xs:complexType>  
+    <!--<xs:unique name="uniqueSUBDESC">--><!--Unique SUBDESC in the TAN--><!--      
+      <xs:selector xpath="mstns:RXN/mstns:SUBDESC/mstns:SUBDEFN/mstns:NRNNUM" />
+      <xs:field xpath="." />
+    </xs:unique>--> <!--Unique SUBDESC removed on 16th Apr 2011-->
+  </xs:element>
+
+  <!--RXN Element-->
+  <xs:element name="RXN">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref ="RXNID"/>
+        <xs:element name="RSD" type="rsdType" />
+        <xs:element ref ="XREFGRP"/>
+        <xs:element ref ="SUBDESC" minOccurs="0"/>
+        <xs:element ref ="RXNPROCESS"/>
+      </xs:sequence>
+      <xs:attribute name="NO" type="xs:int" />
+    </xs:complexType>    
+  </xs:element>  
+  
+<!--RXNPROCESS Element-->
+<xs:element name="RXNPROCESS">
+    <xs:complexType>
+      <xs:sequence >
+        <xs:element ref ="RSN" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref ="STAGE" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--STAGE Element-->
+<xs:element name="STAGE" >
+  <xs:complexType>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref ="RSN" minOccurs="0"/>
+      <xs:element ref ="SUBSTAGE" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>  
+  
+<!--RXNID Element-->
+<xs:element name="RXNID">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="RXNNUM" type="rxnnumType" />
+      <xs:element name="RXNSEQ" type="rxnseqType" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<!--XREFGRP Element-->
+<xs:element name="XREFGRP">
+  <xs:complexType>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="NRN">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="NRNNUM" type="NrnNumType"/>            
+            <xs:element name="NRNREG" type="NrnRegType" />
+          </xs:sequence>
+        </xs:complexType>        
+      </xs:element>
+    </xs:sequence>   
+  </xs:complexType>
+  <xs:unique name="uniqueNRN"><!--Unique NRN tag should be there in XML-->
+    <xs:selector xpath="mstns:NRN/mstns:NRNNUM" />
+    <xs:field xpath="." />
+  </xs:unique>
+  <xs:unique name="uniqueNRNREG"><!--Unique NRNREG should be there in XML-->
+    <xs:selector xpath="mstns:NRN/mstns:NRNREG" />
+    <xs:field xpath="." />
+  </xs:unique>
+</xs:element>
+
+<!--SUBDESC Element--> 
+<xs:element name="SUBDESC" >
+  <xs:complexType>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="SUBDEFN">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="NRNNUM" type="SubDescNrnNumType" />
+            <xs:element name="SUBLOC" type="xs:string" />
+            <xs:element name="SUBNAME" type="xs:string"  minOccurs="0" maxOccurs="unbounded" />           
+          </xs:sequence>
+        </xs:complexType>            
+      </xs:element>
+    </xs:sequence>    
+  </xs:complexType>
+  <xs:unique name="uniqueSUBDEFN">
+    <!--Unique SUBDEFN in the Reaction-->
+    <xs:selector xpath="mstns:SUBDEFN/mstns:NRNNUM" />
+    <xs:field xpath="." />
+  </xs:unique>
+</xs:element>
+
+<!--SUBSTAGE Element-->
+<xs:element name="SUBSTAGE">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref ="COND"/>          
+      </xs:sequence>      
+    </xs:complexType>    
+  </xs:element>
+
+<!--COND Element-->
+<xs:element name="COND">  
+  <xs:complexType mixed ="true">   
+    <xs:attribute name="TYPE" type="condType" />   
+  </xs:complexType>
+</xs:element>
+
+<!--RSN Element-->
+<xs:element name="RSN">
+  <xs:complexType mixed ="true">    
+    <xs:attribute name="TYPE" type="xs:string"/>    
+  </xs:complexType>
+</xs:element>
+
+<!--RXNFILE Element. It is the Root element in the XML file-->
+<xs:element name="RXNFILE">
+    <xs:annotation>
+      <xs:documentation>
+        ================================================================================
+        The "RXNFILE" element is a top-level (document) element in the XML.
+        It contains SOURCE,FILENUM,VERSION , and DOCUMENT information in the TAN.
+        ================================================================================
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SOURCE" type="sourceType"/>
+        <xs:element name="FILENUM" type="filenameType"/>
+        <xs:element name="VERSION" type="versionType"/>
+        <xs:element ref="DOCUMENT" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+  
+</xs:schema>

@@ -1,0 +1,65 @@
+﻿@using ProductTracking.Models.Core
+@using ProductTracking.Util
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Sno</th>
+        <th>Batch</th>
+        <th>Created Date</th>
+        <th>TANs</th>
+        <th>Updated Tans Count</th>
+        <th>Remaining Tans Count</th>
+    </tr>
+    <tbody>
+        @{
+            int count = 1, total = 0;
+            Dictionary<int, int> batchWiseTans = ViewBag.batchWiseTans;
+            Dictionary<int, string> UpdatedTans = ViewBag.batchUpdatedTans;
+            string DocClass = ViewBag.Docclass;
+        }
+        @foreach (Batch shipment in ViewBag.batches)
+        {
+            int shipmentTans = 0;
+            int TanUpdatedList = 0;
+            int RemainingTans = 0;
+            if (batchWiseTans.ContainsKey(shipment.Id))
+            {
+                shipmentTans = batchWiseTans[shipment.Id];
+            }
+            if (UpdatedTans != null)
+            {
+                if (UpdatedTans.ContainsKey(shipment.Id))
+                {
+                    TanUpdatedList = Convert.ToInt32(UpdatedTans[shipment.Id]);
+                }
+            }
+            if (TanUpdatedList != 0)
+            {
+                RemainingTans = shipmentTans - TanUpdatedList;
+            }
+            total += shipmentTans;
+            <tr>
+                <td>@(count++)</td>
+                <td>@shipment.Name</td>
+                <td>
+                    @if (shipment.DateCreated != null)
+                    {
+                        @shipment.DateCreated.Value.ToString("dd-MM-yyyy") <span>(@DateUtils.dateString(shipment.DateCreated.Value))</span>
+                    }
+                </td>
+                <td>@shipmentTans</td>
+                <td><a href="/Shipment/TargetDateUpdatedList/@shipment.Name " target="_blank"> @TanUpdatedList @DocClass</a> </td>
+                <td><a href="/Shipment/RemainingList/@shipment.Name" target="_blank"> @RemainingTans</a></td>
+            </tr>
+        }
+        <tr style="font-weight:bold">
+            <td colspan="3" style="text-align:right">Total</td>
+            <td>@total</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+@if (ViewBag.RemainingTans != null)
+{
+Html.RenderPartial("~/Views/Shipment/_RemainingExcelTanList.cshtml");
+    }

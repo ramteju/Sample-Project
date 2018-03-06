@@ -1,0 +1,44 @@
+﻿<Window x:Class="Client.Views.Delivery.ZipResult"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views.Delivery"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        WindowState="Normal"
+        Icon="/images/icon.png"
+        WindowStyle="ToolWindow"        
+        Title="Status" Height="600" Width="650" Closing="Window_Closing">
+    <Grid>
+        <GroupBox Style="{StaticResource GroupStyle}" Header="Result">
+            <GroupBox.Background>
+                <ImageBrush ImageSource="/images/zip.png" Stretch="UniformToFill" Opacity="0.15"/>
+            </GroupBox.Background>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="TANs" FontWeight="SemiBold"/>
+                    <Label Name="TotalTans" Width="50" FontWeight="Normal"/>
+                    <Label Content="ZIPs" FontWeight="SemiBold"/>
+                    <Label Name="TotalZips" Width="50" FontWeight="Normal"/>
+                    <Label Content="Path" FontWeight="SemiBold"/>
+                    <Label Name="ZipsPath" MaxWidth="380" FontWeight="Normal"/>
+                    <telerik:RadButton Margin="2" CornerRadius="2" Name="Open" Click="Open_Click" ToolTip="Open Folder">
+                        <Image Source="/images/folder-open.png" Height="24" Width="24"/>
+                    </telerik:RadButton>
+                </StackPanel>
+                <telerik:RadListBox Margin="2" Name="result" Background="Transparent" FontWeight="Normal" 
+                                    Height="500"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <telerik:RadListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" Width="550"/>
+                        </ItemsPanelTemplate>
+                    </telerik:RadListBox.ItemsPanel>
+                </telerik:RadListBox>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>

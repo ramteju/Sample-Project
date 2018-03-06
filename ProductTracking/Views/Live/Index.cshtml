@@ -1,0 +1,640 @@
+﻿@using ProductTracking.Util
+@using Entities
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Report</title>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/fa/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/App/css/Site.css" rel="stylesheet" />
+    <link href="~/Content/jqplot/jquery.jqplot.min.css" rel="stylesheet" />
+    <style>
+        .panel-heading {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-heading {
+            text-transform: uppercase;
+            font-weight: bold;
+            border-bottom: 2px solid #a1c2de;
+            font-size: 20px !important;
+            color: #325979;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        .dashboardWidget {
+            height: 60px !important;
+            max-height: 200px !important;
+            min-height: 60px !important;
+        }
+
+        .number {
+            font-size: 30px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .graph {
+            margin: 10px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .projectTitle {
+        }
+
+        .nextGen {
+            font-family: mistral;
+            color: yellow;
+            font-size: 25px;
+        }
+
+        #serverTime {
+            font-size: 18px;
+        }
+
+        #blink {
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <span class="projectTitle">Reactions</span>
+                    <span class="nextGen">Next Gen</span>
+                    <span id="blink" style="color:white;padding-left:15px"> Live Dashboard</span>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="font-weight:bold;font-size:16px;padding-right:20px;">
+                        <a style=""> <span id="serverTime"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid body-content" style="padding-top:30px">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="form-heading">TODAY's Status (@DateTime.Now.ToString("dd-MM-yyyy dddd"))</h3>
+                <div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">TANs Curated</div>
+                            <div class="panel-body dashboardWidget number" id="todayCuration">
+                            </div>
+                        </div>
+                    </div>@*Report-1*@
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">TANs Review'ed</div>
+                            <div class="panel-body dashboardWidget number" id="qcToday">
+                            </div>
+                        </div>
+                    </div>@*Report-2*@
+
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Online Users</div>
+                            <div class="panel-body dashboardWidget number" id="online">
+                            </div>
+                        </div>
+                    </div>@*Report-3*@
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Today Reactions</div>
+                            <div class="panel-body dashboardWidget number" id="todayReactions">
+                            </div>
+                        </div>
+                    </div>@*Report-4*@
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3 class="form-heading">Overall Status</h3>
+                <div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Total TANs</div>
+                            <div class="panel-body dashboardWidget number" id="tanCount">
+                            </div>
+                        </div>
+                    </div>@*Report-1*@
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">TANS Curated</div>
+                            <div class="panel-body dashboardWidget number" id="tansCurated">
+                            </div>
+                        </div>
+                    </div>@*Report-2*@
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Total Reactions</div>
+                            <div class="panel-body dashboardWidget number" id="totalReactions">
+                            </div>
+                        </div>
+                    </div>@*Report-3*@
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Curation InProgress</div>
+                            <div class="panel-body dashboardWidget number" id="curationProgress">
+                            </div>
+                        </div>
+                    </div>@*Report-4*@
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            @DateTime.Now.ToString("dd")
+                            <sup style="text-transform:lowercase">@(DateUtils.GetDaySuffix(Int32.Parse(DateTime.Now.ToString("dd"))))</sup>
+                            @DateTime.Now.ToString("MMMM") Production
+                        </div>
+                        <div class="panel-body graph" id="hourCount">
+                        </div>
+                    </div>
+                </div>
+            </div>@*Report-1*@
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Reactions Created from last 10 days</div>
+                        <div class="panel-body graph" id="curationPast">
+                        </div>
+                    </div>
+                </div>@*Report-1*@
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">TANs qc'ed from last 10 days</div>
+                        <div class="panel-body graph" id="qcPast">
+                        </div>
+                    </div>
+                </div>@*Report-2*@
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="form-heading">General Summary</h3>
+                <div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Total Shipments Received</div>
+                            <div class="panel-body dashboardWidget number" id="shipmentCount">
+                            </div>
+                        </div>
+                    </div>@*Report-5*@
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Total Curators Registered</div>
+                            <div class="panel-body dashboardWidget number" id="curators">
+                            </div>
+                        </div>
+                    </div>@*Report-3*@
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Total Reviewers Registered</div>
+                            <div class="panel-body dashboardWidget number" id="reviewers">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading center">Total QCs Registered</div>
+                            <div class="panel-body dashboardWidget number" id="qc">
+                            </div>
+                        </div>
+                    </div>@*Report-4*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div style="padding-top:5px;padding-left:10px;">
+            <p>&copy; @DateTime.Now.Year - Powered By Excelra Knowledge Solutions</p>
+        </div>
+    </footer>
+
+    <div id="codeDiv" style="display:none">
+
+    </div>
+
+
+    <script src="~/Content/jqplot/jquery.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/jqplot/jquery.jqplot.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script src="~/Content/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+    <script src="~/Content/HighCharts/highcharts-more.js"></script>
+    <script src="~/Content/HighCharts/highcharts.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+
+        $.jqplot.config.enablePlugins = true;
+        var hourResult;
+        var hourPlot = null;
+
+        window.setInterval(function () {
+            showTime();
+        }, 1000);
+
+        (function blink() {
+            $('#blink').fadeOut(2500).fadeIn(800, blink);
+        })();
+
+        function n(n) {
+            return n > 9 ? "" + n : "0" + n;
+        }
+
+        function showTime() {
+            var d = new Date();
+            var dformat = [d.getHours(), d.getMinutes(), n(d.getSeconds())].join(' : ');
+            $('#serverTime').html(dformat)
+        }
+
+        $(document).ready(function () {
+            shipmentCount();
+            todaysCuration();
+            curationProgress();
+            todaysQC();
+            tanCount();
+            tansCurated();
+            qcAccepted();
+            todayProduction();
+            //avgTimeCumulative();
+            curators();
+            reviewers();
+            qc();
+            totalReactions();
+            curationPast();
+            //qcPast();
+            //hourWise();
+            initSignalR();
+            online();
+        })
+
+        function todayProduction() {
+
+            $.ajax({
+                url: "@Url.Action("GetTodayHourWiseCount", "Report")",
+                success: function (result) {
+                    Highcharts.chart('hourCount', {
+                        credits:false,
+                        chart: {
+                            zoomType: 'x'
+                        },
+                        title: {
+                            text: 'Tans Curated Hour wise'
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            tickInterval: 1
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Tans Count'
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{series.name}</b><br />',
+                            pointFormat: 'Hour = {point.x}, Tans Count = {point.y}'
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            area: {
+                                fillColor: {
+                                    linearGradient: {
+                                        x1: 0,
+                                        y1: 0,
+                                        x2: 0,
+                                        y2: 1
+                                    },
+                                    stops: [
+                                        [0, Highcharts.getOptions().colors[0]],
+                                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                    ]
+                                },
+                                marker: {
+                                    radius: 2
+                                },
+                                lineWidth: 1,
+                                states: {
+                                    hover: {
+                                        lineWidth: 1
+                                    }
+                                },
+                                threshold: null
+                            }
+                        },
+
+                        series: [{
+                            type: 'area',
+                            name: 'Hour to Tan',
+                            data: result
+                        }]
+                    });
+                }
+            });
+
+
+        }
+
+        function initSignalR() {
+            var chat = $.connection.liveHub;
+            chat.client.curated = function (msg) {
+                $('#codeDiv').html(msg)
+            };
+            chat.client.accepted = function (msg) {
+                $('#codeDiv').html(msg)
+            };
+            chat.client.online = function (msg) {
+                $('#codeDiv').html(msg)
+            };
+            $.connection.hub.start().done(function () {
+            });
+        }
+
+        function shipmentCount() {
+            $.ajax({
+                url: "@Url.Action("ShipmentsCount", "Live")",
+                success: function (result) {
+                    $('#shipmentCount').html(result);
+                }
+            });
+        }
+
+        function todaysCuration() {
+            $.ajax({
+                url: "@Url.Action("TansCountToday", "Live")",
+                data: { Role: 1 },
+                success: function (result) {
+                    $('#todayCuration').html(result);
+                }
+            });
+        }
+        function curationProgress() {
+            $.ajax({
+                url: "@Url.Action("CurationProgress", "Live")",
+                data: { Role: 1 },
+                success: function (result) {
+                    $('#curationProgress').html(result);
+                }
+            });
+        }
+
+        function totalReactions() {
+            $.ajax({
+                url: "@Url.Action("totalReactions", "Live")",
+                data: { today: true },
+                success: function (result) {
+                    $('#todayReactions').html(result);
+                }
+            });
+            $.ajax({
+                url: "@Url.Action("totalReactions", "Live")",
+                data: { today: false },
+                success: function (result) {
+                    $('#totalReactions').html(result);
+                }
+            });
+        }
+
+        function todaysQC() {
+            $.ajax({
+                url: "@Url.Action("TansCountToday", "Live")",
+                data: { Role: 2 },
+                success: function (result) {
+                    $('#qcToday').html(result);
+                }
+            });
+        }
+
+        function tanCount() {
+            $.ajax({
+                url: "@Url.Action("TotalTans", "Live")",
+                success: function (result) {
+                    $('#tanCount').html(result);
+                }
+            });
+        }
+
+        function tansCurated() {
+            $.ajax({
+                url: "@Url.Action("ToatlCuratedTansCount", "Live")",
+                success: function (result) {
+                    $('#tansCurated').html(result);
+                }
+            });
+        }
+
+        function qcAccepted() {
+            $.ajax({
+                url: "@Url.Action("TansCountToday", "Live")",
+                data: { Role: 3 },
+                success: function (result) {
+                    $('#qcAccepted').html(result);
+                }
+            });
+        }
+
+        @*function avgTime() {
+            $.ajax({
+                url: "@Url.Action("AvgTime", "Live")",
+                success: function (result) {
+                    $('#avgTime').html(result + "<span style='font-size:15px!important'> Mins.</span>");
+                }
+            });
+        }*@
+
+        @*function avgTimeCumulative() {
+            $.ajax({
+                url: "@Url.Action("AvgTimeCumulative", "Live")",
+                success: function (result) {
+                    $('#avgTimeCumulative').html(result + "<span style='font-size:15px!important'> Mins.</span>");
+                }
+            });
+        }*@
+
+        function curators() {
+            $.ajax({
+                url: "@Url.Action("RoleWiseCount", "Live")",
+                data: { Role: 1 },
+                success: function (result) {
+                    $('#curators').html(result);
+                }
+            });
+        }
+        function reviewers() {
+            $.ajax({
+                url: "@Url.Action("RoleWiseCount", "Live")",
+                data: { Role: 2 },
+                success: function (result) {
+                    $('#reviewers').html(result);
+                }
+            });
+        }//reviewers
+
+        function qc() {
+            $.ajax({
+                url: "@Url.Action("RoleWiseCount", "Live")",
+                data: { Role: 3 },
+                success: function (result) {
+                    $('#qc').html(result);
+                }
+            });
+        }
+
+        function online() {
+            $.ajax({
+                url: "@Url.Action("Online", "Live")",
+                success: function (result) {
+                    $('#online').html(result);
+                }
+            });
+        }
+
+        function curationPast() {
+            $.ajax({
+                url: "@Url.Action("StateWiseGraph")",
+                method: 'post',
+                data: { id: 4 },
+                success: function (result) {
+                    var s1 = result[0];
+                    var ticks = result[1];
+
+                    plot1 = $.jqplot('curationPast', [s1], {
+                        title: 'Number of Created Reactions from last 10 Days',
+                        seriesColors: ['#00749F', '#73C774', '#C7754C', '#17BDB8'],
+                        animate: !$.jqplot.use_excanvas,
+                        seriesDefaults: {
+                            renderer: $.jqplot.BarRenderer,
+                            pointLabels: { show: true }
+                        },
+                        axesDefaults: {
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer
+                        },
+                        axes: {
+                            xaxis: {
+                                renderer: $.jqplot.CategoryAxisRenderer,
+                                ticks: ticks
+                            },
+                            yaxis: {
+                                min: 0
+                            }
+                        },
+                        highlighter: { show: true }
+                    });
+                }
+            });
+        }
+
+        @*function qcPast() {
+            $.ajax({
+                url: "@Url.Action("StateWiseGraph")",
+                method: 'post',
+                data: { id: 8 },
+                success: function (result) {
+                    var s1 = result[0];
+                    var ticks = result[1];
+
+                    plot1 = $.jqplot('qcPast', [s1], {
+                        title: 'Number of QC Accepted TANs from last 10 Days',
+                        seriesColors: ['green', '#00749F', '#73C774', '#C7754C', '#17BDB8'],
+                        animate: !$.jqplot.use_excanvas,
+                        seriesDefaults: {
+                            renderer: $.jqplot.BarRenderer,
+                            pointLabels: { show: true }
+                        },
+                        axes: {
+                            xaxis: {
+                                renderer: $.jqplot.CategoryAxisRenderer,
+                                ticks: ticks
+                            },
+                            yaxis: {
+                                min: 0
+                            }
+                        },
+                        highlighter: { show: true }
+                    });
+                }
+            });
+        }
+
+        function hourWise() {
+            $.ajax({
+                url: "@Url.Action("HourWise")",
+                method: 'post',
+                data: { id: 4 },
+                success: function (result) {
+                    hourResult = result;
+                    hourGraph();
+                }
+            });
+        }
+
+        function hourGraph() {
+            if (hourPlot)
+                hourPlot.destroy();
+            hourPlot = $.jqplot('hourCount', hourResult[2], {
+                legend: { show: true },
+                series: hourResult[1],
+                seriesDefaults: {
+                    showMarker: true,
+                    pointLabels: { show: true }
+                },
+                axes: {
+                    xaxis: {
+                        pad: 1,
+                        renderer: $.jqplot.CategoryAxisRenderer,
+                        ticks: hourResult[0]
+                    },
+                    yaxis: {
+                        min: 0
+                    }
+                }
+            });
+            hourPlot.resetAxesScale();
+        }*@
+
+    </script>
+
+</body>
+</html>

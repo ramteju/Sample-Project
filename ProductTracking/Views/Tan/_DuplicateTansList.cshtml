@@ -1,0 +1,37 @@
+﻿@using ProductTracking.Models.Core
+@using ProductTracking.Util
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Sno</th>
+        <th>tanNumber</th>
+        <th>DateCreated</th>    
+        
+    </tr>
+    <tbody>
+        @{
+            int count = 1, total = 0;
+            
+        }
+        @foreach (Tan tan in ViewBag.batchWiseTans)
+        {
+           
+            <tr>
+                <td>@(count++)</td>
+                <td>@tan.tanNumber</td>
+                <td>
+                    @if (tan.DateCreated != null)
+                    {
+                        @tan.DateCreated.ToString("dd-MM-yyyy") <span>(@DateUtils.dateString(tan.DateCreated))</span>
+                    }
+                </td>
+             
+            </tr>
+        }
+        <tr style="font-weight:bold">
+            <td colspan="3" style="text-align:right">Total</td>
+            <td>@Enumerable.Count(ViewBag.batchWiseTans)</td>
+        </tr>
+    </tbody>
+</table>
+

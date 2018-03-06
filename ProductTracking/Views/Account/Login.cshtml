@@ -1,0 +1,69 @@
+﻿@using ProductTracking.Models
+@model LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Reactions</title>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/fa/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/App/css/Login.css" rel="stylesheet" />
+    <link href="~/Content/App/css/Site.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="apollo" style="margin-top:6%;">
+        <div class="apollo-container clearfix">
+            <div class="apollo-facebook" style="text-align:center;">
+                <img src="http://www.excelra.com/images/excelra-logo.png" />
+            </div>
+
+            <div style="text-align:center;">
+                <h2 style="font-weight:500 !important">Reactions</h2>
+            </div>
+
+            <div class="apollo-login">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Domain Username" })
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Domain Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button class="btn btn-block btn-facebook" type="submit">Sign in</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/App/js/jquery-1.12.1.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>

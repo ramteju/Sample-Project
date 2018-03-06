@@ -1,0 +1,278 @@
+﻿<UserControl x:Class="Client.Views.ToolBar"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Client.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="800">
+    <telerik:RadRichTextBoxRibbonUI ContentHeight="79"
+                                    ApplicationName="{Binding Title}"
+                                    ApplicationButtonContent="HELP"
+                                    FontWeight="SemiBold">
+
+        <telerik:RadRichTextBoxRibbonUI.Backstage>
+            <telerik:RadRibbonBackstage>
+                <telerik:RadRibbonBackstageItem Header="Info"
+                                                IsDefault="True">
+                    <StackPanel Margin="30"
+                                HorizontalAlignment="Left">
+                        <Image Source="/Images/excelra-logo.png"
+                               HorizontalAlignment="Left" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="REACTIONS"
+                                       FontSize="25"
+                                       Foreground="{telerik:Office2013Resource ResourceKey=AccentMainBrush}"
+                                       FontFamily="Segoe UI Semilight" />
+                            <TextBlock Text="{Binding AppVersion}"
+                                       FontSize="12"
+                                       Margin="0,5,0,0"
+                                       Foreground="{telerik:Office2013Resource ResourceKey=AccentMainBrush}" />
+                        </StackPanel>
+                        <TextBlock Text="Powered By Excelra Knowledge Solutions"
+                                   FontSize="23"
+                                   Foreground="{telerik:Office2013Resource ResourceKey=AccentMainBrush}" />
+                        <TextBlock Text="© 2017, All Rights Reserved."
+                                   FontSize="12"
+                                   Margin="0,5,0,0"
+                                   Foreground="{telerik:Office2013Resource ResourceKey=AccentMainBrush}" />
+                        <Separator />
+                        <local:Help Margin="2" />
+                        <Separator />
+                    </StackPanel>
+                </telerik:RadRibbonBackstageItem>
+            </telerik:RadRibbonBackstage>
+        </telerik:RadRichTextBoxRibbonUI.Backstage>
+
+        <telerik:RadRichTextBoxRibbonUI.QuickAccessToolBar>
+            <telerik:QuickAccessToolBar>
+                <Image Source="/images/excelra-logo.png"
+                       Width="100"
+                       Height="24"
+                       Margin="2" />
+            </telerik:QuickAccessToolBar>
+        </telerik:RadRichTextBoxRibbonUI.QuickAccessToolBar>
+
+        <telerik:RadRibbonTab Header="CURATION"
+                              FontWeight="Normal">
+            <telerik:RadRibbonGroup Header="TASKS">
+                <telerik:RadCollapsiblePanel>
+                    <telerik:RadRibbonButton Text="Sheet"
+                                             AllowDrop="True"
+                                             Size="Large"
+                                             telerik:ScreenTip.Title="Show Task Sheet(ctrl+O)"
+                                             LargeImage="/Images/tasksheet.png"
+                                             Name="SheetBtn"
+                                             Command="{Binding OpenTaskSheet}" />
+                    <telerik:RadRibbonButton Text="Save"
+                                             Visibility="{Binding IsTanLoaded,Mode=OneWay}"
+                                             AllowDrop="True"
+                                             Size="Large"
+                                             telerik:ScreenTip.Title="Save Tan(ctrl+S)"
+                                             LargeImage="/Images/save.png"
+                                             Click="RadRibbonButton_Click"
+                                             IsEnabled="{Binding SaveEnabled}" />
+                    <telerik:RadRibbonButton Text="Assign Tasks"
+                                             AllowDrop="True"
+                                             Size="Large"
+                                             telerik:ScreenTip.Title="Assign Tans"
+                                             LargeImage="/Images/task-new.png"
+                                             Command="{Binding ShowTans}"
+                                             IsEnabled="{Binding AssignTaskVisble}" />
+                </telerik:RadCollapsiblePanel>
+            </telerik:RadRibbonGroup>
+
+            <telerik:RadRibbonGroup Header="TAN RELATED"
+                                    Name="CommentGroup"
+                                    Visibility="{Binding IsTanLoaded,Mode=OneWay}">
+                <telerik:RadRibbonButton Text="Analogous"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Show Analogous Reactions"
+                                         LargeImage="/Images/edit-paste-2.png"
+                                         Name="AnalogoursBtn"
+                                         Margin="0,1,0,-1"
+                                         Command="{Binding ShowAnalogous}" />
+                <telerik:RadRibbonButton Text="Comments"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Add Comments To Tan"
+                                         LargeImage="/Images/edit-4.png"
+                                         Name="CommentToTanbtn"
+                                         Margin="0,1,0,-1"
+                                         Command="{Binding ShowTanComments}" />
+
+                <telerik:RadRibbonButton Text="Refresh"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Refresh Reaction Preview(ctrl+R)"
+                                         LargeImage="/Images/refresh.png"
+                                         Name="Refresh"
+                                         Margin="0,1,0,-1"
+                                         Command="{Binding Refresh}" />
+            </telerik:RadRibbonGroup>
+
+            <telerik:RadRibbonGroup Header="WORKFLOW"
+                                    Visibility="{Binding IsTanLoaded,Mode=TwoWay}"
+                                    Name="WorkflowGroup">
+                <telerik:RadRibbonButton Text="Submit"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Submit TAN"
+                                         LargeImage="/Images/submit-next.png"
+                                         Name="SubmitBtn"
+                                         Command="{Binding SubmitTan}"
+                                         IsEnabled="{Binding SubmitEnabled}" />
+
+                <telerik:RadRibbonButton Text="Approve"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Approve TAN"
+                                         LargeImage="/Images/dialog-ok-3.png"
+                                         Name="ApproveBtn"
+                                         Command="{Binding ApproveTan}"
+                                         IsEnabled="{Binding ApproveVisible}" />
+
+                <telerik:RadRibbonButton Text="Reject"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Reject TAN"
+                                         LargeImage="/Images/revert.png"
+                                         Name="RejectBtn"
+                                         Command="{Binding RejectTan}"
+                                         IsEnabled="{Binding RejectVisible}" />
+
+
+            </telerik:RadRibbonGroup>
+            <telerik:RadRibbonGroup Header="CLOSE"
+                                    Name="CloseGroup"
+                                    Visibility="{Binding IsTanLoaded,Mode=OneWay}">
+                <telerik:RadRibbonButton Text="Close"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Close Current Tan(ctrl+W)"
+                                         LargeImage="/Images/dialog-no-3.png"
+                                         Name="CancleTanBtn"
+                                         Command="{Binding CancleTan}"
+                                         Visibility="{Binding IsTanLoaded,Mode=OneWay}" />
+            </telerik:RadRibbonGroup>
+            <telerik:RadRibbonGroup Header="QUERY &amp; DOUBT">
+                <telerik:RadRibbonButton Text="Open"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         Name="QueryBtn"
+                                         telerik:ScreenTip.Title="Query Mangement"
+                                         LargeImage="/Images/ask.ico"
+                                         Click="QueryBtn_Click" />
+                <telerik:RadRibbonButton Text="Workflows"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         Name="QueryWorkflowBtn"
+                                         telerik:ScreenTip.Title="Query Workflow"
+                                         LargeImage="/Images/edit-group.png"
+                                         Click="QueryWorkflowBtn_Click"
+                                         IsEnabled="{Binding AssignTaskVisble}" />
+                <telerik:RadRibbonButton Text="Report"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         Name="QueryReportBtn"
+                                         telerik:ScreenTip.Title="Queries Report"
+                                         LargeImage="/Images/office-chart-area-stacked.png"
+                                         Click="QueryReportBtn_Click"
+                                         IsEnabled="{Binding AssignTaskVisble}" />
+            </telerik:RadRibbonGroup>
+            <telerik:RadRibbonGroup Header="Mater Data"
+                                    Name="StaticGroup">
+                <telerik:RadRibbonButton Text="Solvents"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Show solvent boiling points"
+                                         LargeImage="/Images/beakers.jpg"
+                                         Name="SolventBoilingPoints"
+                                         Command="{Binding ShowSolventBoilingPoints}" />
+            </telerik:RadRibbonGroup>
+            <telerik:RadRibbonGroup Header="UserManul">
+                <telerik:RadRibbonButton Text="UserManul"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         Name="rbnUserManul"
+                                         telerik:ScreenTip.Title="User Manuals"
+                                         LargeImage="/Images/User_Manual.jpg"
+                                         Click="rbnUserManul_Click" />
+            </telerik:RadRibbonGroup>
+            <telerik:RadRibbonGroup Header="LogOut">
+                <telerik:RadRibbonButton Text="Logout"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         Name="LogOut"
+                                         telerik:ScreenTip.Title="Log Out"
+                                         LargeImage="/Images/system-shutdown-6.png"
+                                         Click="LogOut_Click" />
+            </telerik:RadRibbonGroup>
+            <!--<telerik:RadRibbonGroup Header="Application LogOut">
+                <telerik:RadRibbonButton Text="LogOut" AllowDrop="True" Size="Large" Name="logoutBtn" telerik:ScreenTip.Title="Logout" LargeImage="/Images/logout.ico" Click="QueryBtn_Click" />
+            </telerik:RadRibbonGroup>-->
+
+
+            <!--<telerik:RadRibbonGroup Header="Settings" Name="SettingsGroup" >
+                <telerik:RadRibbonButton Text="Settings" AllowDrop="True" Size="Large" 
+                                         LargeImage="/Images/Settings.png" Name="SettingsBtn" 
+                                         Command="{Binding Settings}" 
+                                         Visibility="{Binding SettingsVisible,Mode=OneWay}" />
+            </telerik:RadRibbonGroup>-->
+        </telerik:RadRibbonTab>
+
+        <telerik:RadRibbonTab Header="DELIVERY"
+                              Visibility="{Binding ShowDeliveryTab}"
+                              FontWeight="Normal">
+            <telerik:RadRibbonGroup Header="Prepare Delivery">
+                <telerik:RadRibbonButton Content="Shipments"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Final Checks Before Delivery"
+                                         LargeImage="/Images/prepare.png"
+                                         Name="PrepareDeliveryBtn"
+                                         Click="PrepareDeliveryBtn_Click" />
+            </telerik:RadRibbonGroup>
+            <telerik:RadRibbonGroup Header="After Delivery">
+                <telerik:RadRibbonButton Content="Verify XML"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Select TANs For Delivery . ."
+                                         LargeImage="/Images/checklist.png"
+                                         Name="CreateDeliveryTAN"
+                                         Click="CreateDeliveryTAN_Click" />
+                <telerik:RadRibbonButton Content="Report"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Delivery Report"
+                                         LargeImage="/Images/report.png"
+                                         Name="DeliveryReportBtn"
+                                         Click="DeliveryReportBtn_Click" />
+            </telerik:RadRibbonGroup>
+        </telerik:RadRibbonTab>
+        <telerik:RadRibbonTab Header="REPORTS"
+                              FontWeight="Normal"
+                              Visibility="Collapsed">
+            <telerik:RadRibbonGroup Header="User Reports">
+                <telerik:RadRibbonButton Content="AnalystIds"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Final Checks Before Delivery"
+                                         LargeImage="/Images/prepare.png"
+                                         Name="AnalystId"
+                                         Click="AnalystId_Click" />
+                <telerik:RadRibbonButton Content="Daily Status"
+                                         AllowDrop="True"
+                                         Size="Large"
+                                         telerik:ScreenTip.Title="Final Checks Before Delivery"
+                                         LargeImage="/Images/prepare.png"
+                                         Name="DailyStatus"
+                                         Click="DailyStatus_Click" />
+            </telerik:RadRibbonGroup>
+        </telerik:RadRibbonTab>
+
+    </telerik:RadRichTextBoxRibbonUI>
+</UserControl>

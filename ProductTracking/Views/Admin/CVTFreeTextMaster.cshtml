@@ -1,0 +1,123 @@
+﻿@using Entities
+@using ProductTracking.Models.Core
+@using Excelra.Utils.Library
+
+@{
+    ViewBag.Title = "CVT&Freetext Master Form";
+    List<string> cvts = ViewBag.cvts;
+    List<string> freetexts = ViewBag.freetexts;
+    List<string> Ignorablecvts = ViewBag.Ignorablecvts;
+}
+
+@section head {
+    <link href="~/Content/App/plugins/jqgrid/css/trirand/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/jqgrid/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <style>
+        .full-height {
+            height: calc(100vh - 250px);
+            overflow-y: auto;
+        }
+
+        .snoColumn {
+            width: 50px;
+        }
+
+        .userNameColumn {
+            width: 250px;
+        }
+
+        .checkColumn {
+            width: 100px;
+        }
+
+        textarea {
+            height: 650px;
+            width: 100%;
+            font-size: medium;
+        }
+    </style>
+
+}
+
+<form method="post" action="@Url.Action("SaveCVTFreeTexts")" id="user-benchmarks-form">
+    <input type="submit" class="btn btn-primary" value="Save" style="margin-bottom:15px;margin-left:15px" />
+    <button type="button" class="btn btn-primary" data-toggle="modal" style="margin-bottom:15px;margin-left:15px" data-target="#user-benchmarks-form-Modal">Add Ignorable CVTs</button>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">CVTs:</div>
+            </div>
+            <textarea id="cvtText" name="cvtTexts">@string.Join("\r\n", cvts)</textarea>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Free texts:</div>
+            </div>
+            <textarea id="FreeText" name="FreeTexts">@string.Join("\r\n", freetexts)</textarea>
+        </div>
+        <div style="padding:5px;font-weight:bold">
+            <img src="~/Images/help-hint.png" style="height:30px"/>CVT & Associated Freetext split string "::"
+        </div>
+    </div>
+
+</form>
+
+
+<div class="modal fade" id="user-benchmarks-form-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">CVT1 Related CVTs</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">CVTs:</div>
+                        </div>
+                        <textarea id="DIcvtText" name="cvtTexts">@string.Join("\r\n", Ignorablecvts)</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Save" style="margin-bottom:15px;margin-left:15px" id="AddIgnorable" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#AddIgnorable").click(function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("SaveIgnorableCVTs","Admin")",
+                    data: { "CVTText": $("#DIcvtText").val() },
+                    success: function (data) {
+                        if (data == "Success")
+                            $("#user-benchmarks-form-Modal").modal("hide");
+                        else
+                            alert(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status == 404)
+                            alert("Request not valid . .");
+                        else if (jqXHR.status == 409)
+                            alert("Curator Role Already assigned for selected User");
+                        else if (jqXHR.status == 204)
+                            alert("Invalid Data");
+                        else
+                            alert("Error while saving details . .");
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}

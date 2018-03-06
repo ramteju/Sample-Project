@@ -1,0 +1,18 @@
+﻿<Window x:Class="Client.Stores.DataImport"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Stores"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True"
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow"
+        Title="Reactions-NG :: Data Import" Height="180" Width="300">
+    <DockPanel>
+        <Label  Content="This is a one time operation . ." DockPanel.Dock="Top" Margin="10" FontFamily="Segoe UI Light"/>
+        <Label Name="Progress" DockPanel.Dock="Bottom" Margin="10" FontStyle="Italic" FontSize="16" FontFamily="Segoe UI Light"/>
+        <ProgressBar Height="30" IsIndeterminate="True" Margin="10"/>
+    </DockPanel>
+</Window>

@@ -1,0 +1,246 @@
+﻿<UserControl x:Class="Client.Views.QCTableView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Client.Views"
+             xmlns:viewModels="clr-namespace:Client.ViewModels"
+             mc:Ignorable="d"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             d:DesignHeight="600"
+             d:DesignWidth="1000">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <viewModels:StyleConverter x:Key="styleConverter" />
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="110" />
+        </Grid.RowDefinitions>
+        <telerik:RadGridView Background="WhiteSmoke"
+                             ItemsSource="{Binding QCTAbleViewVM.CuratedTanData}"
+                             AutoGenerateColumns="False"
+                             IsReadOnly="True"
+                             BorderThickness="0"
+                             CanUserReorderColumns="False"
+                             CanUserDeleteRows="False"
+                             CanUserInsertRows="False"
+                             CanUserSortColumns="False"
+                             CanUserSortGroups="False"
+                             ShowGroupPanel="False">
+            <telerik:RadGridView.RowStyle>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background"
+                            Value="{Binding Id, Converter={StaticResource styleConverter}, ConverterParameter=Id }">
+
+                    </Setter>
+                </Style>
+            </telerik:RadGridView.RowStyle>
+            <telerik:RadGridView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                 Color="#FFFFee" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey }"
+                                 Color="#000000" />
+            </telerik:RadGridView.Resources>
+
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Sno}"
+                                            Header="S.No."
+                                            Width="40"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}">
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding RxnNumWithSequence}"
+                                            Header="Rxn Num"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Products}"
+                                            Header="Products(Yield)"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Reactants}"
+                                            Header="Reactants"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Agents}"
+                                            Header="Agents"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Catalysts}"
+                                            Header="Catalysts"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Solvents}"
+                                            Header="Solvents"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Time}"
+                                            Header="Time"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Temperature}"
+                                            Header="Temperature"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Pressure}"
+                                            Header="Pressure"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding PH}"
+                                            Header="pH"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Cvt}"
+                                            Header="CVT"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Freetext}"
+                                            Header="Freetext"
+                                            Width="120"
+                                            Background="{Binding Id,Converter={StaticResource styleConverter}, ConverterParameter=Id}" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+        <GroupBox Header="Summary"
+                  Style="{StaticResource GroupStyle}"
+                  Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical"
+                            Margin="5,0,0,5">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Total Reactions: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.TotalReactions}"
+                                   VerticalAlignment="Center"
+                                   Width="30" Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Total Participants Count: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.TotalParticipants}"
+                                   Width="30"
+                                   VerticalAlignment="Center"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Note/s-Participants Count"></Label>
+                    </StackPanel>
+                </StackPanel>
+                <Separator Margin="3"/>
+                <StackPanel Orientation="Vertical"
+                            Margin="5,0,0,5">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Total Stages: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.TotalStages}"
+                                   Width="30"
+                                   VerticalAlignment="Center"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Products: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Products}"
+                                   Width="30"
+                                   VerticalAlignment="Center"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Time: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Time}"
+                                   Width="30"
+                                   VerticalAlignment="Center"
+                                   Foreground="Green" />
+                    </StackPanel>
+                </StackPanel>
+                <Separator Margin="3"/>
+                <StackPanel Orientation="Vertical"
+                            Margin="5,0,0,5">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="No. Of Distinct 8000 Series: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Distinct8000Count}"
+                                   Width="30"
+                                   VerticalAlignment="Center"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Reactants: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Reactants}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Pressure: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Pressure}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                </StackPanel>
+                <Separator Margin="3"/>
+                <StackPanel Orientation="Vertical"
+                            Margin="5,0,0,5">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="No. of Reactions with 8000 Series: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.ReactionsWith8000}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Catalyst: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Catalyst}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Temp: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Temp}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                </StackPanel>
+                <Separator Margin="3"/>
+                <StackPanel Orientation="Vertical" Margin="5,0,0,5">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Solvent: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Solvent}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="Agent: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.Agent}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Label Content="pH: "></Label>
+                        <TextBlock Text="{Binding QCTAbleViewVM.PH}"
+                                   VerticalAlignment="Center"
+                                   Width="30"
+                                   Foreground="Green" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="06f03d69-a46e-4df5-8cf2-64ddb69fb56f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.168.45.29/BlueBeem/BlueService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BlueData.wsdl" MetadataType="Wsdl" ID="d40718fb-8300-432e-b8aa-c2f53b3427a7" SourceId="1" SourceUrl="http://192.168.45.29/BlueBeem/BlueService.svc?wsdl" />
+    <MetadataFile FileName="BlueService.xsd" MetadataType="Schema" ID="f2359224-b26c-4a95-aa41-06b6da9e9ef4" SourceId="1" SourceUrl="http://192.168.45.29/BlueBeem/BlueService.svc?xsd=xsd2" />
+    <MetadataFile FileName="BlueService.disco" MetadataType="Disco" ID="adfc4257-2a28-47ed-acc9-26b58ba29514" SourceId="1" SourceUrl="http://192.168.45.29/BlueBeem/BlueService.svc?disco" />
+    <MetadataFile FileName="BlueService1.xsd" MetadataType="Schema" ID="831df79e-d5f7-4f3b-ac88-16e9081420b1" SourceId="1" SourceUrl="http://192.168.45.29/BlueBeem/BlueService.svc?xsd=xsd1" />
+    <MetadataFile FileName="BlueService2.xsd" MetadataType="Schema" ID="99da0ab0-804d-403e-9866-b3a920c924bd" SourceId="1" SourceUrl="http://192.168.45.29/BlueBeem/BlueService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

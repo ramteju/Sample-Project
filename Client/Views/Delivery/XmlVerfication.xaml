@@ -1,0 +1,172 @@
+﻿<Window x:Class="Client.Views.Delivery.XmlVerfication"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views.Delivery"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="d"
+        Icon="/images/icon.png"
+        xmlns:common="clr-namespace:Client.Common"
+        xmlns:views="clr-namespace:Client.Views" 
+        xmlns:delivery="clr-namespace:Client.Views.Delivery"
+        xmlns:viewModels="clr-namespace:Client.ViewModels"
+        xmlns:utils="clr-namespace:Client.ViewModels.Utils"
+        xmlns:entities="clr-namespace:Entities;assembly=Entities" 
+        xmlns:styles="clr-namespace:Client.Styles" xmlns:wb="clr-namespace:Client.Util"
+        Title="Xml Verfication" Height="800" Width="1000" WindowState="Maximized" Closing="Window_Closing">
+
+    <Window.Resources>
+        <Style x:Key="NumberStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Courier New"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <viewModels:XMLVerificationVM  x:Key="context"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="context"/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Style="{StaticResource GroupStyle}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Content="XML File" Margin="2"/>
+                <TextBox Width="550" Margin="2" Height="30" Text="{Binding XmlPath,UpdateSourceTrigger=PropertyChanged}"/>
+                <telerik:RadButton CornerRadius="2" Margin="2" Content=". . ." Command="{Binding BrowseXML}"/>
+                <telerik:RadButton CornerRadius="2" Margin="2" Content="Validate" Command="{Binding ValidateXML}"/>
+                <telerik:RadButton CornerRadius="2" Margin="2" Content="Clear" Command="{Binding ClearForm}"/>
+            </StackPanel>
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="Delivery Summary" FontWeight="SemiBold" Margin="2" Width="250" Style="{StaticResource GroupStyleTwo}">
+                <Grid VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Total TANs" FontWeight="Normal"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding TotalTans}" FontWeight="Normal" Style="{StaticResource NumberStyle}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Total RXNs" FontWeight="Normal"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding TotalRXNs}" FontWeight="Normal" Style="{StaticResource NumberStyle}"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Max RSD Length" FontWeight="Normal"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding MaxRSDLength}" FontWeight="Normal" Style="{StaticResource NumberStyle}"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="8000 Chemicals" FontWeight="Normal"/>
+                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding S8000Chemicals}" FontWeight="Normal" Style="{StaticResource NumberStyle}"/>
+                    <Separator Grid.Row="4" Grid.ColumnSpan="2"/>
+                    <Label Grid.Row="5" Grid.Column="0" Content="XSD Errors" FontWeight="Normal" Foreground="Red"/>
+                    <Label Grid.Row="5" Grid.Column="1" Content="{Binding XSDResult.Count}" FontWeight="Normal" Foreground="Red" Style="{StaticResource NumberStyle}"/>
+                    <Label Grid.Row="6" Grid.Column="0" Content="Unicode Comments" FontWeight="Normal" Foreground="Red"/>
+                    <Label Grid.Row="6" Grid.Column="1" Content="{Binding CommentsUnicodeErrors.Count}" FontWeight="Normal" Foreground="Red" Style="{StaticResource NumberStyle}"/>
+                    <Label Grid.Row="7" Grid.Column="0" Content="Unicode RSN" FontWeight="Normal" Foreground="Red"/>
+                    <Label Grid.Row="7" Grid.Column="1" Content="{Binding RSNUnicodeErrors.Count}" FontWeight="Normal" Foreground="Red" Style="{StaticResource NumberStyle}"/>
+                    <Label Grid.Row="8" Grid.Column="0" Content="Unicode 8000" FontWeight="Normal" Foreground="Red"/>
+                    <Label Grid.Row="8" Grid.Column="1" Content="{Binding S8000UnicodeErrors.Count}" FontWeight="Normal" Foreground="Red" Style="{StaticResource NumberStyle}"/>
+                </Grid>
+            </GroupBox>
+            <telerik:RadBusyIndicator Grid.Column="1" IsBusy="{Binding IsBusy}">
+                <telerik:RadTabControl Margin="2" FontWeight="SemiBold">
+                    <telerik:RadTabItem Header="Formatted View">
+                        <WebBrowser utils:WebBrowserUtility.BindableSource="{Binding XmlPath}" Navigated="WebBrowser_Navigated" LoadCompleted="WebBrowser_LoadCompleted"/>
+                    </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="XSD Verification">
+                        <telerik:RadGridView AlternationCount="2" IsReadOnly="True" 
+                                             SelectionMode="Extended" ItemsSource="{Binding XSDResult}" 
+                                             AutoGenerateColumns="False" Margin="2" ShowGroupPanel="False" 
+                                             ShowSearchPanel="True"
+                                             IsSynchronizedWithCurrentItem="False">
+                            <telerik:RadGridView.Columns>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding Level}"  Header="Level" Width="100"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding LineNumber}" Header="Line" Width="100"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding LinePosition}" Header="Position" Width="100"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding Text}" Header="Message" Width="*" TextWrapping="Wrap"/>
+                            </telerik:RadGridView.Columns>
+                        </telerik:RadGridView>
+                    </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="RSD Length">
+                        <telerik:RadGridView AlternationCount="2" IsReadOnly="True" 
+                                             SelectionMode="Extended" ItemsSource="{Binding RSDResult}" 
+                                             AutoGenerateColumns="False" Margin="2" ShowGroupPanel="False" 
+                                             ShowSearchPanel="True"
+                                             IsSynchronizedWithCurrentItem="False">
+                            <telerik:RadGridView.Columns>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding TanNumber}"  Header="TAN" Width="100"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding RxnNo}" Header="RXN" Width="100"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding ProductNo}" Header="Product"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding Sequence}" Header="SEQ" Width="100"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding RSD}" Header="RSD" Width="*" TextWrapping="Wrap"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding RsdLength}" Header="Length"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding Semicolumns}" Header="Semi Columns" Width="100"/>
+                                <telerik:GridViewDataColumn DataMemberBinding="{Binding Stages}" Header="Stages" Width="100"/>
+                            </telerik:RadGridView.Columns>
+                        </telerik:RadGridView>
+                    </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="Special Characters">
+                        <telerik:RadTabControl>
+                            <telerik:RadTabItem Header="Comments">
+                                <telerik:RadGridView AlternationCount="2" IsReadOnly="True" 
+                                             SelectionMode="Extended" ItemsSource="{Binding CommentsUnicodeErrors}" 
+                                             AutoGenerateColumns="False" Margin="2" ShowGroupPanel="False" 
+                                             ShowSearchPanel="False"
+                                             IsSynchronizedWithCurrentItem="False">
+                                    <telerik:RadGridView.Columns>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding TanNumber}"  Header="TAN" Width="100"/>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Comments}" Header="Comments" Width="*"/>
+                                    </telerik:RadGridView.Columns>
+                                </telerik:RadGridView>
+                            </telerik:RadTabItem>
+                            <telerik:RadTabItem Header="RSN">
+                                <telerik:RadGridView AlternationCount="2" IsReadOnly="True" 
+                                             SelectionMode="Extended" ItemsSource="{Binding RSNUnicodeErrors}" 
+                                             AutoGenerateColumns="False" Margin="2" ShowGroupPanel="False" 
+                                             ShowSearchPanel="False"
+                                             IsSynchronizedWithCurrentItem="False">
+                                    <telerik:RadGridView.Columns>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding TanNumber}"  Header="TAN" Width="100"/>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding RXN}" Header="RXN" Width="100"/>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Seq}" Header="Seq" Width="100"/>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Comments}" Header="RSN" Width="*"/>
+                                    </telerik:RadGridView.Columns>
+                                </telerik:RadGridView>
+                            </telerik:RadTabItem>
+                            <telerik:RadTabItem Header="8000 Series">
+                                <telerik:RadGridView AlternationCount="2" IsReadOnly="True" 
+                                             SelectionMode="Extended" ItemsSource="{Binding S8000UnicodeErrors}" 
+                                             AutoGenerateColumns="False" Margin="2" ShowGroupPanel="False" 
+                                             ShowSearchPanel="False"
+                                             IsSynchronizedWithCurrentItem="False">
+                                    <telerik:RadGridView.Columns>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding TanNumber}"  Header="TAN" Width="100"/>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Num}" Header="NUM" Width="100"/>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Seq}" Header="Seq" Width="100"/>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding SubstanceName}" Header="Substance Name" Width="*"/>
+                                    </telerik:RadGridView.Columns>
+                                </telerik:RadGridView>
+                            </telerik:RadTabItem>
+                        </telerik:RadTabControl>
+                    </telerik:RadTabItem>
+                </telerik:RadTabControl>
+            </telerik:RadBusyIndicator>
+
+        </Grid>
+    </Grid>
+</Window>

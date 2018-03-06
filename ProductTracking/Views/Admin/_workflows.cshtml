@@ -1,0 +1,65 @@
+﻿@using Entities
+@using ProductTracking.Models.Core
+
+@{
+    List<Workflow> workflowBasedUserRoles = ViewBag.workflowBasedUserRoles;
+}
+
+@if (workflowBasedUserRoles.Count > 0)
+{
+    int count = 1;
+    <table class="table-bordered table-striped table-condensed">
+        <tbody>
+            @foreach (var userRole in workflowBasedUserRoles)
+            {
+                <tr>
+                    <td>@(count++)</td>
+                    <td>@userRole.Curator.UserName (@Role.Curator)</td>
+                    @if (userRole.Reviewer != null)
+                    {
+                        <td>@userRole.Reviewer.UserName (@Role.Reviewer)</td>
+                    }
+                    @if (userRole.QC != null)
+                    {
+                        <td>@userRole.QC.UserName (@Role.QC)</td>
+                    }
+                    <td>
+                        @*<i class="fa fa-edit" workflow="@workflowId" title="Edit"></i>*@
+                        <i class="fa fa-remove" workflow="@userRole.Id" title="Delete"></i>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        $('.fa-remove').click(function () {
+            if (confirm('Confirm delete ?')) {
+                deleteWorkflow($(this).attr('workflow'));
+            }
+        })
+
+        function deleteWorkflow(id) {
+            $.ajax({
+                url: "@Url.Action("DeleteWorkflow")",
+                method: 'post',
+                data: { id: id },
+                beforeSend: function () {
+                    $("#workflows").html("<img src='@Url.Content("~/Content/App/images/loading.gif")' width=64 height=64 />");
+                },
+                success: function (result) {
+                    loadWorkflows();
+                },
+                error: function () {
+                    $("#workflows").html("Error while deleting workflow . .");
+                }
+            });
+        }
+    </script>
+
+}
+else
+{
+    <text>No Workflows Found !</text>
+}
+

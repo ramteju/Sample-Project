@@ -1,0 +1,60 @@
+﻿<Window x:Class="Client.Views.Query.QueryWorkflowWindow"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.Views.Query"
+         xmlns:html="clr-namespace:TheArtOfDev.HtmlRenderer.WPF;assembly=HtmlRenderer.WPF"
+        xmlns:dto="clr-namespace:Entities;assembly=Entities"
+        xmlns:viewModels="clr-namespace:Client.ViewModels"
+        xmlns:queryViewModles="clr-namespace:Client.ViewModels.Query"
+        xmlns:utils="clr-namespace:Client.Util"
+        ResizeMode="CanResize"
+        mc:Ignorable="d"
+        Icon="/images/icon.png"
+        WindowState="Maximized" WindowStartupLocation="CenterScreen" 
+        Title="Query Management - Workflows" Height="600" Width="800" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <queryViewModles:QueryWorkflowWindowVM  x:Key="context"/>
+            <viewModels:EnumDescriptionConverter x:Key="enumDescriptionConverter" />
+            <viewModels:EnumBooleanConverter x:Key="enumBooleanConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Placeholder.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="context"/>
+    </Window.DataContext>
+    <telerik:RadBusyIndicator IsBusy="{Binding Loading}">
+        <DockPanel Margin="2">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="2">
+                <telerik:RadButton CornerRadius="3" Content="Refresh" Command="{Binding Refresh}"/>
+                <telerik:RadButton CornerRadius="3" Content="Save" Margin="2,0,0,0" Command="{Binding SaveUsers}"/>
+            </StackPanel>
+            <GroupBox Style="{StaticResource GroupStyleTwo}">
+                <telerik:RadGridView 
+            Background="Transparent"
+            ShowSearchPanel="True" 
+            ShowGroupPanel="False" 
+            Margin="2" 
+            ItemsSource="{Binding Workflows}"
+                    AlternateRowBackground="WhiteSmoke"
+                    AlternationCount="2"
+            AutoGenerateColumns="False">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Header="SNo" MinWidth="50" DataMemberBinding="{Binding DisplayOrder}" IsFilterable="False" IsReadOnly="True"/>
+                        <telerik:GridViewDataColumn Header="Level - 1" MinWidth="200" DataMemberBinding="{Binding L1user}" IsReadOnly="True"/>
+                        <telerik:GridViewComboBoxColumn Header="Level - 2" MinWidth="200" DataMemberBinding="{Binding L2user}" IsComboBoxEditable="True" ItemsSourceBinding="{Binding Usernames, Source={StaticResource context}}"/>
+                        <telerik:GridViewComboBoxColumn Header="Level - 3" MinWidth="200" DataMemberBinding="{Binding L3user}" IsComboBoxEditable="True" ItemsSourceBinding="{Binding Usernames, Source={StaticResource context}}"/>
+                        <telerik:GridViewComboBoxColumn Header="Level - 4" MinWidth="200" DataMemberBinding="{Binding L4user}" IsComboBoxEditable="True" ItemsSourceBinding="{Binding Usernames, Source={StaticResource context}}"/>
+                        <telerik:GridViewComboBoxColumn Header="Level - 5" MinWidth="200" DataMemberBinding="{Binding L5user}" IsComboBoxEditable="True" ItemsSourceBinding="{Binding Usernames, Source={StaticResource context}}"/>
+                        <telerik:GridViewDataColumn Header="Valid" MinWidth="50" DataMemberBinding="{Binding IsValid}" IsReadOnly="True"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </GroupBox>
+        </DockPanel>
+    </telerik:RadBusyIndicator>
+</Window>

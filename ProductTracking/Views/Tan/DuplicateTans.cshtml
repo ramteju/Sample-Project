@@ -1,0 +1,76 @@
+﻿@using ProductTracking.Models.Core
+
+@{
+    ViewBag.Title = "DuplicateTans";
+    ViewBag.Heading = "Tasks";
+   
+}
+
+
+@section head{
+<link href="~/Content/App/css/animate.min.css" rel="stylesheet" />
+<style>
+    .fc-time {
+        display: none;
+    }
+
+    .glow {
+        text-shadow: 0 0 10px yellow;
+    }
+</style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Duplicate Tans List</div>
+                <div> Select BatchList: </div>     @Html.DropDownList("assignToBatch", new SelectList(ViewBag.batches, "Id", "Name"), "Select . .", new { @class = "form-control", id = "assignToBatch", @style = "width: 200px;" })
+                <div class="panel-body" id="Tans">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initSignalR();
+        });
+
+      
+        $('#assignToBatch').change(function () {
+            $('#Tans').html("")
+            var id=$(this).val();
+            if(id=='')
+                return;
+            $.ajax({
+                url: "@Url.Action("DuplicateTansList", "Tan")",
+                data: { BatchId: id},
+            success: function (result) {
+                $("#Tans").html(result);
+              
+            }
+        });
+        })
+        function initSignalR() {
+            var chat = $.connection.liveHub;
+            chat.client.ftpJobStatus = function (msg) {
+                $('#ftpJobStatus').html(msg);
+                $('#ftpJobStatus').addClass('animated flash glow');
+                setInterval(function () {
+                    $('#ftpJobStatus').removeClass('animated flash glow');
+                }, 500);
+            };
+            $.connection.hub.start().done(function () {
+            });
+        }
+    </script>
+}
+
+

@@ -1,0 +1,164 @@
+﻿<Window x:Class="Client.TaskSheet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        xmlns:data="clr-namespace:Client.ViewModels"
+        mc:Ignorable="d"
+        Title="Task Sheet"
+        Height="400"
+        Width="950"
+        Icon="/images/icon.png"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen"
+        Visibility="{Binding Visibility,Mode=TwoWay}"
+        xmlns:WPFMVVMPrism="clr-namespace:WPFMVVMPrism;assembly=WPFMVVMPrism">
+    <Window.Background>
+        <VisualBrush>
+            <VisualBrush.Visual>
+                <Grid>
+                    <Rectangle>
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.504,1.5"
+                                                 StartPoint="0.504,0.03">
+                                <GradientStop Color="Plum"
+                                              Offset="0" />
+                                <GradientStop Color="#FFFFFFFF"
+                                              Offset="0.567" />
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Image Source="/Images/task.jpg"
+                           Opacity="0.2" />
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+    </Window.Background>
+    <DockPanel>
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Top">
+            <TextBlock Text="Search"
+                       Margin="2" />
+            <TextBox Name="Search"
+                     Margin="2"
+                     Width="150"
+                     Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <telerik:RadButton CornerRadius="2"
+                               Name="Refresh"
+                               Margin="2"
+                               Command="{Binding RefreshClick}"
+                               Content="Refresh"
+                               ToolTip="Refresh"
+                               IsEnabled="{Binding ButtonEnable,Mode=TwoWay}" />
+            <telerik:RadButton CornerRadius="2"
+                               Name="PullTasks"
+                               Margin="2"
+                               Content="Get Tasks"
+                               Command="{Binding GetTasks}" />
+            <telerik:RadProgressBar Margin="2"
+                                    Visibility="{Binding ProgressBarVisibility,Mode=TwoWay}"
+                                    IsIndeterminate="True" />
+            <Label Margin="2"
+                   Content="{Binding NeedsUpdate}"
+                   Width="250"
+                   HorizontalAlignment="Right"
+                   FontWeight="Bold" />
+        </StackPanel>
+        <telerik:RadGridView Background="Transparent"
+                             Margin="2"
+                             Name="UserTasksGrid"
+                             AutoGenerateColumns="False"
+                             ShowGroupPanel="False"
+                             CanUserInsertRows="False"
+                             CanUserDeleteRows="False"
+                             CanUserResizeColumns="True"
+                             CanUserResizeRows="True"
+                             CanUserSortColumns="True"
+                             ItemsSource="{Binding UserTasks,Mode=TwoWay}"
+                             SelectedItem="{Binding CurrentTask, Mode=OneWayToSource}"
+                             Grid.Row="1">
+
+            <telerik:RadGridView.RowStyle>
+                <Style TargetType="telerik:GridViewRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding NearToTargetDate}"
+                                     Value="true">
+                            <Setter Property="Foreground"
+                                    Value="Red"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding NearToTargetDate}"
+                                     Value="false">
+                            <Setter Property="Foreground"
+                                    Value="Black"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </telerik:RadGridView.RowStyle>
+            <WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+                <WPFMVVMPrism:BehaviorBinding Event="MouseDoubleClick"
+                                              Command="{Binding Path=MouseDoubleClickCommand}"
+                                              CommandParameter="{Binding ElementName=UserTasksGrid, Path=SelectedItem}" />
+            </WPFMVVMPrism:CommandBehaviorCollection.Behaviors>
+            <telerik:RadGridView.InputBindings>
+                <KeyBinding Key="Enter"
+                            Command="{Binding Path=MouseDoubleClickCommand}"
+                            CommandParameter="{Binding ElementName=UserTasksGrid, Path=SelectedItem}" />
+            </telerik:RadGridView.InputBindings>
+            <telerik:RadGridView.Columns>
+
+                <telerik:GridViewDataColumn Header="S.No."
+                                            DataMemberBinding="{Binding DisplayOrder}"
+                                            Width="50"
+                                            IsReadOnly="True" />
+                <telerik:GridViewDataColumn Header="TanId"
+                                            DataMemberBinding="{Binding TanId}"
+                                            Width="*"
+                                            IsReadOnly="True"
+                                            IsVisible="False" />
+                <telerik:GridViewDataColumn Header="Tan"
+                                            DataMemberBinding="{Binding TanName}"
+                                            IsReadOnly="True"
+                                            Width="100" />
+                <telerik:GridViewDataColumn Header="NUMs"
+                                            DataMemberBinding="{Binding NUMsCount}"
+                                            IsReadOnly="True"
+                                            Width="70" />
+                <telerik:GridViewDataColumn Header="RXNs"
+                                            DataMemberBinding="{Binding RXNsCount}"
+                                            IsReadOnly="True"
+                                            Width="70" />
+                <telerik:GridViewDataColumn Header="Batch"
+                                            DataMemberBinding="{Binding BatchNo}"
+                                            IsReadOnly="True"
+                                            Width="100" />
+                <telerik:GridViewDataColumn Header="Status"
+                                            DataMemberBinding="{Binding Status}"
+                                            IsReadOnly="True"
+                                            Width="*" />
+                <telerik:GridViewDataColumn Header="Analyst"
+                                            DataMemberBinding="{Binding Analyst}"
+                                            IsReadOnly="True"
+                                            Width="*" />
+                <telerik:GridViewDataColumn Header="Reviewer"
+                                            DataMemberBinding="{Binding Reviewer}"
+                                            IsReadOnly="True"
+                                            Width="*" />
+                <telerik:GridViewDataColumn Header="QC"
+                                            DataMemberBinding="{Binding QC}"
+                                            IsReadOnly="True"
+                                            Width="*" />
+                <telerik:GridViewDataColumn Header="Tan Completion Time"
+                                            DataMemberBinding="{Binding TanCompletionDate}"
+                                            IsReadOnly="True"
+                                            Width="*" />
+                <telerik:GridViewDataColumn Header="Processing Note"
+                                            DataMemberBinding="{Binding ProcessingNote}"
+                                            IsReadOnly="True"
+                                            Width="*" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </DockPanel>
+</Window>

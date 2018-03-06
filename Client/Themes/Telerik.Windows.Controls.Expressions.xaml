@@ -1,0 +1,397 @@
+<ResourceDictionary
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="http://schemas.telerik.com/2008/xaml/compile"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="c"
+        xmlns:expressions="clr-namespace:Telerik.Windows.Controls.Expressions;assembly=Telerik.Windows.Controls.Expressions"
+        xmlns:controls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Expressions">
+    <ResourceDictionary.MergedDictionaries>
+        <telerik:Office2013ResourceDictionary/>
+    </ResourceDictionary.MergedDictionaries>
+    <SolidColorBrush x:Key="RadExpressionEditor_InfoPanel_BorderBrush" Color="Transparent"/>
+    <Color x:Key="ExpressionTextBox_CaretColor">#FF000000</Color>
+    <Color x:Key="FunctionColor_Foreground">#FF1795E5</Color>
+    <Color x:Key="MemberColor_Foreground">#FF8C2CBA</Color>
+    <Color x:Key="StringColor_Foreground">#FF31CA34</Color>
+    <Color x:Key="DateTimeColor_Foreground">#FFE51717</Color>
+    <Color x:Key="DefaultColor_Foreground">#FF000000</Color>
+    <ControlTemplate TargetType="expressions:ExpressionTextBox" x:Key="ExpressionTextBoxTemplate">
+        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+            <telerik:RadRichTextBox x:Name="RichTextBox"
+                    AcceptsReturn="False"
+                    BorderThickness="1"
+                    IsSpellCheckingEnabled="False"
+                    IsSelectionMiniToolBarEnabled="False"
+                    IsContextMenuEnabled="False"
+                    FontSize="{telerik:Office2013Resource ResourceKey=FontSizeL}"
+                    FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                    FontWeight="Bold"
+                    DocumentInheritsDefaultStyleSettings="True"/>
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="ExpressionTextBoxStyle" TargetType="expressions:ExpressionTextBox">
+        <Setter Property="Template" Value="{StaticResource ExpressionTextBoxTemplate}"/>
+        <Setter Property="SyntaxColors">
+            <Setter.Value>
+                <expressions:SyntaxColors
+                        FunctionColor="{StaticResource FunctionColor_Foreground}"
+                        MemberColor="{StaticResource MemberColor_Foreground}"
+                        StringColor="{StaticResource StringColor_Foreground}"
+                        DateTimeColor="{StaticResource DateTimeColor_Foreground}"
+                        DefaultColor="{StaticResource DefaultColor_Foreground}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <HierarchicalDataTemplate x:Key="CategoryItemTemplate" ItemsSource="{Binding ChildCategories}">
+        <TextBlock Text="{Binding Name}"/>
+    </HierarchicalDataTemplate>
+    <ControlTemplate x:Key="RadExpressionEditorTemplate" TargetType="controls:RadExpressionEditor">
+        <Grid Background="Transparent" UseLayoutRounding="True" Margin="3" SnapsToDevicePixels="True">
+            <Border x:Name="PART_RootElement"
+                    Grid.RowSpan="5"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="True">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="3" Opacity="0.2" ShadowDepth="3" Direction="315"/>
+                </Border.Effect>
+            </Border>
+            <Border
+                    Background="{TemplateBinding Background}"
+                    Grid.RowSpan="5"
+                    CornerRadius="0"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="True"
+                    Margin="-1,-1,0,0"
+                    Padding="10">
+                <Grid x:Name="PART_ExpressionEditorGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <expressions:ExpressionTextBox x:Name="PART_ExpressionNodeEditor"/>
+                    <StackPanel x:Name="CalculationPanel" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Stretch" Orientation="Horizontal">
+                        <telerik:RadButton x:Name="Plus"
+                                MinWidth="20"
+                                MinHeight="20"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                FontWeight="Bold"
+                                IsBackgroundVisible="False"
+                                Padding="0 0 0 2"
+                                VerticalContentAlignment="Center"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="+">
+                            <telerik:RadButton.Content>
+                                <TextBlock Text="+" VerticalAlignment="Center"/>
+                            </telerik:RadButton.Content>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="Minus"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                FontWeight="Bold"
+                                IsBackgroundVisible="False"
+                                Padding="0 0 0 1"
+                                VerticalContentAlignment="Center"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="-">
+                            <telerik:RadButton.Content>
+                                <TextBlock Text="-" VerticalAlignment="Center"/>
+                            </telerik:RadButton.Content>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="Multiply"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontWeight="Bold"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                IsBackgroundVisible="False"
+                                Padding="0,3,0,0"
+                                VerticalContentAlignment="Center"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="*">
+                            <telerik:RadButton.Content>
+                                <TextBlock Text="*" VerticalAlignment="Center"/>
+                            </telerik:RadButton.Content>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="Divide"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Content="/"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                IsBackgroundVisible="False"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="/"/>
+                        <telerik:RadButton x:Name="Percent"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                IsBackgroundVisible="False"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="%">
+                            <Path
+                                    Fill="Black"
+                                    Data="M6.5,5 C7.3284268,5 8,5.6715727 8,6.5 C8,7.3284268 7.3284268,8 6.5,8 C5.6715727,8 5,7.3284268 5,6.5 C5,5.6715727 5.6715727,5 6.5,5 z M6.6443858,0 L8,1.355615 L1.3565066,8.000001 L3.5762793E-07,6.6434941 z M1.5,0 C2.3284271,0 3,0.67157286 3,1.4999999 C3,2.3284271 2.3284271,2.9999998 1.5,2.9999998 C0.67157286,2.9999998 6.412975E-08,2.3284271 0,1.4999999 C6.412975E-08,0.67157286 0.67157286,0 1.5,0 z"
+                                    Width="8"
+                                    Height="8"
+                                    Stretch="Fill"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="Equals"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="10,0,0,0"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                IsBackgroundVisible="False"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="=">
+                            <Path Data="M0,3 L9,3 L9,5 L0,5 z M2.682209E-07,0 L9,0 L9,2 L2.682209E-07,2 z" Width="8" Height="5" Fill="Black" Stretch="Fill"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="NotEquals"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                IsBackgroundVisible="False"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="&lt;&gt;">
+                            <Path
+                                    Fill="Black"
+                                    Data="M6.8438272,0 L6.0373545,2.0623121 L8,2.0623121 L8,4.0623121 L5.2552485,4.0623121 L4.8641958,5.0623121 L8,5.0623121 L8,7.0623121 L4.0820904,7.0623121 L3.2790608,9.115819 L1.1248636,9.0938644 L1.9289982,7.0623121 L0,7.0623121 L0,5.0623121 L2.7206435,5.0623121 L3.116466,4.0623121 L2.7167258E-07,4.0623121 L2.7167258E-07,2.0623121 L3.9081113,2.0623121 L4.7207074,0.0093827248 z"
+                                    Width="8"
+                                    Height="9"
+                                    Stretch="Fill"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="LessThan"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                IsBackgroundVisible="False"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="&lt;">
+                            <Path Fill="Black" Data="F1 M14.10388,3.5915833 L10.967,3.579 L6.4790001,8.066 L10.967,12.554 L14.128588,12.56459 L9.5209999,8.066 z" Stretch="Fill" Width="6" Height="8"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="LessThanOrEquals"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                IsBackgroundVisible="False"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="&lt;=">
+                            <Path
+                                    Fill="Black"
+                                    Data="M7.0000005,5 L12.000001,5 L12.000001,7 L7.0000005,7 z M7.0000005,1.9999996 L12.000001,1.9999996 L12.000001,3.9999998 L7.0000005,3.9999998 z M3.5201895,0 L5.9806204,0.011203052 L2.3860106,3.9948406 L6,8.000001 L3.5201895,7.9905715 L0,3.9948406 z"
+                                    Width="12"
+                                    Height="8"
+                                    Stretch="Fill"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="GreaterThanOrEquals"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                IsBackgroundVisible="False"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="&gt;=">
+                            <Path
+                                    Data="M0,4 L5,4 L5,6 L0,6 z M0,0.99999988 L5,0.99999988 L5,3 L0,3 z M9.5201912,0 L11.980621,0.011203052 L8.3860121,3.9948406 L12.000002,8.000001 L9.5201912,7.9905715 L6.0000014,3.9948406 z"
+                                    Margin="-1"
+                                    Fill="Black"
+                                    RenderTransformOrigin="0.5,0.5"
+                                    Width="12"
+                                    Height="8"
+                                    Stretch="Fill">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="-180"/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="GreaterThan"
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Padding="0"
+                                VerticalContentAlignment="Center"
+                                IsBackgroundVisible="False"
+                                FontWeight="Bold"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeXL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="&gt;">
+                            <Path
+                                    Fill="Black"
+                                    Data="F1 M14.10388,3.5915833 L10.967,3.579 L6.4790001,8.066 L10.967,12.554 L14.128588,12.56459 L9.5209999,8.066 z"
+                                    Stretch="Fill"
+                                    Width="6"
+                                    Height="8"
+                                    RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="-180"/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </telerik:RadButton>
+                        <telerik:RadButton x:Name="And"
+                                Content="And"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeS}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                FontWeight="Bold"
+                                Padding="0"
+                                MinWidth="32"
+                                IsBackgroundVisible="False"
+                                CornerRadius="0"
+                                VerticalContentAlignment="Center"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="And"/>
+                        <telerik:RadButton x:Name="Or"
+                                Content="Or"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeS}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                FontWeight="Bold"
+                                Padding="0"
+                                MinWidth="32"
+                                IsBackgroundVisible="False"
+                                CornerRadius="0"
+                                Margin="1,0"
+                                MinHeight="20"
+                                VerticalContentAlignment="Center"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="Or"/>
+                        <telerik:RadButton x:Name="Not"
+                                Content="Not"
+                                CornerRadius="0"
+                                Padding="0"
+                                MinWidth="32"
+                                IsBackgroundVisible="False"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeS}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                FontWeight="Bold"
+                                VerticalContentAlignment="Center"
+                                MinHeight="20"
+                                Margin="1,0,0,0"
+                                Command="controls:RadExpressionEditorCommands.InsertText"
+                                CommandParameter="Not"/>
+                    </StackPanel>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <telerik:RadTreeView x:Name="PART_EditorCategoriesTree"
+                                BorderThickness="1"
+                                BorderBrush="{telerik:Office2013Resource ResourceKey=HighDarkBrush}"
+                                ItemsSource="{Binding Categories}"
+                                SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                                MinHeight="126"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeL}"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                ItemTemplate="{StaticResource CategoryItemTemplate}"
+                                IsLineEnabled="True"/>
+                        <telerik:RadTreeView x:Name="PART_EditorItemsTree"
+                                FontWeight="Bold"
+                                BorderThickness="1"
+                                Margin="-1,0,0,0"
+                                MinHeight="126"
+                                FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                BorderBrush="{telerik:Office2013Resource ResourceKey=HighDarkBrush}"
+                                Grid.Column="1"
+                                FontSize="{telerik:Office2013Resource ResourceKey=FontSizeL}"
+                                ItemsSource="{Binding CategoryItems}"
+                                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                DisplayMemberPath="Name"/>
+                    </Grid>
+                    <Border x:Name="EditorInfoPanel" Grid.Row="3" Margin="0,2,0,0" Background="{telerik:Office2013Resource ResourceKey=EffectAccentLowBrush}" BorderThickness="0" MinHeight="76">
+                        <Grid Margin="6">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                    Text="{Binding SelectedItem.QuickInfo}"
+                                    FontSize="{telerik:Office2013Resource ResourceKey=FontSizeL}"
+                                    FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                    FontWeight="Bold"/>
+                            <TextBlock
+                                    Text="{Binding SelectedItem.Description}"
+                                    FontSize="{telerik:Office2013Resource ResourceKey=FontSizeL}"
+                                    FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                    TextWrapping="Wrap"
+                                    Grid.Row="1"/>
+                        </Grid>
+                    </Border>
+                    <Border x:Name="EditorResultsPanel" Grid.Row="4" BorderThickness="0" Background="{telerik:Office2013Resource ResourceKey=MainBrush}">
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock
+                                    Text="Result preview:"
+                                    FontSize="{telerik:Office2013Resource ResourceKey=FontSizeL}"
+                                    FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                    HorizontalAlignment="Right"/>
+                            <TextBlock
+                                    Text="{Binding PreviewResult}"
+                                    FontSize="{telerik:Office2013Resource ResourceKey=FontSizeL}"
+                                    FontFamily="{telerik:Office2013Resource ResourceKey=FontFamily}"
+                                    TextAlignment="Right"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+    <Style x:Key="RadExpressionEditorStyle" TargetType="controls:RadExpressionEditor">
+        <Setter Property="Template" Value="{StaticResource RadExpressionEditorTemplate}"/>
+        <Setter Property="Background" Value="{telerik:Office2013Resource ResourceKey=MainBrush}"/>
+        <Setter Property="BorderBrush" Value="{telerik:Office2013Resource ResourceKey=HighDarkBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+    </Style>
+    <Style TargetType="controls:RadExpressionEditor" BasedOn="{StaticResource RadExpressionEditorStyle}"/>
+    <Style TargetType="expressions:ExpressionTextBox" BasedOn="{StaticResource ExpressionTextBoxStyle}"/>
+</ResourceDictionary>

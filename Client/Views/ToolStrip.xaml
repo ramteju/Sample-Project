@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="Client.Views.ToolStrip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.Views"
+              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="1200">
+    <StatusBar Height="25" VerticalAlignment="Center" FontSize="12">
+        <StatusBar.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!--0. username-->
+                        <ColumnDefinition Width="Auto" />
+                        <!--1.seperator-->
+                        <ColumnDefinition Width="Auto" />
+                        <!--2. TAN number-->
+                        <ColumnDefinition Width="120" />
+                        <!--3.seperator-->
+                        <ColumnDefinition Width="Auto" />
+                        <!--4. batch-->
+                        <ColumnDefinition Width="120" />
+                        <!--5.seperator-->
+                        <ColumnDefinition Width="Auto" />
+                        <!--6. CAN-->
+                        <ColumnDefinition Width="120" />
+                        <!--7.seperator-->
+                        <ColumnDefinition Width="Auto" />
+                        <!--8.Progress Label-->
+                        <ColumnDefinition Width="120" />
+                        <!--9.seperator-->
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <!--9.seperator-->
+                        <ColumnDefinition Width="Auto" />
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ItemsPanelTemplate>
+        </StatusBar.ItemsPanel>
+        <StatusBarItem Grid.Column="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="USER : " FontWeight="Bold"/>
+                <TextBlock Text="{Binding UserName}" ToolTip="{Binding SignalRId}"/>
+            </StackPanel>
+        </StatusBarItem>
+
+        <Separator Grid.Column="1" />
+
+        <StatusBarItem Grid.Column="2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="TAN : "
+                           FontWeight="Bold"
+                           VerticalAlignment="Center" />
+                <TextBox Text="{Binding TanVM.TanNumber}" Name="TanNumber" Background="Transparent" IsReadOnly="True" VerticalAlignment="Center"/>
+            </StackPanel>
+        </StatusBarItem>
+
+        <Separator Grid.Column="3" />
+
+        <StatusBarItem Grid.Column="4">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="BATCH : "
+                           FontWeight="Bold"
+                           VerticalAlignment="Center" />
+                <TextBox Text="{Binding TanVM.BatchNumber}"
+                         Background="Transparent"
+                         IsReadOnly="True"
+                         VerticalAlignment="Center" />
+            </StackPanel>
+        </StatusBarItem>
+
+        <Separator Grid.Column="5" />
+
+        <StatusBarItem Grid.Column="6">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="CAN : " FontWeight="Bold" />
+                <TextBlock Text="{Binding TanVM.CanNumber}"  />
+            </StackPanel>
+        </StatusBarItem>
+        <Separator Grid.Column="7" />
+        <StatusBarItem Grid.Column="8" ToolTip="{Binding TanVM.Rsd}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="RSD : " FontWeight="Bold" />
+                <TextBlock Text="{Binding TanVM.RsdLength}" />
+            </StackPanel>
+        </StatusBarItem>
+        <Separator Grid.Column="9" />
+        <StatusBarItem Grid.Column="10">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="CURATOR : " FontWeight="Bold" />
+                <TextBlock Text="{Binding TanVM.Curator}" MinWidth="100" />
+                <Separator Width="1"/>
+                <TextBlock Text="REVIEWER : " FontWeight="Bold" />
+                <TextBlock Text="{Binding TanVM.Reviewer}" MinWidth="100" />
+                <Separator Width="1"/>
+                <TextBlock Text="QC : " FontWeight="Bold" />
+                <TextBlock Text="{Binding TanVM.QC}" MinWidth="100" />
+                <Separator Width="1"/>
+            </StackPanel>
+        </StatusBarItem>
+        <Separator Grid.Column="11" />
+
+        <StatusBarItem Grid.Column="12" HorizontalAlignment="Right">
+            <TextBlock Text="{Binding ProgressText}" FontStyle="Italic"/>
+        </StatusBarItem>
+        <StatusBarItem Grid.Column="13" HorizontalAlignment="Left">
+            <telerik:RadProgressBar Height="20" Width="150" Visibility="{Binding ProgressBarVisibility}" IsIndeterminate="True"/>
+        </StatusBarItem>
+    </StatusBar>
+</UserControl>

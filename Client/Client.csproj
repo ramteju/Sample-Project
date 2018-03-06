@@ -1,0 +1,1950 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{028D86E0-FC37-42A0-89C9-1BEEC365C4A7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Client</RootNamespace>
+    <AssemblyName>Reactions_Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Reactions_Test</ProductName>
+    <PublisherName>Excelra Knowledge Solutions</PublisherName>
+    <SuiteName>Reactions_Test</SuiteName>
+    <MinimumRequiredVersion>2.0.15.26</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>index.html</WebPage>
+    <ApplicationRevision>27</ApplicationRevision>
+    <ApplicationVersion>2.0.15.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PublishUrl>ftp://192.168.45.32/CT/Reactions_Test/</PublishUrl>
+    <InstallUrl>http://192.168.45.32/Reactions_Test_Update/</InstallUrl>
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PublishUrl>ftp://192.168.45.32/CT/Reactions_Test/</PublishUrl>
+    <InstallUrl>http://192.168.45.32/Reactions_Test_Update/</InstallUrl>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Reactions.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>73013DA2EC1E1F11FA2E2BA820A19ACF12F3D4DD</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Client.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <PublishUrl>ftp://192.168.45.32/CT/Reactions_Test/</PublishUrl>
+    <InstallUrl>http://192.168.45.32/Reactions_Test_Update/</InstallUrl>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.FoxitPDFSDKProLib, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SupportDll\AxInterop.FoxitPDFSDKProLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Excelra.Utils.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Excelra.Utils.1.0.29\lib\Excelra.Utils.Library.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlRenderer, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.1-beta1\lib\net45\HtmlRenderer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlRenderer.WPF, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.WPF.1.5.1-beta1\lib\net45\HtmlRenderer.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=0.42.1.63, Culture=neutral, PublicKeyToken=d25ce09139c726a9" />
+    <Reference Include="itextsharp">
+      <HintPath>..\SupportDll\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="JChem, Version=5.4.0.1015, Culture=neutral, PublicKeyToken=d25ce09139c726a9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SupportDll\JChem.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkupConverter, Version=0.0.0.0, Culture=neutral, PublicKeyToken=275ae570975796c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\MarkupConverter.1.0.4\lib\net45\MarkupConverter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MDL.Draw.Editor, Version=4.1.1.4, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\excelraws101\Share\Writable\Dlls\MDL.Draw.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="MDL.Draw.Foundation, Version=4.1.1.4, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\excelraws101\Share\Writable\Dlls\MDL.Draw.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="MDL.Draw.Renderer, Version=4.1.1.4, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\excelraws101\Share\Writable\Dlls\MDL.Draw.Renderer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Dlls\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.4.3\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>\\excelraws120\Share\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Telerik.Pivot.Core">
+      <HintPath>..\SupportDll\Telerik.Pivot.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Pivot.DataProviders.Adomd">
+      <HintPath>..\SupportDll\Telerik.Pivot.DataProviders.Adomd.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Pivot.DataProviders.Queryable">
+      <HintPath>..\SupportDll\Telerik.Pivot.DataProviders.Queryable.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Pivot.DataProviders.Xmla">
+      <HintPath>..\SupportDll\Telerik.Pivot.DataProviders.Xmla.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Analytics">
+      <HintPath>..\SupportDll\Telerik.Windows.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Cloud">
+      <HintPath>..\SupportDll\Telerik.Windows.Cloud.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Cloud.Controls">
+      <HintPath>..\SupportDll\Telerik.Windows.Cloud.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Chart">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Chart.Direct2D">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Chart.Direct2D.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataServices">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.DataServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataServices50">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.DataServices50.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataServices60">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.DataServices60.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataVisualization">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Diagrams">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Diagrams.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Diagrams.Extensions">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Diagrams.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.EntityFramework">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.EntityFramework60">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.EntityFramework60.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Expressions">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.FixedDocumentViewers">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.FixedDocumentViewers.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.FixedDocumentViewersUI">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.FixedDocumentViewersUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GanttView">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.GanttView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.GridView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView.Export">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.GridView.Export.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.ImageEditor">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.ImageEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Pivot">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Pivot.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.PivotFieldList">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.PivotFieldList.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RichTextBoxUI">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.RichTextBoxUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.ScheduleView">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.ScheduleView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Spreadsheet">
+      <HintPath>..\SupportDll\Telerik.Windows.Controls.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\SupportDll\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Diagrams.Core">
+      <HintPath>..\SupportDll\Telerik.Windows.Diagrams.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Fixed.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Flow.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow.FormatProviders.Pdf">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Flow.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Html">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.FormatProviders.Html.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.MsRichTextBoxXaml">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.FormatProviders.MsRichTextBoxXaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.OpenXml">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.FormatProviders.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Pdf">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Rtf">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.FormatProviders.Rtf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Xaml">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.FormatProviders.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Proofing">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Proofing.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Proofing.DataGrid">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Proofing.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Proofing.Dictionaries.En-US">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Proofing.Dictionaries.En-US.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Proofing.RadGridView">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Proofing.RadGridView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf">
+      <HintPath>..\SupportDll\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.PersistenceFramework">
+      <HintPath>..\SupportDll\Telerik.Windows.PersistenceFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Scheduling.Core">
+      <HintPath>..\SupportDll\Telerik.Windows.Scheduling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip">
+      <HintPath>..\SupportDll\Telerik.Windows.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions">
+      <HintPath>..\SupportDll\Telerik.Windows.Zip.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFMVVMPrism">
+      <HintPath>..\SupportDll\WPFMVVMPrism.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Common\AnalogousBuilder.cs" />
+    <Compile Include="Common\CharUtils.cs" />
+    <Compile Include="Common\ErrorCodes.cs" />
+    <Compile Include="Common\ExtentionMethods.cs" />
+    <Compile Include="Common\HandleException.cs" />
+    <Compile Include="Common\MolToInchi.cs" />
+    <Compile Include="Common\NetWorkAvailability.cs" />
+    <Compile Include="Common\PdfAnnotsReplacer.cs" />
+    <Compile Include="Common\PdfMerger.cs" />
+    <Compile Include="Common\TanChemicalsCrud.cs" />
+    <Compile Include="Common\ViewModelToModel.cs" />
+    <Compile Include="RDLC_Reports\DailyStatusReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DailyStatusReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="RDLC_Reports\ReactionsDataSet1.cs">
+      <DependentUpon>ReactionsDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReactionsDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="RDLC_Reports\ReactionsDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionsDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reactions_prodDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reactions_prodDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reactions_prodDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reactions_prodDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="RestConnection\ReportHub.cs" />
+    <Compile Include="Export\NumsToPdf.cs" />
+    <Compile Include="Stores\AppConfig.cs" />
+    <Compile Include="Stores\DataImport.xaml.cs">
+      <DependentUpon>DataImport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Stores\StaticConstants.cs" />
+    <Compile Include="Stores\StaticStore.cs" />
+    <Compile Include="Stores\TanStore.cs" />
+    <Compile Include="Stores\UserStore.cs" />
+    <Compile Include="Util\ListBoxExtention.cs" />
+    <Compile Include="Util\TanExtensions.cs" />
+    <Compile Include="Validations\ParticipantValidations.cs" />
+    <Compile Include="Validations\PressureValidations.cs" />
+    <Compile Include="Validations\ReactionValidations.cs" />
+    <Compile Include="Common\ReactionViewBuilder.cs" />
+    <Compile Include="Common\Sample.cs" />
+    <Compile Include="Validations\RSNValidations.cs" />
+    <Compile Include="Validations\ThermalValidations.cs" />
+    <Compile Include="Converters\CollectionExtention.cs" />
+    <Compile Include="CopyStages.xaml.cs">
+      <DependentUpon>CopyStages.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\MongoLogEntry.cs" />
+    <Compile Include="Models\ChemicalName.cs" />
+    <Compile Include="Models\PropertyChangedNotification.cs" />
+    <Compile Include="Models\StringRangeValidatorRule.cs" />
+    <Compile Include="Notify\HubClient.cs" />
+    <Compile Include="Notify\Notify.xaml.cs">
+      <DependentUpon>Notify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RestConnection\DeliveryRestHub.cs" />
+    <Compile Include="RestConnection\QueryHub.cs" />
+    <Compile Include="RestConnection\RestHub.cs" />
+    <Compile Include="RestConnection\RestStatus.cs" />
+    <Compile Include="Service References\S3Connection\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Styles\ChemicalCellStyle.cs" />
+    <Compile Include="Styles\StyleConstants.cs" />
+    <Compile Include="TaskSheet.xaml.cs">
+      <DependentUpon>TaskSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\ImageUtil.cs" />
+    <Compile Include="Util\MathConverter.cs" />
+    <Compile Include="Util\StringExtensions.cs" />
+    <Compile Include="Util\WebBrowserUtility.cs" />
+    <Compile Include="Util\XamlUtils.cs" />
+    <Compile Include="ViewModels\Core\DiffVM.cs" />
+    <Compile Include="ViewModels\Core\Edit8500VM.cs" />
+    <Compile Include="ViewModels\Core\UserManualVM.cs" />
+    <Compile Include="ViewModels\Delivery\FreetextReplaceVM.cs" />
+    <Compile Include="ViewModels\Extended\QCViewTableVM.cs" />
+    <Compile Include="ViewModels\Extended\RSNReplaceVM.cs" />
+    <Compile Include="ViewModels\Extended\SolventBoilingPointsVM.cs" />
+    <Compile Include="ViewModels\Pdf\PdfAnnotationResultVM.cs" />
+    <Compile Include="ViewModels\Pdf\PdfAnnotationsVM.cs" />
+    <Compile Include="ViewModels\Pdf\PdfSearchResultVM.cs" />
+    <Compile Include="ViewModels\Pdf\PdfSearchVM.cs" />
+    <Compile Include="ViewModels\Core\PullTaskVM.cs" />
+    <Compile Include="ViewModels\Core\RanksVM.cs" />
+    <Compile Include="ViewModels\Core\RSNWindowVM.cs" />
+    <Compile Include="ViewModels\Core\TanCommentsVM.cs" />
+    <Compile Include="ViewModels\Core\TanDocumentsVM.cs" />
+    <Compile Include="ViewModels\Core\TanHistoryVM.cs" />
+    <Compile Include="ViewModels\Core\TanKeyWordsVM.cs" />
+    <Compile Include="ViewModels\Delivery\BatchSummaryVM.cs" />
+    <Compile Include="ViewModels\Delivery\BatchVM.cs" />
+    <Compile Include="ViewModels\Delivery\DeliveryBatchVM.cs" />
+    <Compile Include="ViewModels\Delivery\DeliveryReportVM.cs" />
+    <Compile Include="ViewModels\Delivery\DeliveryTanVM.cs" />
+    <Compile Include="ViewModels\Delivery\ExtractRsnVM.cs" />
+    <Compile Include="ViewModels\Delivery\RoleVM.cs" />
+    <Compile Include="ViewModels\Delivery\S8000NameLocationVM.cs" />
+    <Compile Include="ViewModels\Delivery\S8580CommentsVM.cs" />
+    <Compile Include="ViewModels\Delivery\ShipmentsVM.cs" />
+    <Compile Include="ViewModels\Delivery\BatchTan.cs" />
+    <Compile Include="ViewModels\Delivery\TanCategoryVM.cs" />
+    <Compile Include="ViewModels\Delivery\UnicodeErrorVM.cs" />
+    <Compile Include="ViewModels\Delivery\ValidateRSDVM.cs" />
+    <Compile Include="ViewModels\Delivery\XMLVerificationVM.cs" />
+    <Compile Include="ViewModels\Delivery\XSDValidationVM.cs" />
+    <Compile Include="ViewModels\Extended\ChemicalUsedPlacesVM.cs" />
+    <Compile Include="ViewModels\Extended\DuplicateNamesVM.cs" />
+    <Compile Include="ViewModels\Extended\PdfReactionViewVM.cs" />
+    <Compile Include="ViewModels\Extended\ViewAnalogousVM.cs" />
+    <Compile Include="ViewModels\Extended\EditAnalogousVM.cs" />
+    <Compile Include="ViewModels\Core\CvtVM.cs" />
+    <Compile Include="ViewModels\Core\FreeTextVM.cs" />
+    <Compile Include="ViewModels\Extended\UserResportsVM.cs" />
+    <Compile Include="ViewModels\Query\QueryReportEntryVM.cs" />
+    <Compile Include="ViewModels\Query\QueryReportVM.cs" />
+    <Compile Include="ViewModels\Query\QueryResponseVM.cs" />
+    <Compile Include="ViewModels\Query\QueryVM.cs" />
+    <Compile Include="ViewModels\Query\QueryWindowVM.cs" />
+    <Compile Include="ViewModels\Query\QueryWorkflowVM.cs" />
+    <Compile Include="ViewModels\Query\QueryWorkflowWindowVM.cs" />
+    <Compile Include="ViewModels\Reports\ErrorPercentageReportVM.cs" />
+    <Compile Include="ViewModels\Reports\ErrorReportVM.cs" />
+    <Compile Include="ViewModels\Shipment\ShipmentUploadVM.cs" />
+    <Compile Include="ViewModels\Tasks\TaskAllocationVM.cs" />
+    <Compile Include="ViewModels\Tasks\UsersVM.cs" />
+    <Compile Include="ViewModels\Utils\EditChemicalName.cs" />
+    <Compile Include="ViewModels\Utils\EnumDescriptionConverter.cs" />
+    <Compile Include="ViewModels\Utils\FixedSizeImageConverter.cs" />
+    <Compile Include="ViewModels\Utils\ParticipantComparater.cs" />
+    <Compile Include="ViewModels\Core\ReactionParticipant.cs" />
+    <Compile Include="ViewModels\Core\ReactionParticipantViewVM.cs" />
+    <Compile Include="ViewModels\Core\ReactionViewVM.cs" />
+    <Compile Include="ViewModels\Core\ReactionVM.cs" />
+    <Compile Include="ViewModels\Extended\ReviewViewVM.cs" />
+    <Compile Include="ViewModels\Core\RsnVM.cs" />
+    <Compile Include="ViewModels\Utils\RsnFilter.cs" />
+    <Compile Include="ViewModels\Utils\RsnsComparater.cs" />
+    <Compile Include="ViewModels\Core\RsnsPreviewVM.cs" />
+    <Compile Include="ViewModels\Core\StageConditionVM.cs" />
+    <Compile Include="ViewModels\Core\StageViewVM.cs" />
+    <Compile Include="ViewModels\Core\StageVM.cs" />
+    <Compile Include="ViewModels\Core\TemparatureVM.cs" />
+    <Compile Include="ViewModels\Utils\RxnCompleteToColorConverter.cs" />
+    <Compile Include="ViewModels\Utils\RxnTypeToIconConverter.cs" />
+    <Compile Include="ViewModels\Utils\SelfCheckVM.cs" />
+    <Compile Include="ViewModels\Utils\ShipmentTansMultiSelectBehavior.cs" />
+    <Compile Include="ViewModels\Utils\VisibilityConverter.cs" />
+    <Compile Include="ViewModels\Utils\WebBrowserUtility.cs" />
+    <Compile Include="Views\Analogous\AnalogousUC.xaml.cs">
+      <DependentUpon>AnalogousUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Analogous\EditAnalogous.xaml.cs">
+      <DependentUpon>EditAnalogous.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppInfoBox.xaml.cs">
+      <DependentUpon>AppInfoBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppErrorBox.xaml.cs">
+      <DependentUpon>AppErrorBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChemicalUsedPlacesWindow.xaml.cs">
+      <DependentUpon>ChemicalUsedPlacesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Delivery\DeliveryFreetextReplace.xaml.cs">
+      <DependentUpon>DeliveryFreetextReplace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Delivery\DeliveryReport.xaml.cs">
+      <DependentUpon>DeliveryReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Delivery\GenerateXMLSuccessBox.xaml.cs">
+      <DependentUpon>GenerateXMLSuccessBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Delivery\Shipments.xaml.cs">
+      <DependentUpon>Shipments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Delivery\XmlVerfication.xaml.cs">
+      <DependentUpon>XmlVerfication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Delivery\ZipResult.xaml.cs">
+      <DependentUpon>ZipResult.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DuplicateNamesList.xaml.cs">
+      <DependentUpon>DuplicateNamesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Diff.xaml.cs">
+      <DependentUpon>Diff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Edit8500Window.xaml.cs">
+      <DependentUpon>Edit8500Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Extended\RSNReplaceWindow.xaml.cs">
+      <DependentUpon>RSNReplaceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Manuals.xaml.cs">
+      <DependentUpon>Manuals.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NUMSDuplicate.xaml.cs">
+      <DependentUpon>NUMSDuplicate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NumsUC.xaml.cs">
+      <DependentUpon>NumsUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ParticipantsDisplay.xaml.cs">
+      <DependentUpon>ParticipantsDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Core\ConditionVM.cs" />
+    <Compile Include="ViewModels\Extended\CopyStageVM.cs" />
+    <Compile Include="ViewModels\Utils\EmptyTextFilteringBehavior.cs" />
+    <Compile Include="ViewModels\Utils\EnumBooleanConverter.cs" />
+    <Compile Include="ViewModels\Users\LoginVM.cs" />
+    <Compile Include="ViewModels\Extended\NUMVM.cs" />
+    <Compile Include="ViewModels\Utils\OrderableVM.cs" />
+    <Compile Include="ViewModels\Core\StaticCollection.cs" />
+    <Compile Include="ViewModels\Core\TanVM.cs" />
+    <Compile Include="ViewModels\Core\MainVM.cs" />
+    <Compile Include="ViewModels\Core\PopupVM.cs" />
+    <Compile Include="ViewModels\Users\TaskSheetVM.cs" />
+    <Compile Include="ViewModels\Core\ValidationVM.cs" />
+    <Compile Include="ViewModels\Utils\ViewModelBase.cs" />
+    <Compile Include="ViewModels\Utils\VMCollectionExtension.cs" />
+    <Compile Include="Views\Conditions.xaml.cs">
+      <DependentUpon>Conditions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Landing.xaml.cs">
+      <DependentUpon>Landing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NUMs.xaml.cs">
+      <DependentUpon>NUMs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PdfReactionsView.xaml.cs">
+      <DependentUpon>PdfReactionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PdfReaderForm.xaml.cs">
+      <DependentUpon>PdfReaderForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pdf\ExportedPDF.xaml.cs">
+      <DependentUpon>ExportedPDF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pdf\PdfAnnotations.xaml.cs">
+      <DependentUpon>PdfAnnotations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pdf\PdfSearch.xaml.cs">
+      <DependentUpon>PdfSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PopupWindow.xaml.cs">
+      <DependentUpon>PopupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PullTaskDetails.xaml.cs">
+      <DependentUpon>PullTaskDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QCTableView.xaml.cs">
+      <DependentUpon>QCTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QCView.xaml.cs">
+      <DependentUpon>QCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Query\QueryReport.xaml.cs">
+      <DependentUpon>QueryReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Query\QueryWindow.xaml.cs">
+      <DependentUpon>QueryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Query\QueryWorkflowWindow.xaml.cs">
+      <DependentUpon>QueryWorkflowWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReactionPreviewLargeView.xaml.cs">
+      <DependentUpon>ReactionPreviewLargeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Report\AnalystIDReportView.xaml.cs">
+      <DependentUpon>AnalystIDReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Report\DailyStatusReport.xaml.cs">
+      <DependentUpon>DailyStatusReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Report\ErrorReportWindow.xaml.cs">
+      <DependentUpon>ErrorReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReviewView.xaml.cs">
+      <DependentUpon>ReviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RSNWindow.xaml.cs">
+      <DependentUpon>RSNWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelfCheck.xaml.cs">
+      <DependentUpon>SelfCheck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SolventBoilingPointsWindow.xaml.cs">
+      <DependentUpon>SolventBoilingPointsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StagePreviewControl.xaml.cs">
+      <DependentUpon>StagePreviewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TanCommentWindow.xaml.cs">
+      <DependentUpon>TanCommentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskAllocation.xaml.cs">
+      <DependentUpon>TaskAllocation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskAllocationWindow.xaml.cs">
+      <DependentUpon>TaskAllocationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ToolBar.xaml.cs">
+      <DependentUpon>ToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ToolStrip.xaml.cs">
+      <DependentUpon>ToolStrip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UploadShipment.xaml.cs">
+      <DependentUpon>UploadShipment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkingArea.xaml.cs">
+      <DependentUpon>WorkingArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XML\8000SeriesXML.cs" />
+    <Compile Include="XML\9000SeriesXml.cs" />
+    <Page Include="CopyStages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Notify\Notify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Stores\DataImport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\AppStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Background.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Placeholder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TaskSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\System.Windows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Cloud.Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Chart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Data.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.DataVisualization.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Diagrams.Extensions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Diagrams.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Docking.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Expressions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.FixedDocumentViewers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.FixedDocumentViewersUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.GanttView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.GridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.ImageEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Input.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Navigation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Pivot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.PivotFieldList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.RibbonView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.RichTextBoxUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.ScheduleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.Spreadsheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Documents.Proofing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Telerik.Windows.Documents.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Analogous\AnalogousUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Analogous\EditAnalogous.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppInfoBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppErrorBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChemicalUsedPlacesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Delivery\DeliveryFreetextReplace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Delivery\DeliveryReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Delivery\GenerateXMLSuccessBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Delivery\Shipments.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Delivery\XmlVerfication.xaml">
+    </Page>
+    <Page Include="Views\Delivery\ZipResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DuplicateNamesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Edit8500Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Diff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Extended\RSNReplaceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Manuals.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NUMSDuplicate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NumsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ParticipantsDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Conditions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Landing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NUMs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PdfReactionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PdfReaderForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pdf\ExportedPDF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pdf\PdfAnnotations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pdf\PdfSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PopupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PullTaskDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QCTableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QCView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Query\QueryReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Query\QueryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Query\QueryWorkflowWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReactionPreviewLargeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Report\AnalystIDReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Report\DailyStatusReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Report\ErrorReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RSNWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelfCheck.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SolventBoilingPointsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StagePreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TanCommentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TaskAllocation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TaskAllocationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ToolStrip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UploadShipment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorkingArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\nugetexample.js" />
+    <EmbeddedResource Include="RDLC_Reports\AnalystIDReport.rdlc" />
+    <EmbeddedResource Include="RDLC_Reports\DailyStatusReport.rdlc" />
+    <None Include="App.Test.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
+    <Content Include="CORE_Input_Schema.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CORE_Input_Schema_List.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="RDLC_Reports\DailyStatusReport.xsc">
+      <DependentUpon>DailyStatusReport.xsd</DependentUpon>
+    </None>
+    <None Include="RDLC_Reports\DailyStatusReport.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DailyStatusReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="RDLC_Reports\DailyStatusReport.xss">
+      <DependentUpon>DailyStatusReport.xsd</DependentUpon>
+    </None>
+    <None Include="ReactionsDataSet.xsc">
+      <DependentUpon>ReactionsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ReactionsDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReactionsDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ReactionsDataSet.xss">
+      <DependentUpon>ReactionsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RDLC_Reports\ReactionsDataSet1.xsc">
+      <DependentUpon>ReactionsDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="RDLC_Reports\ReactionsDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReactionsDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RDLC_Reports\ReactionsDataSet1.xss">
+      <DependentUpon>ReactionsDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Reactions_prodDataSet.xsc">
+      <DependentUpon>Reactions_prodDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Reactions_prodDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Reactions_prodDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reactions_prodDataSet.xss">
+      <DependentUpon>Reactions_prodDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Reactions_prodDataSet1.xsc">
+      <DependentUpon>Reactions_prodDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Reactions_prodDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Reactions_prodDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reactions_prodDataSet1.xss">
+      <DependentUpon>Reactions_prodDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Scripts\jquery-2.1.1.min.map" />
+    <None Include="Service References\S3Connection\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\S3Connection\configuration.svcinfo" />
+    <None Include="Service References\S3Connection\configuration91.svcinfo" />
+    <None Include="Service References\S3Connection\S3Connection.disco" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.Release.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <Resource Include="Images\query.png" />
+    <Resource Include="Images\query_bg.png" />
+    <Resource Include="Images\error.png" />
+    <Resource Include="Images\help-hint.ico" />
+    <Resource Include="Images\logout.ico" />
+    <Resource Include="Images\report.png" />
+    <Resource Include="Images\ok-blue.png" />
+    <Resource Include="Images\plus.png" />
+    <Resource Include="Images\task.jpg" />
+    <Resource Include="Images\ask.ico" />
+    <Resource Include="Images\dialog-no-3.png" />
+    <Resource Include="Images\dialog-ok-3.png" />
+    <Resource Include="Images\edit-4.png" />
+    <Resource Include="Images\edit-group.png" />
+    <Resource Include="Images\mail-notification.png" />
+    <Resource Include="Images\office-chart-area-stacked.png" />
+    <Resource Include="Images\ok.png" />
+    <Resource Include="Images\popUp.ico" />
+    <Resource Include="Images\revert.png" />
+    <Resource Include="Images\Settings.png" />
+    <Resource Include="Images\submit-next.png" />
+    <Resource Include="Images\system-shutdown-6.png" />
+    <Resource Include="Images\task-new.png" />
+    <Resource Include="Images\tasksheet.png" />
+    <Resource Include="Images\warning.png" />
+    <Resource Include="Images\handicon.png" />
+    <Resource Include="Images\text.png" />
+    <Resource Include="Images\Not_available_icon.jpg" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Service References\S3Connection\S3Connection.wsdl" />
+    <None Include="Service References\S3Connection\S3Connection.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\S3Connection\S3Connection1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\S3Connection\S3Connection2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\S3Connection\S3Connection3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\S3Connection\S3Connection4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="web.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\grid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow-left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit-copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit-delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\dots.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\excelra-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\downloadSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit-paste-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\beakers.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rxAdd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rxArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\addBefore.png" />
+    <Resource Include="Images\addAfter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{e19b47bf-9c1e-4a2e-a44c-8f4ba4bde6ce}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\video.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\temperature.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ph.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pressure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\time.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="FoxitPDFSDKProLib">
+      <Guid>{B0B1B6D4-2556-4F48-B324-9A3C989E6296}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\reload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\e-letter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\zoom-fit-best-2.png" />
+    <Resource Include="Images\zoom-fit-best-4.png" />
+    <Resource Include="Images\zoom-fit-height.png" />
+    <Resource Include="Images\zoom-fit-width.png" />
+    <Resource Include="Images\zoom-in-3.png" />
+    <Resource Include="Images\zoom-out-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\window-duplicate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Reactions.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LandingTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\landing-bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\no-chemical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\approval.png" />
+    <Resource Include="Images\Reject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Back.png" />
+    <Resource Include="Images\ring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\gears.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\kb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pdf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder-open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="AxdsvisualizercontrolLib">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="dsvisualizercontrolLib">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Entities.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Beans">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Jdbc">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Media">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Misc">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Naming">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Remoting">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Security">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.SwingAWT">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Text">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.Util">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.XML.API">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.XML.Bind">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.OpenJDK.XML.RelaxNG">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.Runtime">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="IKVM.Runtime.JNI">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MDL.Cheshire">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MDL.CsInline">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MDL.Draw.Clipboard">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MDL.Draw.Editor">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MDL.Draw.Foundation">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MDL.Draw.Renderer">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MDL.Draw.TextServicesWrapper">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.Practices.ObjectBuilder2">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.Practices.Unity">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.Common">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.DataVisualization">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.ProcessingObjectModel">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="nalpp">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="ojdbc14">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="OpenEye.oedrawaddin">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Reactions_Test.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="SandBar">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="SandDock">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="SharpDX">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="SharpDX.Direct2D1">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="SharpDX.DXGI">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Comment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\submit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\close2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\a-icon.png" />
+    <Resource Include="Images\m-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\web.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\popup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\xml.jpg" />
+    <Resource Include="Images\checklist.png" />
+    <Resource Include="Images\extract.png" />
+    <Resource Include="Images\Prepare.png" />
+    <Resource Include="Images\compare.png" />
+    <Resource Include="Images\zip.png" />
+    <Resource Include="Images\go-first.ico" />
+    <Resource Include="Images\go-last.ico" />
+    <Resource Include="Images\go-next.png" />
+    <Resource Include="Images\go-previous.ico" />
+    <Resource Include="Images\User_Manual.jpg" />
+    <Resource Include="Images\equationNext.png" />
+    <Resource Include="Images\equationPlus.png" />
+    <Resource Include="Images\go-next-4.png" />
+    <Resource Include="Images\refresh.png" />
+    <Resource Include="Images\swap.png" />
+    <Content Include="Inchi\dll\libinchi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Inchi\inchi.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\S3Connection\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="Exists('App.$(Configuration).config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="App.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="App.$(Configuration).config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="App.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
+  <Target Name="AfterPublish">
+    <PropertyGroup>
+      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+    </PropertyGroup>
+    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
+    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)$(OutDir)$(TargetName).pdb" "$(ProjectDir)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "ShipmentException";
+}
+
+@section head{
+    <link href="~/Content/App/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <style>
+        .fc-time {
+            display: none;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px yellow;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Shippment Exceptions List</div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>
+                            Select BatchList: @Html.DropDownList("assignToBatch", new SelectList(ViewBag.batches, "Name", "Name"), "Select . .", new { @class = "form-control", id = "assignToBatch", @style = "width: 200px;" })
+                        </label>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="field1" style="margin-bottom:0"></label>
+                        <button class="btn btn-success" id="ApplyBtn">Apply</button>
+                    </div>
+                    <div class="panel-body" id="Tans">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Content/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initSignalR();
+            $('#fromDate').datepicker({
+                format: "dd-mm-yyyy"
+            });
+        });
+
+         
+
+        $('#assignToBatch').change(function () {
+            $('#Tans').html("")
+            var id = $(this).val();
+            if (id == '')
+                return;
+            $.ajax({
+                url: "@Url.Action("ShipmentExceptionlist", "Shipment")",
+                data: { BatchNo: id },
+                success: function (result) {
+
+                    $("#Tans").html(result);
+
+                }
+            });
+        })
+        function initSignalR() {
+            var chat = $.connection.liveHub;
+            chat.client.ftpJobStatus = function (msg) {
+                $('#ftpJobStatus').html(msg);
+                $('#ftpJobStatus').addClass('animated flash glow');
+                setInterval(function () {
+                    $('#ftpJobStatus').removeClass('animated flash glow');
+                }, 500);
+            };
+            $.connection.hub.start().done(function () {
+            });
+        }
+
+
+    </script>
+}
+

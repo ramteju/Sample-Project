@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "ShipmentmissingNodes";
+}
+
+<style>
+    a.hiddenTab {visibility:hidden; display:none;}
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Shipments Issues</div>
+                <div class="panel-body" id="MissingNodes">
+                
+                </div>
+            </div>
+        </div>
+
+     
+
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Missing Tan Details</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hdnfldId" />
+                <input type="hidden" id="hdnfldRegNumber" />
+              <input type="text" id="txtTanNumber" class="form-control" readonly/>
+                <input type="text" id="txtIssueDescription" class="form-control" readonly/>
+                <input type="text" id="txtNum" class="form-control" />
+                <input type="text" id="txtCSH" class="form-control" readonly/>
+                <input type="text" id="txtCSM" class="form-control"readonly />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnUpdate">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        LoadMissingNodes();
+        $(document).on('click', '.btnEdit', function (e) {
+
+            $.ajax({
+                url: "@Url.Action("ShipmentMissingSingleNode", "Shipment")",
+                data: { Id: $(this).data("id") },
+                success: function (result) {
+                    $("#hdnfldId").val(result[0].Id);
+                    $("#hdnfldRegNumber").val(result[0].RegNumber);
+                    $("#txtTanNumber").val(result[0].tannumber);
+                    $("#txtIssueDescription").val(result[0].IssueDescription);
+                    $("#txtCSH").val(result[0].CSM);
+                    $("#txtCSM").val(result[0].CSH);
+                    $("#txtNum").val(result[0].Num);
+                    $("#myModal").modal('show');
+                }
+            });
+        });
+        $(document).on('click', '.btnLive', function (e) {
+
+            $.ajax({
+                url: "@Url.Action("ShipmentMissingTanLive", "Shipment")",
+                data: { Id: $(this).data("id") },
+                success: function (result) {
+                    if (result == "This Tan is Live") {
+
+                        LoadMissingNodes();
+                    }
+                    
+                    alert(result);
+            }
+        });
+    });
+        $(document).on('click', '#btnUpdate', function (e) {
+            var formData = new FormData();
+
+            formData.append("Id", $("#hdnfldId").val());
+            formData.append("TanNumber", $("#txtTanNumber").val());
+            formData.append("Num", $("#txtNum").val());
+            formData.append("RegNumber", $("#hdnfldRegNumber").val());
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateShipmentMissingNode", "Shipment")",
+                data: formData,
+                ///  dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $("#MissingNodes").html('');
+                    $('input[type="text"]').val('');
+                    $("#myModal").modal('hide');
+                    $("#MissingNodes").html(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+    function LoadMissingNodes() {
+
+        $.ajax({
+            url: "@Url.Action("ShipmentmissingNodesList", "Shipment")",
+            data: {},
+        success: function (result) {
+            $("#MissingNodes").html(result);
+
+        }
+    });
+    }
+
+  
+    </script>
+}

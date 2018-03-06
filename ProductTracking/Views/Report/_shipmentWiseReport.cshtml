@@ -1,0 +1,112 @@
+﻿
+@using ProductTracking.Models.Core
+@using ProductTracking.Models.Core.ViewModels
+@{
+    Dictionary<string, Dictionary<TanState?, ShipmentWiseReportVM>> Groupeddata = ViewBag.GroupedData;
+    Dictionary<string, ShipmentWiseReportVM> DeliveredData = ViewBag.DeliveredData;
+    List<TanState> tanStates = ViewBag.TanStates;
+    List<TanState> ReadyToDeliverStates = ViewBag.ReadyToDeliever;
+}
+
+<table class="table table-bordered table-striped" id="ShipmentTable">
+    <thead>
+        <tr>
+            <td></td>
+            @foreach (var key in Groupeddata.Keys)
+            {
+                <td colspan="2" align="center" style="font-weight:bold">@key</td>
+            }
+            <td colspan="2" align="center" style="font-weight:bold">Total</td>
+        </tr>
+        <tr>
+            <td align="center" style="font-weight:bold">STATUS</td>
+            @foreach (var key in Groupeddata.Keys)
+            {
+                <th>TANs</th>
+                <th>RXNs</th>
+            }
+            <th>TANs</th>
+            <th>RXNs</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            List<int> tansCount = new List<int>();
+            List<int> rxnsCount = new List<int>();
+            List<int> ReadytoDelievertansCount = new List<int>();
+            List<int> ReadytoDelieverrxnsCount = new List<int>();
+            foreach (TanState state in tanStates)
+            {
+                <tr>
+                    <td align="center" style="font-weight:bold;width: 20px; @(state.ToString().ToLower().Contains("not_assigned") ? "background: none;color: black;font-weight: normal;" : string.Empty)" class="@(state.ToString().ToLower().Contains("curat") ? "Curation" : ( state.ToString().ToLower().Contains("revie") ? "Review" : "Qc"))">@state.ToString().ToUpper()</td>
+                    @{
+                        int tans = 0;
+                        int rxns = 0;
+                        int ReadytoDelievertans = 0;
+                        int ReadytoDelieverrxns = 0;
+                    }
+                    @foreach (var key in Groupeddata.Keys)
+                    {
+                        tans = tans + (Groupeddata[key].ContainsKey(state) ? Groupeddata[key][state].TANsCount : 0);
+                        rxns = rxns + (Groupeddata[key].ContainsKey(state) ? Groupeddata[key][state].RXNsCount : 0);
+                        if (ReadyToDeliverStates.Contains(state))
+                        {
+                            ReadytoDelievertans = ReadytoDelievertans + (Groupeddata[key].ContainsKey(state) ? Groupeddata[key][state].TANsCount : 0);
+                            ReadytoDelieverrxns = ReadytoDelieverrxns + (Groupeddata[key].ContainsKey(state) ? Groupeddata[key][state].RXNsCount : 0);
+                        }
+                        <td>@(Groupeddata[key].ContainsKey(state) ? Groupeddata[key][state].TANsCount : 0)</td>
+                        <td>@(Groupeddata[key].ContainsKey(state) ? Groupeddata[key][state].RXNsCount : 0)</td>
+                    }
+                    @{
+                        tansCount.Add(tans);
+                        rxnsCount.Add(rxns);
+                        ReadytoDelievertansCount.Add(ReadytoDelievertans);
+                        ReadytoDelieverrxnsCount.Add(ReadytoDelieverrxns);
+                        <td align="center" style="font-weight:bold">@tans</td>
+                        <td align="center" style="font-weight:bold">@rxns</td>
+                    }
+                </tr>
+                        }
+                        <tr>
+                            <td style="font-weight:bold;width: 20px;" class="Qc">Delivered Data</td>
+                            @foreach (var key in Groupeddata.Keys)
+                            {
+                                <td>@(DeliveredData.ContainsKey(key) ? DeliveredData[key].TANsCount : 0)</td>
+                                <td>@(DeliveredData.ContainsKey(key) ? DeliveredData[key].RXNsCount : 0)</td>
+                            }
+                            <td style="font-weight:bold">@(DeliveredData.Select(d => d.Value.TANsCount).Sum())</td>
+                            <td style="font-weight:bold">@(DeliveredData.Select(d => d.Value.RXNsCount).Sum())</td>
+                        </tr>
+                        <tr>
+                            <td colspan="@(3+(Groupeddata.Keys.Count * 2))" style="border: 0 !important"></td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="font-weight:bold">
+                                TOTAL
+                            </td>
+                            @foreach (var key in Groupeddata.Keys)
+            {
+                                <td align="center" style="font-weight:bold">@(Groupeddata[key].Select(t => t.Value.TANsCount).Sum() + (DeliveredData.ContainsKey(key) ? DeliveredData[key].TANsCount : 0))</td>
+                                <td align="center" style="font-weight:bold">@(Groupeddata[key].Select(t => t.Value.RXNsCount).Sum() + (DeliveredData.ContainsKey(key) ? DeliveredData[key].RXNsCount : 0))</td>
+                            }
+                            <td align="center" style="font-weight:bold">@(tansCount.Sum() + DeliveredData.Values.Select(t=>t.TANsCount).Sum())</td>
+                            <td align="center" style="font-weight:bold">@(rxnsCount.Sum() + DeliveredData.Values.Select(t => t.RXNsCount).Sum())</td>
+                        </tr>
+                        <tr>
+                            <td colspan="@(3+(Groupeddata.Keys.Count * 2))" style="border: 0 !important"></td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="font-weight:bold; border: 2px solid #2FC0F4 !important;">
+                                READY TO DELIVER
+                            </td>
+                            @foreach (var key in Groupeddata.Keys)
+            {
+                                <td align="center" style="font-weight:bold; border: 2px solid #2FC0F4 !important;">@(Groupeddata[key].Where(t => t.Key.HasValue && ReadyToDeliverStates.Contains(t.Key.Value)).Select(t => t.Value.TANsCount).Sum())</td>
+                                <td align="center" style="font-weight:bold; border: 2px solid #2FC0F4 !important;">@(Groupeddata[key].Where(t => t.Key.HasValue && ReadyToDeliverStates.Contains(t.Key.Value)).Select(t => t.Value.RXNsCount).Sum())</td>
+                            }
+                            <td align="center" style="font-weight:bold; border: 2px solid #2FC0F4 !important;">@(ReadytoDelievertansCount.Sum())</td>
+                            <td align="center" style="font-weight:bold; border: 2px solid #2FC0F4 !important;">@(ReadytoDelieverrxnsCount.Sum())</td>
+                        </tr>
+        }
+    </tbody>
+</table>

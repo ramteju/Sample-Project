@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "TargetedDate";
+}
+
+
+@section head{
+    <link href="~/Content/App/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <style>
+        .fc-time {
+            display: none;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px yellow;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">Select Batches</div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>
+                            Select From BatchList: @Html.DropDownList("assignFromBatch", new SelectList(ViewBag.batches, "Id", "Name"), "Select . .", new { @class = "form-control", id = "assignFromBatch", @style = "width: 200px;" })
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Select To BatchList: @Html.DropDownList("assignToBatch", new SelectList(ViewBag.batches, "Id", "Name"), "Select . .", new { @class = "form-control", id = "assignToBatch", @style = "width: 200px;" })
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="file">Upload Users:</label>
+                            <input type="file" class="form-control" id="TargetDatefile" name="TargetDatefile" accept=".xlsx" />
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="field1" style="margin-bottom:0">Shipment Received Date :</label>
+                            <div class="input-group">
+                                <input type="text" id="ReceivedDate"
+                                       class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="field1" style="margin-bottom:0"></label>
+                            <div><button class="btn btn-success" id="ApplyBtn">Apply</button></div>
+                        </div>
+                    </div>
+                    <div class="panel-body" id="Tans">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Shipments</div>
+                <div class="panel-body" id="Selectedshipments">
+                </div>
+            </div>
+
+            @*<div class="panel panel-default" id="DivexcelUpload" style="display:none">
+                    <div class="panel-heading">Remaining Excel Tans List</div>
+                    <div class="panel-body" id="Excelshipments">
+                    </div>
+                </div>*@
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Content/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            initSignalR();
+            $('#ReceivedDate').datepicker({
+                format: "dd-mm-yyyy"
+            });
+        });
+        function SelectedShipments() {
+            var FromBatchId = $("#assignFromBatch option:selected").text();
+            var ToBatchId = $("#assignToBatch option:selected").text();
+            $.ajax({
+                url: "@Url.Action("SelectedShipments", "Shipment")",
+                data: { ToBatchId: ToBatchId, FromBatchId: FromBatchId },
+                success: function (result) {
+                    $("#Selectedshipments").html(result);
+                }
+            });
+        }
+        $('#ApplyBtn').click(function (e) {
+            UpdateTargetDate();
+        });
+
+
+        function UpdateTargetDate() {
+
+
+            var formData = new FormData();
+
+
+            var file = document.getElementById("TargetDatefile").files[0];
+
+            formData.append("BatchId", $("#assignToBatch").val());
+
+            if ($("#assignFromBatch option:selected").text() == "Select . .") {
+                alert("Select From Batch");
+                return;
+            }
+            if ($("#assignToBatch option:selected").text() == "Select . .") {
+                alert("Select To Batch");
+                return;
+            }
+            if ($("#ReceivedDate").val() == "") {
+                alert("Select Shipment Recived Date");
+                return;
+            }
+
+            formData.append("FileUpload", file);
+            formData.append("FromBatchId", $("#assignFromBatch option:selected").text());
+            formData.append("ToBatchId", $("#assignToBatch option:selected").text());
+            formData.append("ReceivedDate", $("#ReceivedDate").val());
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateTargetDate", "Shipment")",
+                data: formData,
+                ///  dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (msg) {
+                    $("#Selectedshipments").html(msg);
+                    $('#Tans').html("");
+                    var FromBatchId = $("#assignFromBatch option:selected").text();
+                    var ToBatchId = $("#assignToBatch option:selected").text();
+                    if (ToBatchId == '')
+                        return;
+                    $.ajax({
+                        url: "@Url.Action("ShippmentTansList", "Shipment")",
+                        data: { ToBatchId: ToBatchId, FromBatchId: FromBatchId },
+                        success: function (result) {
+
+                            $("#Tans").html(result);
+
+                            // SelectedShipments();
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+
+
+        }
+
+        $('#assignToBatch').change(function () {
+            $('#Tans').html("");
+            var FromBatchId = $("#assignFromBatch option:selected").text();
+            var ToBatchId = $("#assignToBatch option:selected").text();
+            if (ToBatchId == '')
+                return;
+            $.ajax({
+                url: "@Url.Action("ShippmentTansList", "Shipment")",
+                data: { ToBatchId: ToBatchId, FromBatchId: FromBatchId },
+                success: function (result) {
+
+                    $("#Tans").html(result);
+                    SelectedShipments();
+                }
+            });
+        })
+        function initSignalR() {
+            var chat = $.connection.liveHub;
+            chat.client.ftpJobStatus = function (msg) {
+                $('#ftpJobStatus').html(msg);
+                $('#ftpJobStatus').addClass('animated flash glow');
+                setInterval(function () {
+                    $('#ftpJobStatus').removeClass('animated flash glow');
+                }, 500);
+            };
+            $.connection.hub.start().done(function () {
+            });
+        }
+
+
+    </script>
+}
+
+
+
+

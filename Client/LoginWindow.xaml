@@ -1,0 +1,48 @@
+﻿<Window x:Class="Client.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.ViewModel"
+        mc:Ignorable="d"
+        Icon="Images/Icon.png"
+        x:Name="LoginForm" Title="{Binding LoginTitle,Mode=OneWay}"  Height="420" Width="300" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" 
+        Topmost="True"
+        Visibility="{Binding Hide, Mode=TwoWay}"
+        Loaded="LoginForm_Loaded">
+
+    <Window.Background>
+        <ImageBrush ImageSource="Images/bg.png" AlignmentY="Bottom" Stretch="None"></ImageBrush>
+    </Window.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Style="{StaticResource GroupStyleTwo}" BorderThickness="0">
+            <StackPanel>
+                <Image Source="/images/excelra-logo.png" Width="100" Height="35" Stretch="Uniform" Margin="0,50,0,0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="REACTIONS" Margin="5,0,0,0" FontSize="30" FontFamily="Segoe UI Light" Foreground="blue" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Next Gen" FontWeight="Thin" FontSize="15" FontFamily="Mistral" Foreground="Green" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2,0,0,10"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Label x:Name="label" Content="User Name" HorizontalAlignment="Left" Margin="12,16,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtLogin" HorizontalAlignment="Left" Height="23" Margin="95,16,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" 
+                 Width="152" Text="{Binding Path = UserName, Mode=TwoWay}"/>
+            <Label x:Name="label_Copy" Content="Password" HorizontalAlignment="Left" Margin="21,43,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+            <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="95,44,0,-3" Grid.Row="3" VerticalAlignment="Top" Width="152" Height="25"/>
+            <Label x:Name="label_Copy1" Content="Role" HorizontalAlignment="Left" Margin="48,71,0,-25" Grid.Row="3" VerticalAlignment="Top"/>
+            <ComboBox x:Name="cmbRoles" HorizontalAlignment="Left" ItemsSource="{Binding Path=Roles,Mode=OneWay}" SelectedIndex="{Binding SelectIndex,Mode=TwoWay}" DisplayMemberPath="RoleName" SelectedValuePath="RoleId" SelectedValue="{Binding RoleId, Mode=TwoWay}" Margin="95,74,0,0" Grid.Row="3" VerticalAlignment="Top" Width="152"/>
+            <Button x:Name="button" Content="_Login" IsDefault="True" HorizontalAlignment="Left" Margin="95,104,0,-3" Grid.Row="3" Width="152" 
+                Command="{Binding Path=Login}" CommandParameter="{Binding ElementName=txtPassword}" Height="21" VerticalAlignment="Top" IsEnabled="{Binding LoginEnable}"/>
+            <Button Margin="252,176,10,1" Background="Transparent" Name="SelfCheckBtn" Click="SelfCheckBtn_Click">
+                <Image Source="images/help.png" Height="40" RenderTransformOrigin="0.5,-0.725" />
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Client.ViewModels.TanVM">
+    <Position X="4" Y="0.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>CAAGgCAAAQgAQBAAAMAQggAQFG4EEEQgAGAAIgxgUgk=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.ReactionVM">
+    <Position X="14.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAQAAAAAAAAAAAABAQAAAAkCAAAIAgQAABAAgA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.ReactionParticipant">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAiUCAAAFABAgCAAAIAAAQBAAAEAQCAAAAAAQEAIgE=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.Rsn">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAIAAAAAAAAAAAAAEAIAiBAgIIgAIAAAAgg=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.Cvt">
+    <Position X="12.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAAAAAAAAAAEIAAAACAAAAgA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.FreeText">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAgA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.ParticipantComparater" BaseTypeListCollapsed="true">
+    <Position X="17" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Client.ViewModels.StageVM">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAEAAEABAAAAQAAAAEAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.StageCondition">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAADQIAAAEAAAAAAAABAAAAAAAAAAEACAAQAAgAEAwA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.ParticipantPreview">
+    <Position X="9" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAgAMAAIABABggAIAIIAKAQAAAAEAIAAAQCAAAEAABA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Client.ViewModels.ReactionPreview">
+    <Position X="17" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAgAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TanVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

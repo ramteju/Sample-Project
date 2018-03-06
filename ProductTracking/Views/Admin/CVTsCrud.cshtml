@@ -1,0 +1,294 @@
+﻿
+@{
+    ViewBag.Title = "Admnistration";
+}
+
+@section head {
+    <link href="~/Content/App/plugins/jqgrid/css/trirand/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/App/plugins/jqgrid/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+}
+
+@section heading {
+    <h4 class="page-header"><i class="fa fa-gear"></i> Administration</h4>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">CVT Dictionary</div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#rolesTab">Deliverable CVTs</a></li>
+                        <li><a data-toggle="tab" href="#usersTab">Deliverable Freetexts</a></li>
+                        <li><a data-toggle="tab" href="#IgnorableTab">Ignorable CVTs</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        @*Roles tab*@
+                        <div id="rolesTab" class="tab-pane fade in active">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table id="roles"></table>
+                                        <div id="rolesPager"></div>
+                                    </td>
+                                    <td style="vertical-align:top;padding-left:10px;">
+                                        <div id="workflowDiv"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        @*Users tab*@
+                        <div id="usersTab" class="tab-pane fade">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table id="freetexts"></table>
+                                        <div id="freetextsPager"></div>
+                                    </td>
+                                    <td style="vertical-align:top;padding-left:10px;">
+                                        <div id="workflowDiv"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="IgnorableTab" class="tab-pane fade">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table id="igncvt"></table>
+                                        <div id="igncvtPager"></div>
+                                    </td>
+                                    <td style="vertical-align:top;padding-left:10px;">
+                                        <div id="workflowDiv"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>@*Panel body*@
+            </div>@*Panel*@
+        </div>
+    </div>
+</div>@*First Row*@
+
+@section scripts {
+
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="~/Content/App/plugins/jqgrid/js/trirand/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/App/plugins/jqgrid/js/trirand/jquery.jqGrid.min.js"></script>
+    <script type="text/javascript">
+
+        $.jgrid.defaults.width = 780;
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap';
+
+        function errorMessage(response) {
+            return '<i class="icon-remove" style="padding-left:10px"></i> ' + response.responseText;
+        }
+
+        function datePicker(element) {
+            $(element).datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+        }
+
+        //*************************************************************Role
+        $(document).ready(function () {
+            $("#roles").jqGrid({
+                url: '@Url.Action("DelivarableCVTs")',
+                editurl: '@Url.Action("DelivarableCVTsCrud")',
+                datatype: "json",
+                colModel: [
+                    { name: 'CVT', index: 'type', label: 'CVT', width: 150, editable: true },
+                    { name: 'AssociatedFreetext', index: 'type', label: 'AssociatedFreetext', width: 150, editable: true }
+                ],
+                sortname: 'Code',
+                sortorder: 'asc',
+                viewrecords: true,
+                height: 300,
+                rowNum: 1000,
+                pginput: false,
+                pgbuttons: false,
+                pager: "#rolesPager",
+                caption: false,
+                postData: {
+                    //id: '${employee?.id}'
+                },
+                onSelectRow: function (id) {
+                }
+            });
+
+            $('#roles').navGrid('#rolesPager',
+                    // the buttons to appear on the toolbar of the grid
+                    {
+                        edit: true,
+                        add: true,
+                        del: true,
+                        search: false,
+                        refresh: false,
+                        view: false,
+                        position: "left",
+                        cloneToTop: false
+                    },
+                    // options for the Edit Dialog
+                    {
+                        editCaption: "Edit CVT",
+                        recreateForm: true,
+                        checkOnUpdate: false,
+                        checkOnSubmit: false,
+                        closeAfterEdit: true,
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    },
+                    // options for the Add Dialog
+                    {
+                        addCaption: 'Add CVT',
+                        closeAfterAdd: true,
+                        recreateForm: true,
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    },
+                    // options for the Delete Dailog
+                    {
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    });
+            $("#freetexts").jqGrid({
+                url: '@Url.Action("Freetexts")',
+                editurl: '@Url.Action("FreetextsCrud")',
+                datatype: "json",
+                colModel: [
+                    { name: 'Freetext', index: 'type', label: 'Freetext', width: 150, editable: true }
+                ],
+                sortname: 'Code',
+                sortorder: 'asc',
+                viewrecords: true,
+                height: 300,
+                rowNum: 1000,
+                pginput: false,
+                pgbuttons: false,
+                pager: "#freetextsPager",
+                caption: false,
+                postData: {
+                    //id: '${employee?.id}'
+                },
+                onSelectRow: function (id) {
+                }
+            });
+
+            $('#freetexts').navGrid('#freetextsPager',
+                    // the buttons to appear on the toolbar of the grid
+                    {
+                        edit: true,
+                        add: true,
+                        del: true,
+                        search: false,
+                        refresh: false,
+                        view: false,
+                        position: "left",
+                        cloneToTop: false
+                    },
+                    // options for the Edit Dialog
+                    {
+                        editCaption: "Edit Freetext",
+                        recreateForm: true,
+                        checkOnUpdate: false,
+                        checkOnSubmit: false,
+                        closeAfterEdit: true,
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    },
+                    // options for the Add Dialog
+                    {
+                        addCaption: 'Add Freetext',
+                        closeAfterAdd: true,
+                        recreateForm: true,
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    },
+                    // options for the Delete Dailog
+                    {
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    });
+
+            $("#igncvt").jqGrid({
+                url: '@Url.Action("IgnorableCVTs")',
+                editurl: '@Url.Action("IgnorableCVTsCrud")',
+                datatype: "json",
+                colModel: [
+                    { name: 'CVT', index: 'type', label: 'CVT', width: 150, editable: true },
+                    { name: 'AssociatedFreetext', index: 'type', label: 'AssociatedFreetext', width: 150, editable: true },
+                    { name: 'ExistingType', index: 'ExistingType', editable: true, edittype: "select", editoptions: { dataUrl: '@Url.Content("~/Admin/ParticipantTypes")' } },
+                    { name: 'NewType', index: 'NewType', editable: true, edittype: "select", editoptions: { dataUrl: '@Url.Content("~/Admin/ParticipantTypes")' } }
+                ],
+                sortname: 'Code',
+                sortorder: 'asc',
+                viewrecords: true,
+                height: 300,
+                rowNum: 1000,
+                pginput: false,
+                pgbuttons: false,
+                pager: "#igncvtPager",
+                caption: false,
+                postData: {
+                    //id: '${employee?.id}'
+                },
+                onSelectRow: function (id) {
+                }
+            });
+
+            $('#igncvt').navGrid('#igncvtPager',
+                    // the buttons to appear on the toolbar of the grid
+                    {
+                        edit: true,
+                        add: true,
+                        del: true,
+                        search: false,
+                        refresh: false,
+                        view: false,
+                        position: "left",
+                        cloneToTop: false
+                    },
+                    // options for the Edit Dialog
+                    {
+                        editCaption: "Edit CVT",
+                        recreateForm: true,
+                        checkOnUpdate: false,
+                        checkOnSubmit: false,
+                        closeAfterEdit: true,
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    },
+                    // options for the Add Dialog
+                    {
+                        addCaption: 'Add CVT',
+                        closeAfterAdd: true,
+                        recreateForm: true,
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    },
+                    // options for the Delete Dailog
+                    {
+                        errorTextFormat: function (data) {
+                            return 'Error: ' + data.responseText
+                        }
+                    });
+
+        });
+    </script>
+}
+
